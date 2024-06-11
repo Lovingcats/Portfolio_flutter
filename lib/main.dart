@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
         breakpoints: const ScreenBreakpoints(desktop: 1024, tablet: 768, watch: 250),
         mobile: (_) => OrientationLayoutBuilder(
           portrait: (context) => const MobilePortraitScreen(),
-          landscape: (context) => const MobileLandscapeScreen()
+          landscape: (context) => const MobileLandscapeScreen(),
         ),
         tablet: (_) => const TabletScreen(),
         desktop: (_) => const DesktopScreen(),
-      )
+      ),
     );
   }
 }
@@ -61,9 +61,25 @@ class DesktopScreen extends StatelessWidget {
     return Scaffold(
       appBar: null,
       body: Center(
-        child: CustomPaint(
-          size: Size(400, 850),
-          painter: DeviceFramePainter(),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final aspectRatio = 400 / 850;
+            double deviceWidth;
+            double deviceHeight;
+
+            if (constraints.maxWidth / constraints.maxHeight > aspectRatio) {
+              deviceHeight = constraints.maxHeight * 0.8;
+              deviceWidth = deviceHeight * aspectRatio;
+            } else {
+              deviceWidth = constraints.maxWidth * 0.8;
+              deviceHeight = deviceWidth / aspectRatio;
+            }
+
+            return CustomPaint(
+              size: Size(deviceWidth, deviceHeight),
+              painter: DeviceFramePainter(),
+            );
+          },
         ),
       ),
     );
@@ -78,6 +94,11 @@ class DeviceFramePainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 5;
 
+    final bluePaint = Paint()
+      ..color = Colors.blue
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 10;
+
     // 디바이스 외곽
     canvas.drawRRect(
       RRect.fromRectAndRadius(
@@ -86,7 +107,16 @@ class DeviceFramePainter extends CustomPainter {
       ),
       paint,
     );
-    
+
+    // 파란색 외곽 테두리
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(5, 5, size.width - 10, size.height - 10),
+        Radius.circular(15),
+      ),
+      bluePaint,
+    );
+
     // 전원 버튼
     final powerButtonPaint = Paint()
       ..color = Colors.black
@@ -108,7 +138,6 @@ class DeviceFramePainter extends CustomPainter {
       ),
       powerButtonPaint,
     );
-    
   }
 
   @override
