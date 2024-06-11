@@ -68,10 +68,10 @@ class DesktopScreen extends StatelessWidget {
             double deviceHeight;
 
             if (constraints.maxWidth / constraints.maxHeight > aspectRatio) {
-              deviceHeight = constraints.maxHeight * 0.8;
+              deviceHeight = constraints.maxHeight * 0.9;
               deviceWidth = deviceHeight * aspectRatio;
             } else {
-              deviceWidth = constraints.maxWidth * 0.8;
+              deviceWidth = constraints.maxWidth * 0.9;
               deviceHeight = deviceWidth / aspectRatio;
             }
 
