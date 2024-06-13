@@ -67,6 +67,7 @@ class DesktopScreen extends StatefulWidget {
 
 class _DesktopScreenState extends State<DesktopScreen> {
   ui.Image? _backgroundImage;
+  ui.Image? _pcImage;
 
   @override
   void initState() {
@@ -75,47 +76,65 @@ class _DesktopScreenState extends State<DesktopScreen> {
   }
 
   Future<void> _loadImage() async {
-    final ByteData data = await rootBundle.load('assets/img/deviceBackground.png');
-    final List<int> bytes = data.buffer.asUint8List();
-    final ui.Codec codec = await ui.instantiateImageCodec(Uint8List.fromList(bytes));
-    final ui.FrameInfo fi = await codec.getNextFrame();
+    final ByteData data1 = await rootBundle.load('assets/img/deviceBackground.png');
+    final List<int> bytes1 = data1.buffer.asUint8List();
+    final ui.Codec codec1 = await ui.instantiateImageCodec(Uint8List.fromList(bytes1));
+    final ui.FrameInfo fi1 = await codec1.getNextFrame();
+
+    final ByteData data2 = await rootBundle.load('assets/img/PC_08.jpg');
+    final List<int> bytes2 = data2.buffer.asUint8List();
+    final ui.Codec codec2 = await ui.instantiateImageCodec(Uint8List.fromList(bytes2));
+    final ui.FrameInfo fi2 = await codec2.getNextFrame();
+
     setState(() {
-      _backgroundImage = fi.image;
+      _backgroundImage = fi1.image;
+      _pcImage = fi2.image;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_backgroundImage == null) {
+    if (_backgroundImage == null || _pcImage == null) {
       return const Center(child: CircularProgressIndicator());
     }
 
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: null,
-      body: Center(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final aspectRatio = 400 / 850;
-            double deviceWidth;
-            double deviceHeight;
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          RawImage(
+            image: _pcImage!,
+            fit: BoxFit.cover,
+          ),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.black.withOpacity(0.7),
+          ),
+          Center(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final aspectRatio = 400 / 850;
+                double deviceWidth;
+                double deviceHeight;
 
-            if (constraints.maxWidth / constraints.maxHeight > aspectRatio) {
-              deviceHeight = constraints.maxHeight * 0.9;
-              deviceWidth = deviceHeight * aspectRatio;
-            } else {
-              deviceWidth = constraints.maxWidth * 0.9;
-              deviceHeight = deviceWidth / aspectRatio;
-            }
+                if (constraints.maxWidth / constraints.maxHeight > aspectRatio) {
+                  deviceHeight = constraints.maxHeight * 0.9;
+                  deviceWidth = deviceHeight * aspectRatio;
+                } else {
+                  deviceWidth = constraints.maxWidth * 0.9;
+                  deviceHeight = deviceWidth / aspectRatio;
+                }
 
-            return CustomPaint(
-              size: Size(deviceWidth, deviceHeight),
-              painter: DeviceFramePainter(_backgroundImage!),
-            );
-          },
-        ),
+                return CustomPaint(
+                  size: Size(deviceWidth, deviceHeight),
+                  painter: DeviceFramePainter(_backgroundImage!),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 }
-
