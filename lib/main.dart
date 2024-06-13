@@ -169,7 +169,7 @@ class DeviceFramePainter extends CustomPainter {
 
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width + 2, size.height / 2 - 130, 4.5, 70),
+        Rect.fromLTWH(size.width + 3, size.height / 2 - 130, 4.5, 70),
         const Radius.circular(5),
       ),
       powerButtonPaint,
@@ -177,7 +177,7 @@ class DeviceFramePainter extends CustomPainter {
 
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width + 2, size.height / 2 - 300, 4.5, 125),
+        Rect.fromLTWH(size.width + 3, size.height / 2 - 300, 4.5, 125),
         const Radius.circular(5),
       ),
       powerButtonPaint,
