@@ -5,7 +5,6 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart' show rootBundle;
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -91,6 +90,7 @@ class _DesktopScreenState extends State<DesktopScreen> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: null,
       body: Center(
         child: LayoutBuilder(
@@ -126,55 +126,59 @@ class DeviceFramePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 5;
-
-    final bluePaint = Paint()
-      ..color = Colors.blue
+      ..color = Colors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10;
 
-    // Device outer border
+    final bluePaint = Paint()
+      ..color = const Color(0xff111724)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 20; 
+
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromLTWH(0, 0, size.width, size.height),
-        Radius.circular(20),
+        const Radius.circular(20),
       ),
       paint,
     );
 
-    // Blue inner border
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(5, 5, size.width - 10, size.height - 10),
-        Radius.circular(15),
+        Rect.fromLTWH(10, 10, size.width - 20, size.height - 20), 
+        const Radius.circular(15),
       ),
       bluePaint,
     );
 
-    // Draw background image
-    final imageRect = Rect.fromLTWH(5, 5, size.width - 10, size.height - 10);
-    canvas.drawImageRect(backgroundImage, Rect.fromLTWH(0, 0, backgroundImage.width.toDouble(), backgroundImage.height.toDouble()), imageRect, paint);
+    final imageRect = Rect.fromLTWH(10, 10, size.width - 20, size.height - 20);
+    final clipRect = RRect.fromRectAndRadius(imageRect, const Radius.circular(15));
+    canvas.save();
+    canvas.clipRRect(clipRect);
+    canvas.drawImageRect(
+      backgroundImage,
+      Rect.fromLTWH(0, 0, backgroundImage.width.toDouble(), backgroundImage.height.toDouble()),
+      imageRect,
+      paint,
+    );
+    canvas.restore();
 
-    // Power button
     final powerButtonPaint = Paint()
-      ..color = Colors.black
+      ..color = const Color(0xff111724)
       ..style = PaintingStyle.fill;
 
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width, size.height / 2 - 130, 4.5, 70),
-        Radius.circular(5),
+        Rect.fromLTWH(size.width + 2, size.height / 2 - 130, 4.5, 70),
+        const Radius.circular(5),
       ),
       powerButtonPaint,
     );
 
-    // Volume button
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width, size.height / 2 - 320, 4.5, 125),
-        Radius.circular(5),
+        Rect.fromLTWH(size.width + 2, size.height / 2 - 300, 4.5, 125),
+        const Radius.circular(5),
       ),
       powerButtonPaint,
     );
