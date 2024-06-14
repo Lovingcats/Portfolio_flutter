@@ -69,7 +69,6 @@ class DeviceFramePainter extends CustomPainter {
       powerButtonPaint,
     );
 
-    // Status bar background
     final statusBarPaint = Paint()
       ..color = Colors.transparent
       ..style = PaintingStyle.fill;
@@ -79,12 +78,11 @@ class DeviceFramePainter extends CustomPainter {
       statusBarPaint,
     );
 
-    // Drawing status bar elements
     final textPainter = TextPainter(
       textDirection: TextDirection.ltr,
     );
 
-    // Time
+    // 시간
     textPainter.text = TextSpan(
       text: "12:00",
       style: TextStyle(
@@ -94,9 +92,13 @@ class DeviceFramePainter extends CustomPainter {
       ),
     );
     textPainter.layout();
-    textPainter.paint(canvas, Offset(20, 15));
+    textPainter.paint(canvas, Offset(20, 15.8));
 
-    // Battery
+    // 배터리
+    canvas.save();
+    canvas.translate(size.width - 25, 20); // 배터리 위치 조정
+    canvas.rotate(-3.14 / 2); // 배터리를 세로로 회전
+
     final batteryPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
@@ -108,35 +110,32 @@ class DeviceFramePainter extends CustomPainter {
 
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width - 40, 15, 24, 12),
+        Rect.fromLTWH(-15, -20, 19, 12), // 가로형 배터리
         const Radius.circular(3),
       ),
       batteryPaint,
     );
 
     canvas.drawRect(
-      Rect.fromLTWH(size.width - 18, 18, 2, 6),
+      Rect.fromLTWH(-15, -20, 14, 12), // 가로형 배터리 내부
       batteryLevelPaint,
     );
 
-    canvas.drawRect(
-      Rect.fromLTWH(size.width - 38, 17, 20, 10),
-      batteryLevelPaint,
-    );
+    canvas.restore();
 
-    // Network signal
+    // 네트워크 모양
     final signalPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
 
     for (int i = 0; i < 4; i++) {
       canvas.drawRect(
-        Rect.fromLTWH(size.width - 80 + i * 6, 30 - i * 5, 4, i * 5),
+        Rect.fromLTWH(size.width - 80 + i * 6, 33.5 - i * 5, 4, i * 5),
         signalPaint,
       );
     }
 
-    // Camera
+    //카메라
     final cameraPaint = Paint()
       ..color = Colors.black
       ..style = PaintingStyle.fill;
