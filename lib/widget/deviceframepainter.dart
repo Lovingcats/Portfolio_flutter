@@ -104,11 +104,10 @@ class DeviceFramePainter extends CustomPainter {
       style: TextStyle(
         color: Colors.white,
         fontSize: 16,
-        fontWeight: FontWeight.bold,
       ),
     );
     batteryPercentPainter.layout();
-    batteryPercentPainter.paint(canvas, Offset(300, 15.8));
+    batteryPercentPainter.paint(canvas, Offset(290, 15.8));
 
 
     // 배터리
