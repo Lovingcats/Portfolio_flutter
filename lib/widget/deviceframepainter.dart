@@ -78,12 +78,12 @@ class DeviceFramePainter extends CustomPainter {
       statusBarPaint,
     );
 
-    final textPainter = TextPainter(
+    final timePainter = TextPainter(
       textDirection: TextDirection.ltr,
     );
 
     // 시간
-    textPainter.text = TextSpan(
+    timePainter.text = TextSpan(
       text: "12:00",
       style: TextStyle(
         color: Colors.white,
@@ -91,13 +91,30 @@ class DeviceFramePainter extends CustomPainter {
         fontWeight: FontWeight.bold,
       ),
     );
-    textPainter.layout();
-    textPainter.paint(canvas, Offset(20, 15.8));
+    timePainter.layout();
+    timePainter.paint(canvas, Offset(20, 15.8));
+
+    final batteryPercentPainter = TextPainter(
+      textDirection: TextDirection.ltr,
+    );
+
+    // 배터리 퍼센트
+    batteryPercentPainter.text = TextSpan(
+      text: "76%",
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+    batteryPercentPainter.layout();
+    batteryPercentPainter.paint(canvas, Offset(300, 15.8));
+
 
     // 배터리
     canvas.save();
-    canvas.translate(size.width - 25, 20); // 배터리 위치 조정
-    canvas.rotate(-3.14 / 2); // 배터리를 세로로 회전
+    canvas.translate(size.width - 25, 20); 
+    canvas.rotate(-3.14 / 2); 
 
     final batteryPaint = Paint()
       ..color = Colors.white
@@ -110,14 +127,14 @@ class DeviceFramePainter extends CustomPainter {
 
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(-15, -20, 19, 12), // 가로형 배터리
+        Rect.fromLTWH(-15, -20, 17, 10), // 가로형 배터리
         const Radius.circular(3),
       ),
       batteryPaint,
     );
 
     canvas.drawRect(
-      Rect.fromLTWH(-15, -20, 14, 12), // 가로형 배터리 내부
+      Rect.fromLTWH(-15, -20, 12, 10), // 가로형 배터리 내부
       batteryLevelPaint,
     );
 
@@ -130,7 +147,7 @@ class DeviceFramePainter extends CustomPainter {
 
     for (int i = 0; i < 4; i++) {
       canvas.drawRect(
-        Rect.fromLTWH(size.width - 80 + i * 6, 33.5 - i * 5, 4, i * 5),
+        Rect.fromLTWH(size.width - 100 + i * 6, 33.5 - i * 5, 4, i * 5),
         signalPaint,
       );
     }
