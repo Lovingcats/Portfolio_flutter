@@ -107,8 +107,7 @@ class DeviceFramePainter extends CustomPainter {
       ),
     );
     batteryPercentPainter.layout();
-    batteryPercentPainter.paint(canvas, Offset(290, 15.8));
-
+    batteryPercentPainter.paint(canvas, Offset(297.5, 16.4));
 
     // 배터리
     canvas.save();
@@ -146,7 +145,7 @@ class DeviceFramePainter extends CustomPainter {
 
     for (int i = 0; i < 4; i++) {
       canvas.drawRect(
-        Rect.fromLTWH(size.width - 100 + i * 6, 33.5 - i * 5, 4, i * 5),
+        Rect.fromLTWH(size.width - 96 + i * 6, 33.5 - i * 5, 4, i * 5),
         signalPaint,
       );
     }
