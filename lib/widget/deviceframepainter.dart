@@ -126,14 +126,14 @@ class DeviceFramePainter extends CustomPainter {
 
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(-12, -20, 13, 8), // 가로형 배터리
+        Rect.fromLTWH(-12, -10, 13, 8), // 가로형 배터리
         const Radius.circular(1.9),
       ),
       batteryPaint,
     );
 
     canvas.drawRect(
-      Rect.fromLTWH(-12, -20, 8, 8), // 가로형 배터리 내부
+      Rect.fromLTWH(-12, -10, 8, 8), // 가로형 배터리 내부
       batteryLevelPaint,
     );
 
