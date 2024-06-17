@@ -62,6 +62,7 @@ class DesktopScreen extends StatefulWidget {
   const DesktopScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _DesktopScreenState createState() => _DesktopScreenState();
 }
 
@@ -82,11 +83,11 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
 
     _fadeAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 0.0, end: 0.2).chain(CurveTween(curve: Interval(0.0, 0.2, curve: Curves.easeIn))),
+        tween: Tween<double>(begin: 0.0, end: 0.2).chain(CurveTween(curve: const Interval(0.0, 0.2, curve: Curves.easeIn))),
         weight: 20,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 0.2, end: 1.0).chain(CurveTween(curve: Interval(0.3, 1.0, curve: Curves.easeOut))),
+        tween: Tween<double>(begin: 0.2, end: 1.0).chain(CurveTween(curve: const Interval(0.3, 1.0, curve: Curves.easeOut))),
         weight: 80,
       ),
     ]).animate(_animationController);
