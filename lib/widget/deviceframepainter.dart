@@ -108,7 +108,7 @@ class DeviceFramePainter extends CustomPainter {
     );
     batteryPercentPainter.layout();
     // 위치를 화면 크기에 맞게 비례하여 설정
-    batteryPercentPainter.paint(canvas, Offset(size.width - batteryPercentPainter.width - 25, 16.4));
+    batteryPercentPainter.paint(canvas, Offset(size.width - batteryPercentPainter.width - 38, 16.4));
 
     // 배터리
     canvas.save();
