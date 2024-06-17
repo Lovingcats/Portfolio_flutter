@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutterportfolio/widget/deviceFramePainter.dart';
+import 'package:flutterportfolio/widget/deviceframepainter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart' show rootBundle;
@@ -65,14 +65,39 @@ class DesktopScreen extends StatefulWidget {
   _DesktopScreenState createState() => _DesktopScreenState();
 }
 
-class _DesktopScreenState extends State<DesktopScreen> {
+class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProviderStateMixin {
   ui.Image? _backgroundImage;
   ui.Image? _pcImage;
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
     _loadImage();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+
+    _fadeAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 0.0, end: 0.2).chain(CurveTween(curve: Interval(0.0, 0.2, curve: Curves.easeIn))),
+        weight: 20,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 0.2, end: 1.0).chain(CurveTween(curve: Interval(0.3, 1.0, curve: Curves.easeOut))),
+        weight: 80,
+      ),
+    ]).animate(_animationController);
+
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadImage() async {
@@ -126,9 +151,12 @@ class _DesktopScreenState extends State<DesktopScreen> {
                   deviceHeight = deviceWidth / aspectRatio;
                 }
 
-                return CustomPaint(
-                  size: Size(deviceWidth, deviceHeight),
-                  painter: DeviceFramePainter(_backgroundImage!),
+                return FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: CustomPaint(
+                    size: Size(deviceWidth, deviceHeight),
+                    painter: DeviceFramePainter(_backgroundImage!),
+                  ),
                 );
               },
             ),
