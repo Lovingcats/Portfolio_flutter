@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Choyongje portfolio website!',
+      title: 'Choyongje portfolio website~!',
       debugShowCheckedModeBanner: false,
       home: ScreenTypeLayout.builder(
         breakpoints: const ScreenBreakpoints(desktop: 1024, tablet: 768, watch: 250),
