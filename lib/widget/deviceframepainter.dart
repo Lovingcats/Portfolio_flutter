@@ -1,32 +1,13 @@
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 import 'dart:ui' as ui;
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:vector_math/vector_math_64.dart' as vmath;
+import 'package:flutter/material.dart';
 
 class DeviceFramePainter extends CustomPainter {
   final ui.Image backgroundImage;
-  final bool showBack;
-  final double thickness;
-  final vmath.Vector3 rotation;
 
-  DeviceFramePainter(this.backgroundImage, {this.showBack = false, this.thickness = 20, required this.rotation});
+  DeviceFramePainter(this.backgroundImage);
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (rotation.y.abs() > 1.4 && rotation.y.abs() < 1.7) {
-      _paintSide(canvas, size, rotation.y > 0 ? 'left' : 'right');
-    } else if (rotation.x.abs() > 1.4 && rotation.x.abs() < 1.7) {
-      _paintTopBottom(canvas, size, rotation.x > 0 ? 'top' : 'bottom');
-    } else if (!showBack) {
-      _paintFront(canvas, size);
-    } else {
-      _paintBack(canvas, size);
-    }
-  }
-
-  void _paintFront(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = Color.fromARGB(255, 183, 228, 252)
       ..style = PaintingStyle.stroke
@@ -176,44 +157,6 @@ class DeviceFramePainter extends CustomPainter {
       Offset(size.width / 2, 25),
       7.5,
       cameraPaint,
-    );
-  }
-
-  void _paintBack(Canvas canvas, Size size) {
-    final backPaint = Paint()
-      ..color = Color.fromARGB(255, 183, 228, 252)
-      ..style = PaintingStyle.fill;
-
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, 0, size.width, size.height),
-        const Radius.circular(20),
-      ),
-      backPaint,
-    );
-  }
-
-  void _paintSide(Canvas canvas, Size size, String side) {
-    final sidePaint = Paint()
-      ..color = const Color(0xff111724)
-      ..style = PaintingStyle.fill;
-
-    // 옆면 (왼쪽 또는 오른쪽)
-    canvas.drawRect(
-      Rect.fromLTWH(side == 'left' ? -thickness / 2 : size.width - thickness / 2, 0, thickness, size.height),
-      sidePaint,
-    );
-  }
-
-  void _paintTopBottom(Canvas canvas, Size size, String side) {
-    final sidePaint = Paint()
-      ..color = const Color(0xff111724)
-      ..style = PaintingStyle.fill;
-
-    // 위쪽 또는 아래쪽 면
-    canvas.drawRect(
-      Rect.fromLTWH(0, side == 'top' ? -thickness / 2 : size.height - thickness / 2, size.width, thickness),
-      sidePaint,
     );
   }
 
