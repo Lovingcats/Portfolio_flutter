@@ -5,6 +5,7 @@ import 'package:flutterportfolio/widget/deviceframepainter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:vector_math/vector_math_64.dart' as vmath;
 
 void main() {
   runApp(const MyApp());
@@ -58,11 +59,11 @@ class TabletScreen extends StatelessWidget {
   }
 }
 
+
 class DesktopScreen extends StatefulWidget {
   const DesktopScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _DesktopScreenState createState() => _DesktopScreenState();
 }
 
@@ -71,6 +72,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   ui.Image? _pcImage;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+  vmath.Vector3 _rotation = vmath.Vector3.zero();
+  bool _isFront = true;
 
   @override
   void initState() {
@@ -80,7 +83,6 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
       vsync: this,
       duration: const Duration(seconds: 2),
     );
-
     _fadeAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween<double>(begin: 0.0, end: 0.2).chain(CurveTween(curve: const Interval(0.0, 0.2, curve: Curves.easeIn))),
@@ -118,51 +120,81 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
     });
   }
 
+  void _onPanUpdate(DragUpdateDetails details) {
+    setState(() {
+      _rotation += vmath.Vector3(details.delta.dy * 0.01, details.delta.dx * 0.01, 0);
+      _isFront = _rotation.y.abs() < 1.57 && _rotation.x.abs() < 1.57;
+    });
+  }
+
+  void _onPanEnd(DragEndDetails details) {
+    setState(() {
+      _rotation = vmath.Vector3.zero();
+      _isFront = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_backgroundImage == null || _pcImage == null) {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          RawImage(
-            image: _pcImage!,
-            fit: BoxFit.cover,
-          ),
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.black.withOpacity(0.7),
-          ),
-          Center(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final aspectRatio = 400 / 850;
-                double deviceWidth;
-                double deviceHeight;
-
-                if (constraints.maxWidth / constraints.maxHeight > aspectRatio) {
-                  deviceHeight = constraints.maxHeight * 0.9;
-                  deviceWidth = deviceHeight * aspectRatio;
-                } else {
-                  deviceWidth = constraints.maxWidth * 0.9;
-                  deviceHeight = deviceWidth / aspectRatio;
-                }
-
-                return FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: CustomPaint(
-                    size: Size(deviceWidth, deviceHeight),
-                    painter: DeviceFramePainter(_backgroundImage!),
-                  ),
-                );
-              },
+    return GestureDetector(
+      onPanUpdate: _onPanUpdate,
+      onPanEnd: _onPanEnd,
+      child: Scaffold(
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            RawImage(
+              image: _pcImage!,
+              fit: BoxFit.cover,
             ),
-          ),
-        ],
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.black.withOpacity(0.7),
+            ),
+            Center(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final aspectRatio = 400 / 850;
+                  double deviceWidth;
+                  double deviceHeight;
+
+                  if (constraints.maxWidth / constraints.maxHeight > aspectRatio) {
+                    deviceHeight = constraints.maxHeight * 0.9;
+                    deviceWidth = deviceHeight * aspectRatio;
+                  } else {
+                    deviceWidth = constraints.maxWidth * 0.9;
+                    deviceHeight = deviceWidth / aspectRatio;
+                  }
+
+                  return FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: Transform(
+                      transform: Matrix4.identity()
+                        ..rotateX(_rotation.x)
+                        ..rotateY(_rotation.y)
+                        ..rotateZ(_rotation.z),
+                      alignment: FractionalOffset.center,
+                      child: CustomPaint(
+                        size: Size(deviceWidth, deviceHeight),
+                        painter: DeviceFramePainter(
+                          _backgroundImage!,
+                          showBack: !_isFront,
+                          thickness: 20,
+                          rotation: _rotation,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
