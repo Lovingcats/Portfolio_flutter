@@ -19,10 +19,10 @@ class DeviceFramePainter extends CustomPainter {
       _paintSide(canvas, size, rotation.y > 0 ? 'left' : 'right');
     } else if (rotation.x.abs() > 1.4 && rotation.x.abs() < 1.7) {
       _paintTopBottom(canvas, size, rotation.x > 0 ? 'top' : 'bottom');
-    } else if (showBack) {
-      _paintBack(canvas, size);
-    } else {
+    } else if (!showBack) {
       _paintFront(canvas, size);
+    } else {
+      _paintBack(canvas, size);
     }
   }
 
@@ -191,8 +191,6 @@ class DeviceFramePainter extends CustomPainter {
       ),
       backPaint,
     );
-
-    
   }
 
   void _paintSide(Canvas canvas, Size size, String side) {
