@@ -73,6 +73,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   vmath.Vector3 _rotation = vmath.Vector3.zero();
+  bool _isFront = true;
 
   @override
   void initState() {
@@ -122,12 +123,14 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   void _onPanUpdate(DragUpdateDetails details) {
     setState(() {
       _rotation += vmath.Vector3(details.delta.dy * 0.01, details.delta.dx * 0.01, 0);
+      _isFront = _rotation.y.abs() < 1.57;
     });
   }
 
   void _onPanEnd(DragEndDetails details) {
     setState(() {
       _rotation = vmath.Vector3.zero();
+      _isFront = true;
     });
   }
 
@@ -178,7 +181,12 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       alignment: FractionalOffset.center,
                       child: CustomPaint(
                         size: Size(deviceWidth, deviceHeight),
-                        painter: DeviceFramePainter(_backgroundImage!),
+                        painter: DeviceFramePainter(
+                          _backgroundImage!,
+                          showBack: !_isFront,
+                          thickness: 20,
+                          rotation: _rotation,
+                        ),
                       ),
                     ),
                   );
