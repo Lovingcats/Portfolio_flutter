@@ -6,11 +6,20 @@ import 'package:flutter/services.dart' show rootBundle;
 
 class DeviceFramePainter extends CustomPainter {
   final ui.Image backgroundImage;
+  final bool showBack;
 
-  DeviceFramePainter(this.backgroundImage);
+  DeviceFramePainter(this.backgroundImage, {this.showBack = false});
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (showBack) {
+      _paintBack(canvas, size);
+    } else {
+      _paintFront(canvas, size);
+    }
+  }
+
+  void _paintFront(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = Color.fromARGB(255, 183, 228, 252)
       ..style = PaintingStyle.stroke
@@ -83,7 +92,7 @@ class DeviceFramePainter extends CustomPainter {
     );
 
     // 시간
-    timePainter.text = TextSpan(
+    timePainter.text = const TextSpan(
       text: "12:00",
       style: TextStyle(
         color: Colors.white,
@@ -92,14 +101,14 @@ class DeviceFramePainter extends CustomPainter {
       ),
     );
     timePainter.layout();
-    timePainter.paint(canvas, Offset(20, 15.8));
+    timePainter.paint(canvas, const Offset(20, 15.8));
 
     final batteryPercentPainter = TextPainter(
       textDirection: TextDirection.ltr,
     );
 
     // 배터리 퍼센트
-    batteryPercentPainter.text = TextSpan(
+    batteryPercentPainter.text = const TextSpan(
       text: "76%",
       style: TextStyle(
         color: Colors.white,
@@ -126,14 +135,14 @@ class DeviceFramePainter extends CustomPainter {
 
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(-12, -10, 13, 8), // 가로형 배터리
+        const Rect.fromLTWH(-12, -10, 13, 8), // 가로형 배터리
         const Radius.circular(1.9),
       ),
       batteryPaint,
     );
 
     canvas.drawRect(
-      Rect.fromLTWH(-12, -10, 8, 8), // 가로형 배터리 내부
+      const Rect.fromLTWH(-12, -10, 8, 8), // 가로형 배터리 내부
       batteryLevelPaint,
     );
 
@@ -161,6 +170,49 @@ class DeviceFramePainter extends CustomPainter {
       7.5,
       cameraPaint,
     );
+  }
+
+  void _paintBack(Canvas canvas, Size size) {
+    // 뒷면을 그리는 코드 추가
+    final backPaint = Paint()
+      ..color = const Color(0xff111724)
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(0, 0, size.width, size.height),
+        const Radius.circular(20),
+      ),
+      backPaint,
+    );
+
+    // 로고나 기타 디자인 요소를 추가할 수 있습니다.
+    final logoPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    canvas.drawCircle(
+      Offset(size.width / 2, size.height / 2),
+      20,
+      logoPaint,
+    );
+
+    final logoTextPainter = TextPainter(
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.center,
+    );
+
+    logoTextPainter.text = const TextSpan(
+      text: "LOGO",
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+
+    logoTextPainter.layout();
+    logoTextPainter.paint(canvas, Offset((size.width - logoTextPainter.width) / 2, (size.height - logoTextPainter.height) / 2));
   }
 
   @override
