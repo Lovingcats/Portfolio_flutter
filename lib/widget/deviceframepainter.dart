@@ -5,7 +5,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:vector_math/vector_math_64.dart' as vmath;
 
-
 class DeviceFramePainter extends CustomPainter {
   final ui.Image backgroundImage;
   final bool showBack;
@@ -129,8 +128,8 @@ class DeviceFramePainter extends CustomPainter {
 
     // 배터리
     canvas.save();
-    canvas.translate(size.width - 25, 20); 
-    canvas.rotate(-3.14 / 2); 
+    canvas.translate(size.width - 25, 20);
+    canvas.rotate(-3.14 / 2);
 
     final batteryPaint = Paint()
       ..color = Colors.white
@@ -182,7 +181,7 @@ class DeviceFramePainter extends CustomPainter {
 
   void _paintBack(Canvas canvas, Size size) {
     final backPaint = Paint()
-      ..color = const Color(0xff111724)
+      ..color = Color.fromARGB(255, 183, 228, 252)
       ..style = PaintingStyle.fill;
 
     canvas.drawRRect(
@@ -193,32 +192,42 @@ class DeviceFramePainter extends CustomPainter {
       backPaint,
     );
 
-    final logoPaint = Paint()
+    // S21+ 카메라 UI
+    final cameraPaint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.fill;
+
+    // 큰 카메라 렌즈
+    canvas.drawCircle(
+      Offset(size.width - 40, 80),
+      10,
+      cameraPaint,
+    );
+
+    // 중간 카메라 렌즈
+    canvas.drawCircle(
+      Offset(size.width - 40, 120),
+      8,
+      cameraPaint,
+    );
+
+    // 작은 카메라 렌즈
+    canvas.drawCircle(
+      Offset(size.width - 40, 150),
+      6,
+      cameraPaint,
+    );
+
+    // 플래시
+    final flashPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
 
     canvas.drawCircle(
-      Offset(size.width / 2, size.height / 2),
-      20,
-      logoPaint,
+      Offset(size.width - 40, 180),
+      4,
+      flashPaint,
     );
-
-    final logoTextPainter = TextPainter(
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.center,
-    );
-
-    logoTextPainter.text = const TextSpan(
-      text: "LOGO",
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-
-    logoTextPainter.layout();
-    logoTextPainter.paint(canvas, Offset((size.width - logoTextPainter.width) / 2, (size.height - logoTextPainter.height) / 2));
   }
 
   void _paintSide(Canvas canvas, Size size, String side) {
