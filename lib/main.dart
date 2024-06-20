@@ -123,7 +123,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   void _onPanUpdate(DragUpdateDetails details) {
     setState(() {
       _rotation += vmath.Vector3(details.delta.dy * 0.01, details.delta.dx * 0.01, 0);
-      _isFront = _rotation.y.abs() < 1.57;
+      _isFront = _rotation.y.abs() < 1.57 && _rotation.x.abs() < 1.57;
     });
   }
 
