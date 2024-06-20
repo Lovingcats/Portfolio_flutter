@@ -192,42 +192,7 @@ class DeviceFramePainter extends CustomPainter {
       backPaint,
     );
 
-    // S21+ 카메라 UI
-    final cameraPaint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.fill;
-
-    // 큰 카메라 렌즈
-    canvas.drawCircle(
-      Offset(size.width - 40, 80),
-      10,
-      cameraPaint,
-    );
-
-    // 중간 카메라 렌즈
-    canvas.drawCircle(
-      Offset(size.width - 40, 120),
-      8,
-      cameraPaint,
-    );
-
-    // 작은 카메라 렌즈
-    canvas.drawCircle(
-      Offset(size.width - 40, 150),
-      6,
-      cameraPaint,
-    );
-
-    // 플래시
-    final flashPaint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill;
-
-    canvas.drawCircle(
-      Offset(size.width - 40, 180),
-      4,
-      flashPaint,
-    );
+    
   }
 
   void _paintSide(Canvas canvas, Size size, String side) {
