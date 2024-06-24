@@ -160,9 +160,9 @@ class DeviceFramePainter extends CustomPainter {
     );
 
     // 하단 네비게이션 바 영역
-    final navBarHeight = 60.0;
+    const navBarHeight = 60.0;
     final navBarPaint = Paint()
-      ..color = Color(0xff111724)
+      ..color = Colors.transparent
       ..style = PaintingStyle.fill;
 
     canvas.drawRect(
