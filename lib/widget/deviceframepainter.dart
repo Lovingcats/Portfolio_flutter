@@ -158,6 +158,46 @@ class DeviceFramePainter extends CustomPainter {
       7.5,
       cameraPaint,
     );
+
+    // 하단 네비게이션 바 영역
+    final navBarHeight = 60.0;
+    final navBarPaint = Paint()
+      ..color = Color(0xff111724)
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRect(
+      Rect.fromLTWH(0, size.height - navBarHeight, size.width, navBarHeight),
+      navBarPaint,
+    );
+
+    final iconPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+
+    // 홈 버튼
+    canvas.drawCircle(
+      Offset(size.width / 2, size.height - navBarHeight / 2),
+      12,
+      iconPaint,
+    );
+
+    // 뒤로 가기 버튼
+    final backPath = Path()
+      ..moveTo(size.width / 2 - 60, size.height - navBarHeight / 2)
+      ..lineTo(size.width / 2 - 45, size.height - navBarHeight / 2 - 10)
+      ..lineTo(size.width / 2 - 45, size.height - navBarHeight / 2 + 10)
+      ..close();
+    canvas.drawPath(backPath, iconPaint);
+
+    // 최근 앱 버튼
+    final recentPath = Path()
+      ..moveTo(size.width / 2 + 45, size.height - navBarHeight / 2 - 10)
+      ..lineTo(size.width / 2 + 60, size.height - navBarHeight / 2 - 10)
+      ..lineTo(size.width / 2 + 60, size.height - navBarHeight / 2 + 10)
+      ..lineTo(size.width / 2 + 45, size.height - navBarHeight / 2 + 10)
+      ..close();
+    canvas.drawPath(recentPath, iconPaint);
   }
 
   @override
