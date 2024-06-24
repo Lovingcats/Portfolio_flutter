@@ -1,10 +1,14 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class DeviceFramePainter extends CustomPainter {
   final ui.Image backgroundImage;
+  final ui.Image homeButtonImage;
+  final ui.Image backButtonImage;
+  final ui.Image recentButtonImage;
 
-  DeviceFramePainter(this.backgroundImage);
+  DeviceFramePainter(this.backgroundImage, this.homeButtonImage, this.backButtonImage, this.recentButtonImage);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -170,34 +174,29 @@ class DeviceFramePainter extends CustomPainter {
       navBarPaint,
     );
 
-    final iconPaint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
-
     // 홈 버튼
-    canvas.drawCircle(
-      Offset(size.width / 2, size.height - navBarHeight / 2),
-      12,
-      iconPaint,
+    canvas.drawImageRect(
+      homeButtonImage,
+      Rect.fromLTWH(0, 0, homeButtonImage.width.toDouble(), homeButtonImage.height.toDouble()),
+      Rect.fromLTWH(size.width / 2 - 12, size.height - navBarHeight / 2 - 12, 24, 24),
+      Paint(),
     );
 
     // 뒤로 가기 버튼
-    final backPath = Path()
-      ..moveTo(size.width / 2 - 60, size.height - navBarHeight / 2)
-      ..lineTo(size.width / 2 - 45, size.height - navBarHeight / 2 - 10)
-      ..lineTo(size.width / 2 - 45, size.height - navBarHeight / 2 + 10)
-      ..close();
-    canvas.drawPath(backPath, iconPaint);
+    canvas.drawImageRect(
+      backButtonImage,
+      Rect.fromLTWH(0, 0, backButtonImage.width.toDouble(), backButtonImage.height.toDouble()),
+      Rect.fromLTWH(size.width / 2 - 60, size.height - navBarHeight / 2 - 12, 24, 24),
+      Paint(),
+    );
 
     // 최근 앱 버튼
-    final recentPath = Path()
-      ..moveTo(size.width / 2 + 45, size.height - navBarHeight / 2 - 10)
-      ..lineTo(size.width / 2 + 60, size.height - navBarHeight / 2 - 10)
-      ..lineTo(size.width / 2 + 60, size.height - navBarHeight / 2 + 10)
-      ..lineTo(size.width / 2 + 45, size.height - navBarHeight / 2 + 10)
-      ..close();
-    canvas.drawPath(recentPath, iconPaint);
+    canvas.drawImageRect(
+      recentButtonImage,
+      Rect.fromLTWH(0, 0, recentButtonImage.width.toDouble(), recentButtonImage.height.toDouble()),
+      Rect.fromLTWH(size.width / 2 + 36, size.height - navBarHeight / 2 - 12, 24, 24),
+      Paint(),
+    );
   }
 
   @override
