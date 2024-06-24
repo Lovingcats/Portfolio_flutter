@@ -1,10 +1,14 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class DeviceFramePainter extends CustomPainter {
   final ui.Image backgroundImage;
+  final ui.Image homeButtonImage;
+  final ui.Image backButtonImage;
+  final ui.Image recentButtonImage;
 
-  DeviceFramePainter(this.backgroundImage);
+  DeviceFramePainter(this.backgroundImage, this.homeButtonImage, this.backButtonImage, this.recentButtonImage);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -157,6 +161,41 @@ class DeviceFramePainter extends CustomPainter {
       Offset(size.width / 2, 25),
       7.5,
       cameraPaint,
+    );
+
+    // 하단 네비게이션 바 영역
+    const navBarHeight = 60.0;
+    final navBarPaint = Paint()
+      ..color = Colors.transparent
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRect(
+      Rect.fromLTWH(0, size.height - navBarHeight, size.width, navBarHeight),
+      navBarPaint,
+    );
+
+    // 홈 버튼
+    canvas.drawImageRect(
+      homeButtonImage,
+      Rect.fromLTWH(0, 0, homeButtonImage.width.toDouble(), homeButtonImage.height.toDouble()),
+      Rect.fromLTWH(size.width / 2 - 12, size.height - navBarHeight / 2 - 12, 24, 24),
+      Paint(),
+    );
+
+    // 뒤로 가기 버튼
+    canvas.drawImageRect(
+      backButtonImage,
+      Rect.fromLTWH(0, 0, backButtonImage.width.toDouble(), backButtonImage.height.toDouble()),
+      Rect.fromLTWH(size.width / 2 - 116, size.height - navBarHeight / 2 - 12, 24, 24),
+      Paint(),
+    );
+
+    // 최근 앱 버튼
+    canvas.drawImageRect(
+      recentButtonImage,
+      Rect.fromLTWH(0, 0, recentButtonImage.width.toDouble(), recentButtonImage.height.toDouble()),
+      Rect.fromLTWH(size.width / 2 + 92, size.height - navBarHeight / 2 - 12, 24, 24),
+      Paint(),
     );
   }
 

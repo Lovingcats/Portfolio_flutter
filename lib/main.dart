@@ -59,7 +59,6 @@ class TabletScreen extends StatelessWidget {
   }
 }
 
-
 class DesktopScreen extends StatefulWidget {
   const DesktopScreen({super.key});
 
@@ -70,6 +69,9 @@ class DesktopScreen extends StatefulWidget {
 class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProviderStateMixin {
   ui.Image? _backgroundImage;
   ui.Image? _pcImage;
+  ui.Image? _homeButtonImage;
+  ui.Image? _backButtonImage;
+  ui.Image? _recentButtonImage;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
@@ -112,15 +114,33 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
     final ui.Codec codec2 = await ui.instantiateImageCodec(Uint8List.fromList(bytes2));
     final ui.FrameInfo fi2 = await codec2.getNextFrame();
 
+    final ByteData homeData = await rootBundle.load('img/home.png');
+    final List<int> homeBytes = homeData.buffer.asUint8List();
+    final ui.Codec homeCodec = await ui.instantiateImageCodec(Uint8List.fromList(homeBytes));
+    final ui.FrameInfo homeFi = await homeCodec.getNextFrame();
+
+    final ByteData backData = await rootBundle.load('img/back.png');
+    final List<int> backBytes = backData.buffer.asUint8List();
+    final ui.Codec backCodec = await ui.instantiateImageCodec(Uint8List.fromList(backBytes));
+    final ui.FrameInfo backFi = await backCodec.getNextFrame();
+
+    final ByteData recentData = await rootBundle.load('img/recent.png');
+    final List<int> recentBytes = recentData.buffer.asUint8List();
+    final ui.Codec recentCodec = await ui.instantiateImageCodec(Uint8List.fromList(recentBytes));
+    final ui.FrameInfo recentFi = await recentCodec.getNextFrame();
+
     setState(() {
       _backgroundImage = fi1.image;
       _pcImage = fi2.image;
+      _homeButtonImage = homeFi.image;
+      _backButtonImage = backFi.image;
+      _recentButtonImage = recentFi.image;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_backgroundImage == null || _pcImage == null) {
+    if (_backgroundImage == null || _pcImage == null || _homeButtonImage == null || _backButtonImage == null || _recentButtonImage == null) {
       return const Center(child: CircularProgressIndicator());
     }
 
@@ -156,7 +176,12 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   opacity: _fadeAnimation,
                   child: CustomPaint(
                     size: Size(deviceWidth, deviceHeight),
-                    painter: DeviceFramePainter(_backgroundImage!),
+                    painter: DeviceFramePainter(
+                      _backgroundImage!,
+                      _homeButtonImage!,
+                      _backButtonImage!,
+                      _recentButtonImage!,
+                    ),
                   ),
                 );
               },
