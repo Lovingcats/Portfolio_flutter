@@ -186,7 +186,7 @@ class DeviceFramePainter extends CustomPainter {
     canvas.drawImageRect(
       backButtonImage,
       Rect.fromLTWH(0, 0, backButtonImage.width.toDouble(), backButtonImage.height.toDouble()),
-      Rect.fromLTWH(size.width / 2 - 60, size.height - navBarHeight / 2 - 12, 24, 24),
+      Rect.fromLTWH(size.width / 2 - 116, size.height - navBarHeight / 2 - 12, 24, 24),
       Paint(),
     );
 
@@ -194,7 +194,7 @@ class DeviceFramePainter extends CustomPainter {
     canvas.drawImageRect(
       recentButtonImage,
       Rect.fromLTWH(0, 0, recentButtonImage.width.toDouble(), recentButtonImage.height.toDouble()),
-      Rect.fromLTWH(size.width / 2 + 36, size.height - navBarHeight / 2 - 12, 24, 24),
+      Rect.fromLTWH(size.width / 2 + 92, size.height - navBarHeight / 2 - 12, 24, 24),
       Paint(),
     );
   }
