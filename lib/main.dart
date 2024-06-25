@@ -112,17 +112,17 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
     final ui.Codec codec2 = await ui.instantiateImageCodec(Uint8List.fromList(bytes2));
     final ui.FrameInfo fi2 = await codec2.getNextFrame();
 
-    final ByteData homeData = await rootBundle.load('img/home.png');
+    final ByteData homeData = await rootBundle.load('assets/img/home.png');
     final List<int> homeBytes = homeData.buffer.asUint8List();
     final ui.Codec homeCodec = await ui.instantiateImageCodec(Uint8List.fromList(homeBytes));
     final ui.FrameInfo homeFi = await homeCodec.getNextFrame();
 
-    final ByteData backData = await rootBundle.load('img/back.png');
+    final ByteData backData = await rootBundle.load('assets/img/back.png');
     final List<int> backBytes = backData.buffer.asUint8List();
     final ui.Codec backCodec = await ui.instantiateImageCodec(Uint8List.fromList(backBytes));
     final ui.FrameInfo backFi = await backCodec.getNextFrame();
 
-    final ByteData recentData = await rootBundle.load('img/recent.png');
+    final ByteData recentData = await rootBundle.load('assets/img/recent.png');
     final List<int> recentBytes = recentData.buffer.asUint8List();
     final ui.Codec recentCodec = await ui.instantiateImageCodec(Uint8List.fromList(recentBytes));
     final ui.FrameInfo recentFi = await recentCodec.getNextFrame();
