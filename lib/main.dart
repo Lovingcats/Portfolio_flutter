@@ -215,7 +215,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                           width: 75 * scaleFactorWidth,
                           child: const Center(
                             child: Text(
-                              "back",
+                              "",
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
