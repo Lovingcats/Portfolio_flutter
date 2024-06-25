@@ -198,8 +198,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      left: 784 * scaleFactorWidth,
-                      top: 850 * scaleFactorHeight,
+                      left: 488 * scaleFactorWidth,
+                      top: 893 * scaleFactorHeight,
                     ),
                     child: Material(
                       color: Colors.transparent,
@@ -212,7 +212,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                             color: Colors.transparent,
                           ),
                           height: 50 * scaleFactorHeight,
-                          width: 120 * scaleFactorWidth,
+                          width: 75 * scaleFactorWidth,
                           child: const Center(
                             child: Text(
                               "back",
