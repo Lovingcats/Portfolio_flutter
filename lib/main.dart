@@ -1,11 +1,9 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutterportfolio/widget/deviceframepainter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:vector_math/vector_math_64.dart' as vmath;
 
 void main() {
   runApp(const MyApp());
@@ -146,11 +144,12 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
 
     return Scaffold(
       body: Stack(
-        fit: StackFit.expand,
         children: [
           RawImage(
             image: _pcImage!,
             fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
           ),
           Container(
             width: double.infinity,
@@ -171,6 +170,9 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   deviceWidth = constraints.maxWidth * 0.9;
                   deviceHeight = deviceWidth / aspectRatio;
                 }
+
+                print(deviceHeight);
+                print(deviceWidth);
 
                 return FadeTransition(
                   opacity: _fadeAnimation,
