@@ -225,8 +225,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      left: 900 * scaleFactorWidth,
-                      top: 850 * scaleFactorHeight,
+                      left: 563.5 * scaleFactorWidth,
+                      top: 893 * scaleFactorHeight,
                     ),
                     child: Material(
                       color: Colors.transparent,
@@ -239,7 +239,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                             color: Colors.transparent,
                           ),
                           height: 50 * scaleFactorHeight,
-                          width: 120 * scaleFactorWidth,
+                          width: 75 * scaleFactorWidth,
                           child: const Center(
                             child: Text(
                               "home",
@@ -252,8 +252,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      left: 1026 * scaleFactorWidth,
-                      top: 850 * scaleFactorHeight,
+                      left: 641 * scaleFactorWidth,
+                      top: 893 * scaleFactorHeight,
                     ),
                     child: Material(
                       color: Colors.transparent,
@@ -266,7 +266,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                             color: Colors.transparent,
                           ),
                           height: 50 * scaleFactorHeight,
-                          width: 120 * scaleFactorWidth,
+                          width: 75 * scaleFactorWidth,
                           child: const Center(
                             child: Text(
                               "recent",
