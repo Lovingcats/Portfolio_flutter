@@ -1,11 +1,9 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutterportfolio/widget/deviceframepainter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:vector_math/vector_math_64.dart' as vmath;
+import 'dart:typed_data';
 
 void main() {
   runApp(const MyApp());
@@ -146,11 +144,12 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
 
     return Scaffold(
       body: Stack(
-        fit: StackFit.expand,
         children: [
           RawImage(
             image: _pcImage!,
             fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
           ),
           Container(
             width: double.infinity,
@@ -172,6 +171,9 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   deviceHeight = deviceWidth / aspectRatio;
                 }
 
+                print(deviceHeight);
+                print(deviceWidth);
+
                 return FadeTransition(
                   opacity: _fadeAnimation,
                   child: CustomPaint(
@@ -186,6 +188,98 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 );
               },
             ),
+          ),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final scaleFactorWidth = constraints.maxWidth / 1200;
+              final scaleFactorHeight = constraints.maxHeight / 1000;
+
+              return Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 488 * scaleFactorWidth,
+                      top: 893 * scaleFactorHeight,
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
+                            color: Colors.transparent,
+                          ),
+                          height: 50 * scaleFactorHeight,
+                          width: 75 * scaleFactorWidth,
+                          child: const Center(
+                            child: Text(
+                              "",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 563.5 * scaleFactorWidth,
+                      top: 893 * scaleFactorHeight,
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
+                            color: Colors.transparent,
+                          ),
+                          height: 50 * scaleFactorHeight,
+                          width: 75 * scaleFactorWidth,
+                          child: const Center(
+                            child: Text(
+                              "",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 641 * scaleFactorWidth,
+                      top: 893 * scaleFactorHeight,
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(30 * scaleFactorWidth),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30 * scaleFactorWidth),
+                            color: Colors.transparent,
+                          ),
+                          height: 50 * scaleFactorHeight,
+                          width: 75 * scaleFactorWidth,
+                          child: const Center(
+                            child: Text(
+                              "",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),
