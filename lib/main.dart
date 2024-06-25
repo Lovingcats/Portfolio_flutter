@@ -205,7 +205,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   width: 120,
                   child: const Center(
                     child: Text(
-                      "hello",
+                      "back",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -229,7 +229,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   width: 120,
                   child: const Center(
                     child: Text(
-                      "hello1",
+                      "home",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -253,7 +253,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   width: 120,
                   child: const Center(
                     child: Text(
-                      "hello2",
+                      "recent",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
