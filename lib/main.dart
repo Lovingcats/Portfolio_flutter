@@ -189,8 +189,81 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(left: 784, top: 850),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(50),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.transparent,
+                  ),
+                  height: 50,
+                  width: 120,
+                  child: const Center(
+                    child: Text(
+                      "hello",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 900, top: 850),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(50),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.transparent,
+                  ),
+                  height: 50,
+                  width: 120,
+                  child: const Center(
+                    child: Text(
+                      "hello1",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 1026, top: 850),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(30),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.transparent,
+                  ),
+                  height: 50,
+                  width: 120,
+                  child: const Center(
+                    child: Text(
+                      "hello2",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 }
+
