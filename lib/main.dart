@@ -171,115 +171,116 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   deviceHeight = deviceWidth / aspectRatio;
                 }
 
-                print(deviceHeight);
-                print(deviceWidth);
+                final customPainterButtonWidth = deviceWidth * 0.075;
+                final customPainterbuttonHeight = deviceHeight * 0.0325;
 
-                return FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: CustomPaint(
-                    size: Size(deviceWidth, deviceHeight),
-                    painter: DeviceFramePainter(
-                      _backgroundImage!,
-                      _homeButtonImage!,
-                      _backButtonImage!,
-                      _recentButtonImage!,
+                final inkwellButtonWidth = deviceWidth * 0.28;
+                final inkwellbuttonHeight = deviceHeight * 0.05;
+
+                final buttonSpacing = deviceWidth * 0.3;
+
+                return Stack(
+                  children: [
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: CustomPaint(
+                        size: Size(deviceWidth, deviceHeight),
+                        painter: DeviceFramePainter(
+                          _backgroundImage!,
+                          _homeButtonImage!,
+                          _backButtonImage!,
+                          _recentButtonImage!,
+                          customPainterButtonWidth,
+                          customPainterbuttonHeight,
+                          buttonSpacing,
+                        ),
+                      ),
                     ),
-                  ),
+                    Positioned(
+                      left: deviceWidth / 2 - buttonSpacing - inkwellButtonWidth / 2,
+                      top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            print('뒤로가기 버튼');
+                          },
+                          borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                              color: Colors.transparent,
+                            ),
+                            height: inkwellbuttonHeight,
+                            width: inkwellButtonWidth,
+                            child: const Center(
+                              child: Text(
+                                "",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: deviceWidth / 2 - inkwellButtonWidth / 2,
+                      top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            print('홈 버튼');
+                          },
+                          borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                              color: Colors.transparent,
+                            ),
+                            height: inkwellbuttonHeight,
+                            width: inkwellButtonWidth,
+                            child: const Center(
+                              child: Text(
+                                "",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: deviceWidth / 2 + buttonSpacing - inkwellButtonWidth / 2,
+                      top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            print('최근앱 버튼');
+                          },
+                          borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                              color: Colors.transparent,
+                            ),
+                            height: inkwellbuttonHeight,
+                            width: inkwellButtonWidth,
+                            child: const Center(
+                              child: Text(
+                                "",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
-          ),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final scaleFactorWidth = constraints.maxWidth / 1200;
-              final scaleFactorHeight = constraints.maxHeight / 1000;
-
-              return Stack(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 488 * scaleFactorWidth,
-                      top: 893 * scaleFactorHeight,
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
-                            color: Colors.transparent,
-                          ),
-                          height: 50 * scaleFactorHeight,
-                          width: 75 * scaleFactorWidth,
-                          child: const Center(
-                            child: Text(
-                              "",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 563.5 * scaleFactorWidth,
-                      top: 893 * scaleFactorHeight,
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
-                            color: Colors.transparent,
-                          ),
-                          height: 50 * scaleFactorHeight,
-                          width: 75 * scaleFactorWidth,
-                          child: const Center(
-                            child: Text(
-                              "",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 641 * scaleFactorWidth,
-                      top: 893 * scaleFactorHeight,
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(30 * scaleFactorWidth),
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30 * scaleFactorWidth),
-                            color: Colors.transparent,
-                          ),
-                          height: 50 * scaleFactorHeight,
-                          width: 75 * scaleFactorWidth,
-                          child: const Center(
-                            child: Text(
-                              "",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
           ),
         ],
       ),

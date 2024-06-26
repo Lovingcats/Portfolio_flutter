@@ -1,14 +1,16 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 class DeviceFramePainter extends CustomPainter {
   final ui.Image backgroundImage;
   final ui.Image homeButtonImage;
   final ui.Image backButtonImage;
   final ui.Image recentButtonImage;
+  final double buttonWidth;
+  final double buttonHeight;
+  final double buttonSpacing;
 
-  DeviceFramePainter(this.backgroundImage, this.homeButtonImage, this.backButtonImage, this.recentButtonImage);
+  DeviceFramePainter(this.backgroundImage, this.homeButtonImage, this.backButtonImage, this.recentButtonImage, this.buttonWidth, this.buttonHeight, this.buttonSpacing);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -178,7 +180,7 @@ class DeviceFramePainter extends CustomPainter {
     canvas.drawImageRect(
       homeButtonImage,
       Rect.fromLTWH(0, 0, homeButtonImage.width.toDouble(), homeButtonImage.height.toDouble()),
-      Rect.fromLTWH(size.width / 2 - 12, size.height - navBarHeight / 2 - 12, 24, 24),
+      Rect.fromLTWH(size.width / 2 - buttonWidth / 2, size.height - navBarHeight / 2 - buttonHeight / 2 - 3, buttonWidth, buttonHeight),
       Paint(),
     );
 
@@ -186,7 +188,7 @@ class DeviceFramePainter extends CustomPainter {
     canvas.drawImageRect(
       backButtonImage,
       Rect.fromLTWH(0, 0, backButtonImage.width.toDouble(), backButtonImage.height.toDouble()),
-      Rect.fromLTWH(size.width / 2 - 133, size.height - navBarHeight / 2 - 12, 24, 24),
+      Rect.fromLTWH(size.width / 2 - buttonSpacing - buttonWidth / 2, size.height - navBarHeight / 2 - buttonHeight / 2 - 3, buttonWidth, buttonHeight),
       Paint(),
     );
 
@@ -194,7 +196,7 @@ class DeviceFramePainter extends CustomPainter {
     canvas.drawImageRect(
       recentButtonImage,
       Rect.fromLTWH(0, 0, recentButtonImage.width.toDouble(), recentButtonImage.height.toDouble()),
-      Rect.fromLTWH(size.width / 2 + 113.5, size.height - navBarHeight / 2 - 12, 24, 24),
+      Rect.fromLTWH(size.width / 2 + buttonSpacing - buttonWidth / 2, size.height - navBarHeight / 2 - buttonHeight / 2 - 3, buttonWidth, buttonHeight),
       Paint(),
     );
   }
