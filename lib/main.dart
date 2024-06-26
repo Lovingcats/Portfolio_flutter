@@ -176,7 +176,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 final buttonHeight = deviceHeight * 0.05;
 
                 // 버튼 간격 설정
-                final buttonSpacing = deviceWidth * 0.15;
+                final buttonSpacing = deviceWidth * 0.3;
 
                 return Stack(
                   children: [
