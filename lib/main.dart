@@ -171,11 +171,12 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   deviceHeight = deviceWidth / aspectRatio;
                 }
 
-                // 버튼 크기 설정
-                final buttonWidth = deviceWidth * 0.085;
-                final buttonHeight = deviceHeight * 0.035;
+                final customPainterButtonWidth = deviceWidth * 0.085;
+                final customPainterbuttonHeight = deviceHeight * 0.035;
 
-                // 버튼 간격 설정
+                final inkwellButtonWidth = deviceWidth * 0.085;
+                final inkwellbuttonHeight = deviceHeight * 0.035;
+
                 final buttonSpacing = deviceWidth * 0.3;
 
                 return Stack(
@@ -189,8 +190,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                           _homeButtonImage!,
                           _backButtonImage!,
                           _recentButtonImage!,
-                          buttonWidth,
-                          buttonHeight,
+                          customPainterButtonWidth,
+                          customPainterbuttonHeight,
                           buttonSpacing,
                         ),
                       ),
