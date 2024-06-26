@@ -171,11 +171,11 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   deviceHeight = deviceWidth / aspectRatio;
                 }
 
-                final customPainterButtonWidth = deviceWidth * 0.085;
-                final customPainterbuttonHeight = deviceHeight * 0.035;
+                final customPainterButtonWidth = deviceWidth * 0.083;
+                final customPainterbuttonHeight = deviceHeight * 0.0325;
 
-                final inkwellButtonWidth = deviceWidth * 0.085;
-                final inkwellbuttonHeight = deviceHeight * 0.035;
+                final inkwellButtonWidth = deviceWidth * 0.083;
+                final inkwellbuttonHeight = deviceHeight * 0.0325;
 
                 final buttonSpacing = deviceWidth * 0.3;
 
