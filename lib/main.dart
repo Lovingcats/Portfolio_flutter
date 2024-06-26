@@ -171,11 +171,12 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   deviceHeight = deviceWidth / aspectRatio;
                 }
 
-                final inkWellbuttonWidth = deviceWidth * 0.05;
-                final inkwellButtonHeight = deviceHeight * 0.05;
+                // 버튼 크기 설정
+                final buttonWidth = deviceWidth * 0.05;
+                final buttonHeight = deviceHeight * 0.05;
 
-                final painterButtonWidth = deviceWidth * 0.05;
-                final painterButtonHeight = deviceHeight * 0.05;
+                // 버튼 간격 설정
+                final buttonSpacing = deviceWidth * 0.15;
 
                 return Stack(
                   children: [
@@ -188,28 +189,29 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                           _homeButtonImage!,
                           _backButtonImage!,
                           _recentButtonImage!,
-                          painterButtonWidth,
-                          painterButtonHeight,
+                          buttonWidth,
+                          buttonHeight,
+                          buttonSpacing,
                         ),
                       ),
                     ),
                     Positioned(
-                      left: deviceWidth / 2 - inkWellbuttonWidth * 2.8,
-                      top: deviceHeight - 60 / 2 - inkwellButtonHeight / 2,
+                      left: deviceWidth / 2 - buttonSpacing - buttonWidth / 2,
+                      top: deviceHeight - 60 / 2 - buttonHeight / 2,
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
                             print('Back button tapped');
                           },
-                          borderRadius: BorderRadius.circular(inkWellbuttonWidth),
+                          borderRadius: BorderRadius.circular(buttonWidth),
                           child: Ink(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(inkWellbuttonWidth),
+                              borderRadius: BorderRadius.circular(buttonWidth),
                               color: Colors.purple.withOpacity(0.5),
                             ),
-                            height: inkwellButtonHeight,
-                            width: inkWellbuttonWidth,
+                            height: buttonHeight,
+                            width: buttonWidth,
                             child: const Center(
                               child: Text(
                                 "",
@@ -221,22 +223,22 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       ),
                     ),
                     Positioned(
-                      left: deviceWidth / 2 - inkWellbuttonWidth / 2,
-                      top: deviceHeight - 60 / 2 - inkwellButtonHeight / 2,
+                      left: deviceWidth / 2 - buttonWidth / 2,
+                      top: deviceHeight - 60 / 2 - buttonHeight / 2,
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
                             print('Home button tapped');
                           },
-                          borderRadius: BorderRadius.circular(inkWellbuttonWidth),
+                          borderRadius: BorderRadius.circular(buttonWidth),
                           child: Ink(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(inkWellbuttonWidth),
+                              borderRadius: BorderRadius.circular(buttonWidth),
                               color: Colors.blue.withOpacity(0.5),
                             ),
-                            height: inkwellButtonHeight,
-                            width: inkWellbuttonWidth,
+                            height: buttonHeight,
+                            width: buttonWidth,
                             child: const Center(
                               child: Text(
                                 "",
@@ -248,22 +250,22 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       ),
                     ),
                     Positioned(
-                      left: deviceWidth / 2 + inkWellbuttonWidth * 2.8,
-                      top: deviceHeight - 60 / 2 - inkwellButtonHeight / 2,
+                      left: deviceWidth / 2 + buttonSpacing - buttonWidth / 2,
+                      top: deviceHeight - 60 / 2 - buttonHeight / 2,
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
                             print('Recent button tapped');
                           },
-                          borderRadius: BorderRadius.circular(inkWellbuttonWidth),
+                          borderRadius: BorderRadius.circular(buttonWidth),
                           child: Ink(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(inkWellbuttonWidth),
+                              borderRadius: BorderRadius.circular(buttonWidth),
                               color: Colors.red.withOpacity(0.5),
                             ),
-                            height: inkwellButtonHeight,
-                            width: inkWellbuttonWidth,
+                            height: buttonHeight,
+                            width: buttonWidth,
                             child: const Center(
                               child: Text(
                                 "",
