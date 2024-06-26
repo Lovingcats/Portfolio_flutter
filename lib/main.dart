@@ -203,7 +203,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            print('Back button tapped');
+                            print('뒤로가기 버튼');
                           },
                           borderRadius: BorderRadius.circular(inkwellButtonWidth),
                           child: Ink(
@@ -230,7 +230,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            print('Home button tapped');
+                            print('홈 버튼');
                           },
                           borderRadius: BorderRadius.circular(inkwellButtonWidth),
                           child: Ink(
@@ -257,7 +257,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            print('Recent button tapped');
+                            print('최근앱 버튼');
                           },
                           borderRadius: BorderRadius.circular(inkwellButtonWidth),
                           child: Ink(
