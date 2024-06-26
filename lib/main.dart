@@ -186,8 +186,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       ),
                     ),
                     Positioned(
-                      left: deviceWidth / 2 - 133,
-                      top: deviceHeight - 60 / 2 - 12,
+                      left: deviceWidth / 2 - 167,
+                      top: deviceHeight - 72 / 2 - 12,
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
@@ -200,8 +200,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                               borderRadius: BorderRadius.circular(50),
                               color: Colors.purple.withOpacity(0.5),
                             ),
-                            height: 24,
-                            width: 24,
+                            height: 40,
+                            width: 100,
                             child: const Center(
                               child: Text(
                                 "",
