@@ -172,8 +172,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 }
 
                 // 버튼 크기 설정
-                final buttonWidth = deviceWidth * 0.05;
-                final buttonHeight = deviceHeight * 0.05;
+                final buttonWidth = deviceWidth * 0.06;
+                final buttonHeight = deviceHeight * 0.03;
 
                 // 버튼 간격 설정
                 final buttonSpacing = deviceWidth * 0.3;
