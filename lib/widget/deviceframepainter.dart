@@ -8,8 +8,9 @@ class DeviceFramePainter extends CustomPainter {
   final ui.Image recentButtonImage;
   final double buttonWidth;
   final double buttonHeight;
+  final double buttonSpacing;
 
-  DeviceFramePainter(this.backgroundImage, this.homeButtonImage, this.backButtonImage, this.recentButtonImage, this.buttonWidth, this.buttonHeight);
+  DeviceFramePainter(this.backgroundImage, this.homeButtonImage, this.backButtonImage, this.recentButtonImage, this.buttonWidth, this.buttonHeight, this.buttonSpacing);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -187,7 +188,7 @@ class DeviceFramePainter extends CustomPainter {
     canvas.drawImageRect(
       backButtonImage,
       Rect.fromLTWH(0, 0, backButtonImage.width.toDouble(), backButtonImage.height.toDouble()),
-      Rect.fromLTWH(size.width / 2 - buttonWidth * 2.8, size.height - navBarHeight / 2 - buttonHeight / 2, buttonWidth, buttonHeight),
+      Rect.fromLTWH(size.width / 2 - buttonSpacing - buttonWidth / 2, size.height - navBarHeight / 2 - buttonHeight / 2, buttonWidth, buttonHeight),
       Paint(),
     );
 
@@ -195,7 +196,7 @@ class DeviceFramePainter extends CustomPainter {
     canvas.drawImageRect(
       recentButtonImage,
       Rect.fromLTWH(0, 0, recentButtonImage.width.toDouble(), recentButtonImage.height.toDouble()),
-      Rect.fromLTWH(size.width / 2 + buttonWidth * 2.8, size.height - navBarHeight / 2 - buttonHeight / 2, buttonWidth, buttonHeight),
+      Rect.fromLTWH(size.width / 2 + buttonSpacing - buttonWidth / 2, size.height - navBarHeight / 2 - buttonHeight / 2, buttonWidth, buttonHeight),
       Paint(),
     );
   }
