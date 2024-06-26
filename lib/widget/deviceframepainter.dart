@@ -180,7 +180,7 @@ class DeviceFramePainter extends CustomPainter {
     canvas.drawImageRect(
       homeButtonImage,
       Rect.fromLTWH(0, 0, homeButtonImage.width.toDouble(), homeButtonImage.height.toDouble()),
-      Rect.fromLTWH(size.width / 2 - buttonWidth / 2, size.height - navBarHeight / 2 - buttonHeight / 2, buttonWidth, buttonHeight),
+      Rect.fromLTWH(size.width / 2 - buttonWidth / 2, size.height - navBarHeight / 2 - buttonHeight / 2 - 3, buttonWidth, buttonHeight),
       Paint(),
     );
 
@@ -188,7 +188,7 @@ class DeviceFramePainter extends CustomPainter {
     canvas.drawImageRect(
       backButtonImage,
       Rect.fromLTWH(0, 0, backButtonImage.width.toDouble(), backButtonImage.height.toDouble()),
-      Rect.fromLTWH(size.width / 2 - buttonSpacing - buttonWidth / 2, size.height - navBarHeight / 2 - buttonHeight / 2, buttonWidth, buttonHeight),
+      Rect.fromLTWH(size.width / 2 - buttonSpacing - buttonWidth / 2, size.height - navBarHeight / 2 - buttonHeight / 2 - 3, buttonWidth, buttonHeight),
       Paint(),
     );
 
@@ -196,7 +196,7 @@ class DeviceFramePainter extends CustomPainter {
     canvas.drawImageRect(
       recentButtonImage,
       Rect.fromLTWH(0, 0, recentButtonImage.width.toDouble(), recentButtonImage.height.toDouble()),
-      Rect.fromLTWH(size.width / 2 + buttonSpacing - buttonWidth / 2, size.height - navBarHeight / 2 - buttonHeight / 2, buttonWidth, buttonHeight),
+      Rect.fromLTWH(size.width / 2 + buttonSpacing - buttonWidth / 2, size.height - navBarHeight / 2 - buttonHeight / 2 - 3, buttonWidth, buttonHeight),
       Paint(),
     );
   }
