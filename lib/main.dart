@@ -172,8 +172,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 }
 
                 // 버튼 크기 설정
-                final buttonWidth = deviceWidth * 0.06;
-                final buttonHeight = deviceHeight * 0.03;
+                final buttonWidth = deviceWidth * 0.085;
+                final buttonHeight = deviceHeight * 0.035;
 
                 // 버튼 간격 설정
                 final buttonSpacing = deviceWidth * 0.3;
@@ -197,7 +197,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     ),
                     Positioned(
                       left: deviceWidth / 2 - buttonSpacing - buttonWidth / 2,
-                      top: deviceHeight - 60 / 2 - buttonHeight / 2,
+                      top: deviceHeight - 60 / 2 - buttonHeight / 2 - 3,
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
@@ -224,7 +224,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     ),
                     Positioned(
                       left: deviceWidth / 2 - buttonWidth / 2,
-                      top: deviceHeight - 60 / 2 - buttonHeight / 2,
+                      top: deviceHeight - 60 / 2 - buttonHeight / 2 - 3,
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
@@ -251,7 +251,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     ),
                     Positioned(
                       left: deviceWidth / 2 + buttonSpacing - buttonWidth / 2,
-                      top: deviceHeight - 60 / 2 - buttonHeight / 2,
+                      top: deviceHeight - 60 / 2 - buttonHeight / 2 - 3,
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
