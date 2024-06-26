@@ -254,8 +254,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                               borderRadius: BorderRadius.circular(50),
                               color: Colors.red.withOpacity(0.5),
                             ),
-                            height: 24,
-                            width: 24,
+                            height: 40,
+                            width: 100,
                             child: const Center(
                               child: Text(
                                 "",
