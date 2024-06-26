@@ -171,9 +171,11 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   deviceHeight = deviceWidth / aspectRatio;
                 }
 
-                // 버튼 크기 설정
-                final buttonWidth = deviceWidth * 0.05;
-                final buttonHeight = deviceHeight * 0.05;
+                final inkWellbuttonWidth = deviceWidth * 0.05;
+                final inkwellButtonHeight = deviceHeight * 0.05;
+
+                final painterButtonWidth = deviceWidth * 0.05;
+                final painterButtonHeight = deviceHeight * 0.05;
 
                 return Stack(
                   children: [
