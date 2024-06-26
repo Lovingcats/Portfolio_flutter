@@ -171,115 +171,105 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                   deviceHeight = deviceWidth / aspectRatio;
                 }
 
-                print(deviceHeight);
-                print(deviceWidth);
-
-                return FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: CustomPaint(
-                    size: Size(deviceWidth, deviceHeight),
-                    painter: DeviceFramePainter(
-                      _backgroundImage!,
-                      _homeButtonImage!,
-                      _backButtonImage!,
-                      _recentButtonImage!,
+                return Stack(
+                  children: [
+                    FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: CustomPaint(
+                        size: Size(deviceWidth, deviceHeight),
+                        painter: DeviceFramePainter(
+                          _backgroundImage!,
+                          _homeButtonImage!,
+                          _backButtonImage!,
+                          _recentButtonImage!,
+                        ),
+                      ),
                     ),
-                  ),
+                    Positioned(
+                      left: deviceWidth / 2 - 133,
+                      top: deviceHeight - 60 / 2 - 12,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            print('Back button tapped');
+                          },
+                          borderRadius: BorderRadius.circular(50),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.purple.withOpacity(0.5),
+                            ),
+                            height: 24,
+                            width: 24,
+                            child: const Center(
+                              child: Text(
+                                "",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: deviceWidth / 2 - 12,
+                      top: deviceHeight - 60 / 2 - 12,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            print('Home button tapped');
+                          },
+                          borderRadius: BorderRadius.circular(50),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.blue.withOpacity(0.5),
+                            ),
+                            height: 24,
+                            width: 24,
+                            child: const Center(
+                              child: Text(
+                                "",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: deviceWidth / 2 + 113.5,
+                      top: deviceHeight - 60 / 2 - 12,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            print('Recent button tapped');
+                          },
+                          borderRadius: BorderRadius.circular(50),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.red.withOpacity(0.5),
+                            ),
+                            height: 24,
+                            width: 24,
+                            child: const Center(
+                              child: Text(
+                                "",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
-          ),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final scaleFactorWidth = constraints.maxWidth / 1200;
-              final scaleFactorHeight = constraints.maxHeight / 1000;
-
-              return Stack(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 488 * scaleFactorWidth,
-                      top: 893 * scaleFactorHeight,
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
-                            color: Colors.red,
-                          ),
-                          height: 50 * scaleFactorHeight,
-                          width: 75 * scaleFactorWidth,
-                          child: const Center(
-                            child: Text(
-                              "",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 563.5 * scaleFactorWidth,
-                      top: 893 * scaleFactorHeight,
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
-                            color: Colors.blue,
-                          ),
-                          height: 50 * scaleFactorHeight,
-                          width: 75 * scaleFactorWidth,
-                          child: const Center(
-                            child: Text(
-                              "",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 641 * scaleFactorWidth,
-                      top: 893 * scaleFactorHeight,
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(30 * scaleFactorWidth),
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30 * scaleFactorWidth),
-                            color: Colors.purple,
-                          ),
-                          height: 50 * scaleFactorHeight,
-                          width: 75 * scaleFactorWidth,
-                          child: const Center(
-                            child: Text(
-                              "",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
           ),
         ],
       ),
