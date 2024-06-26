@@ -209,7 +209,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         child: Ink(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
-                            color: Colors.transparent,
+                            color: Colors.red,
                           ),
                           height: 50 * scaleFactorHeight,
                           width: 75 * scaleFactorWidth,
@@ -236,7 +236,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         child: Ink(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50 * scaleFactorWidth),
-                            color: Colors.transparent,
+                            color: Colors.blue,
                           ),
                           height: 50 * scaleFactorHeight,
                           width: 75 * scaleFactorWidth,
@@ -263,7 +263,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         child: Ink(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30 * scaleFactorWidth),
-                            color: Colors.transparent,
+                            color: Colors.purple,
                           ),
                           height: 50 * scaleFactorHeight,
                           width: 75 * scaleFactorWidth,
