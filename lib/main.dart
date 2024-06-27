@@ -70,6 +70,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   ui.Image? _homeButtonImage;
   ui.Image? _backButtonImage;
   ui.Image? _recentButtonImage;
+  ui.Image? _statusBarImage;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
