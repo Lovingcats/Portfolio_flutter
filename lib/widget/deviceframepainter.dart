@@ -6,14 +6,13 @@ class DeviceFramePainter extends CustomPainter {
   final ui.Image homeButtonImage;
   final ui.Image backButtonImage;
   final ui.Image recentButtonImage;
-  final ui.Image statusbarImage;
   final double buttonWidth;
   final double buttonHeight;
   final double buttonSpacing;
 
-  DeviceFramePainter(this.backgroundImage, this.homeButtonImage, this.backButtonImage, this.recentButtonImage, this.statusbarImage, this.buttonWidth, this.buttonHeight, this.buttonSpacing);
+  DeviceFramePainter(this.backgroundImage, this.homeButtonImage, this.backButtonImage, this.recentButtonImage, this.buttonWidth, this.buttonHeight, this.buttonSpacing);
 
- @override
+  @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = Color.fromARGB(255, 183, 228, 252)
@@ -52,16 +51,110 @@ class DeviceFramePainter extends CustomPainter {
       paint,
     );
     canvas.restore();
-    final statusBarHeight = size.width * (statusbarImage.height / statusbarImage.width);
-    final statusBarRect = Rect.fromLTWH(10, 10, size.width - 20, statusBarHeight);
-    canvas.drawImageRect(
-      statusbarImage,
-      Rect.fromLTWH(0, 0, statusbarImage.width.toDouble(), statusbarImage.height.toDouble()),
-      statusBarRect,
-      Paint(),
+
+    final powerButtonPaint = Paint()
+      ..color = const Color(0xff111724)
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(size.width + 3, size.height / 2 - 130, 4.5, 70),
+        const Radius.circular(5),
+      ),
+      powerButtonPaint,
     );
 
-    // 카메라
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(size.width + 3, size.height / 2 - 300, 4.5, 125),
+        const Radius.circular(5),
+      ),
+      powerButtonPaint,
+    );
+
+    final statusBarPaint = Paint()
+      ..color = Colors.transparent
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRect(
+      Rect.fromLTWH(10, 10, size.width - 20, 30),
+      statusBarPaint,
+    );
+
+    final timePainter = TextPainter(
+      textDirection: TextDirection.ltr,
+    );
+
+    // 시간
+    timePainter.text = const TextSpan(
+      text: "12:00",
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+    timePainter.layout();
+    timePainter.paint(canvas, const Offset(20, 15.8));
+
+    final batteryPercentPainter = TextPainter(
+      textDirection: TextDirection.ltr,
+    );
+
+    // 배터리 퍼센트
+    batteryPercentPainter.text = const TextSpan(
+      text: "76%",
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+      ),
+    );
+    batteryPercentPainter.layout();
+    // 위치를 화면 크기에 맞게 비례하여 설정
+    batteryPercentPainter.paint(canvas, Offset(size.width - batteryPercentPainter.width - 38, 16.4));
+
+    // 배터리
+    canvas.save();
+    canvas.translate(size.width - 25, 20);
+    canvas.rotate(-3.14 / 2);
+
+    final batteryPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+
+    final batteryLevelPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        const Rect.fromLTWH(-12, -10, 13, 8), // 가로형 배터리
+        const Radius.circular(1.9),
+      ),
+      batteryPaint,
+    );
+
+    canvas.drawRect(
+      const Rect.fromLTWH(-12, -10, 8, 8), // 가로형 배터리 내부
+      batteryLevelPaint,
+    );
+
+    canvas.restore();
+
+    // 네트워크 모양
+    final signalPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    for (int i = 0; i < 4; i++) {
+      canvas.drawRect(
+        Rect.fromLTWH(size.width - 96 + i * 6, 33.5 - i * 5, 4, i * 5),
+        signalPaint,
+      );
+    }
+
+    //카메라
     final cameraPaint = Paint()
       ..color = Colors.black
       ..style = PaintingStyle.fill;
