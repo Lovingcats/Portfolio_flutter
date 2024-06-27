@@ -52,27 +52,6 @@ class DeviceFramePainter extends CustomPainter {
       paint,
     );
     canvas.restore();
-
-    final powerButtonPaint = Paint()
-      ..color = const Color(0xff111724)
-      ..style = PaintingStyle.fill;
-
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width + 3, size.height / 2 - 130, 4.5, 70),
-        const Radius.circular(5),
-      ),
-      powerButtonPaint,
-    );
-
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width + 3, size.height / 2 - 300, 4.5, 125),
-        const Radius.circular(5),
-      ),
-      powerButtonPaint,
-    );
-
     final statusBarHeight = size.width * (statusbarImage.height / statusbarImage.width);
     final statusBarRect = Rect.fromLTWH(10, 10, size.width - 20, statusBarHeight);
     canvas.drawImageRect(
