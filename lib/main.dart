@@ -197,9 +197,11 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                           _homeButtonImage!,
                           _backButtonImage!,
                           _recentButtonImage!,
+                          _statusBarImage!,
                           customPainterButtonWidth,
                           customPainterbuttonHeight,
                           buttonSpacing,
+                          
                         ),
                       ),
                     ),
