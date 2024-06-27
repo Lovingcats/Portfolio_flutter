@@ -6,11 +6,12 @@ class DeviceFramePainter extends CustomPainter {
   final ui.Image homeButtonImage;
   final ui.Image backButtonImage;
   final ui.Image recentButtonImage;
+  final ui.Image statusbarImage;
   final double buttonWidth;
   final double buttonHeight;
   final double buttonSpacing;
 
-  DeviceFramePainter(this.backgroundImage, this.homeButtonImage, this.backButtonImage, this.recentButtonImage, this.buttonWidth, this.buttonHeight, this.buttonSpacing);
+  DeviceFramePainter(this.backgroundImage, this.homeButtonImage, this.backButtonImage, this.recentButtonImage, this.statusbarImage, this.buttonWidth, this.buttonHeight, this.buttonSpacing);
 
   @override
   void paint(Canvas canvas, Size size) {
