@@ -128,6 +128,10 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
     final ui.Codec recentCodec = await ui.instantiateImageCodec(Uint8List.fromList(recentBytes));
     final ui.FrameInfo recentFi = await recentCodec.getNextFrame();
 
+    final ByteData statusBarData = await rootBundle.load('assets/img/statusBar.png');
+    final List<int> statusBarBytes = statusBarData.buffer.asUint8List();
+    final ui.Codec statusBarCodec = await ui.instantiateImageCodec(Uint8List.fromList(statusBarBytes));
+    final ui.FrameInfo statusBarFi = await statusBarCodec.getNextFrame();
     setState(() {
       _backgroundImage = fi1.image;
       _pcImage = fi2.image;
