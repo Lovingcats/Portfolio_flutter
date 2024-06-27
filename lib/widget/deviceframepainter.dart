@@ -73,8 +73,7 @@ class DeviceFramePainter extends CustomPainter {
       powerButtonPaint,
     );
 
-    const statusBarHeight = 30.0;
-
+    final statusBarHeight = size.width * (statusbarImage.height / statusbarImage.width);
     final statusBarRect = Rect.fromLTWH(10, 10, size.width - 20, statusBarHeight);
     canvas.drawImageRect(
       statusbarImage,
