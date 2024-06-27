@@ -132,12 +132,14 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
     final List<int> statusBarBytes = statusBarData.buffer.asUint8List();
     final ui.Codec statusBarCodec = await ui.instantiateImageCodec(Uint8List.fromList(statusBarBytes));
     final ui.FrameInfo statusBarFi = await statusBarCodec.getNextFrame();
+    
     setState(() {
       _backgroundImage = fi1.image;
       _pcImage = fi2.image;
       _homeButtonImage = homeFi.image;
       _backButtonImage = backFi.image;
       _recentButtonImage = recentFi.image;
+      _statusBarImage = statusBarFi.image;
     });
   }
 
