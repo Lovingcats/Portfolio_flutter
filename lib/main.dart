@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutterportfolio/widget/deviceframepainter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'dart:ui' as ui;
@@ -177,8 +178,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 final inkwellButtonWidth = deviceWidth * 0.28;
                 final inkwellbuttonHeight = deviceHeight * 0.05;
 
-                final mainButtonWidth = deviceWidth * 0.28;
-                final mainbuttonHeight = deviceHeight * 0.05;
+                final mainButtonWidth = deviceWidth * 0.155;
+                final mainbuttonHeight = deviceHeight * 0.065;
 
                 final buttonSpacing = deviceWidth * 0.3;
 
@@ -283,11 +284,15 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     Positioned(
                       left: deviceWidth / 2 - mainButtonWidth / 2,
                       top: deviceHeight - 90 / 2 - mainbuttonHeight / 2 - 3,
-                      child: const Row(
+                      child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Hello", style: TextStyle(fontSize: 20, color: Colors.white),)
+                          Container(
+                            height: mainbuttonHeight,
+                            width: mainButtonWidth,
+                            color: Colors.red,
+                          ),
                         ]
                       ),
                     )
