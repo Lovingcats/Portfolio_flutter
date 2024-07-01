@@ -5,6 +5,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -100,6 +101,13 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+  Future<void> _launchUrl(String myUrl) async {
+    final Uri url = Uri.parse(myUrl);
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   Future<void> _loadImage() async {
