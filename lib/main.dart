@@ -177,6 +177,9 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 final inkwellButtonWidth = deviceWidth * 0.28;
                 final inkwellbuttonHeight = deviceHeight * 0.05;
 
+                final mainButtonWidth = deviceWidth * 0.28;
+                final mainbuttonHeight = deviceHeight * 0.05;
+
                 final buttonSpacing = deviceWidth * 0.3;
 
                 return Stack(
@@ -277,6 +280,17 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         ),
                       ),
                     ),
+                    Positioned(
+                      left: deviceWidth / 2 - buttonSpacing - inkwellButtonWidth / 2,
+                      top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
+                      child: const Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Hello", style: TextStyle(fontSize: 20, color: Colors.white),)
+                        ]
+                      ),
+                    )
                   ],
                 );
               },
