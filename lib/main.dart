@@ -300,14 +300,22 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                'assets/img/github.png',
-                                width: deviceHeight * 0.07,
-                                height: deviceHeight * 0.07,
-                                fit: BoxFit.cover,
-                                filterQuality: FilterQuality.high,
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: InkWell(
+                                onTap: () {
+                                  _launchUrl;
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.asset(
+                                    'assets/img/github.png',
+                                    width: deviceHeight * 0.07,
+                                    height: deviceHeight * 0.07,
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.high,
+                                  ),
+                                ),
                               ),
                             ),
                             ClipRRect(
