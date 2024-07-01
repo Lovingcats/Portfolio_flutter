@@ -292,25 +292,41 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: deviceWidth * 0.165,
-                              height: deviceHeight * 0.07,
-                              color: Colors.blue,
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/img/github.png',
+                                width: deviceHeight * 0.07,
+                                height: deviceHeight * 0.07,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            Container(
-                              width: deviceWidth * 0.165,
-                              height: deviceHeight * 0.07,
-                              color: Colors.green,
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/img/gmail.png',
+                                width: deviceHeight * 0.07,
+                                height: deviceHeight * 0.07,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            Container(
-                              width: deviceWidth * 0.165,
-                              height: deviceHeight * 0.07,
-                              color: Colors.yellow,
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/img/tistory.png',
+                                width: deviceHeight * 0.07,
+                                height: deviceHeight * 0.07,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            Container(
-                              width: deviceWidth * 0.165,
-                              height: deviceHeight * 0.07,
-                              color: Colors.purple,
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/img/seeAllApp.png',
+                                width: deviceHeight * 0.07,
+                                height: deviceHeight * 0.07,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ],
                         ),
