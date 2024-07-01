@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutterportfolio/widget/deviceframepainter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'dart:ui' as ui;
@@ -177,6 +178,9 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 final inkwellButtonWidth = deviceWidth * 0.28;
                 final inkwellbuttonHeight = deviceHeight * 0.05;
 
+                final mainButtonWidth = deviceWidth * 0.155;
+                final mainbuttonHeight = deviceHeight * 0.065;
+
                 final buttonSpacing = deviceWidth * 0.3;
 
                 return Stack(
@@ -274,6 +278,61 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                               ),
                             ),
                           ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: deviceWidth * 0.075,
+                      top: deviceHeight * 0.825,
+                      child: Container(
+                        width: deviceWidth * 0.85,
+                        height: deviceHeight * 0.07,
+                        color: Colors.transparent,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/img/github.png',
+                                width: deviceHeight * 0.07,
+                                height: deviceHeight * 0.07,
+                                fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/img/gmail.png',
+                                width: deviceHeight * 0.07,
+                                height: deviceHeight * 0.07,
+                                fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/img/tistory.png',
+                                width: deviceHeight * 0.07,
+                                height: deviceHeight * 0.07,
+                                fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/img/seeAllApp.png',
+                                width: deviceHeight * 0.07,
+                                height: deviceHeight * 0.07,
+                                fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
