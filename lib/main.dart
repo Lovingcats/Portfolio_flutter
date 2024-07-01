@@ -293,6 +293,21 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                             width: mainButtonWidth,
                             color: Colors.red,
                           ),
+                          Container(
+                            height: mainbuttonHeight,
+                            width: mainButtonWidth,
+                            color: Colors.blue,
+                          ),
+                          Container(
+                            height: mainbuttonHeight,
+                            width: mainButtonWidth,
+                            color: Colors.purple,
+                          ),
+                          Container(
+                            height: mainbuttonHeight,
+                            width: mainButtonWidth,
+                            color: Colors.white,
+                          ),
                         ]
                       ),
                     )
