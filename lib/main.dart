@@ -254,7 +254,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       ),
                     ),
                     Positioned(
-                      left: deviceWidth / 2 + buttonSpacing - inkwellButtonWidth / 2,
+                      left: deviceWidth / 2 - inkwellButtonWidth / 2,
                       top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
                       child: Material(
                         color: Colors.transparent,
@@ -281,8 +281,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       ),
                     ),
                     Positioned(
-                      left: deviceWidth / 2 - buttonSpacing - inkwellButtonWidth / 2,
-                      top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
+                      left: deviceWidth / 2 - mainButtonWidth / 2,
+                      top: deviceHeight - 90 / 2 - mainbuttonHeight / 2 - 3,
                       child: const Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
