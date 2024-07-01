@@ -255,7 +255,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       ),
                     ),
                     Positioned(
-                      left: deviceWidth / 2 - inkwellButtonWidth / 2,
+                      left: deviceWidth / 2 + buttonSpacing - inkwellButtonWidth / 2,
                       top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
                       child: Material(
                         color: Colors.transparent,
@@ -282,35 +282,21 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       ),
                     ),
                     Positioned(
-                      left: deviceWidth / 2 - mainButtonWidth / 2,
-                      top: deviceHeight - 200 / 2 - mainbuttonHeight / 2 - 3,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: mainbuttonHeight,
-                            width: mainButtonWidth,
-                            color: Colors.red,
-                          ),
-                          Container(
-                            height: mainbuttonHeight,
-                            width: mainButtonWidth,
-                            color: Colors.blue,
-                          ),
-                          Container(
-                            height: mainbuttonHeight,
-                            width: mainButtonWidth,
-                            color: Colors.purple,
-                          ),
-                          Container(
-                            height: mainbuttonHeight,
-                            width: mainButtonWidth,
-                            color: Colors.white,
-                          ),
-                        ]
+                      left: deviceWidth * 0.05,
+                      top: deviceHeight * 0.855,
+                      child: Container(
+                        width: deviceWidth * 0.9,
+                        height: deviceHeight * 0.07,
+                        color: Colors.red,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            
+                          ],
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 );
               },
