@@ -282,10 +282,10 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       ),
                     ),
                     Positioned(
-                      left: deviceWidth * 0.05,
+                      left: deviceWidth * 0.075,
                       top: deviceHeight * 0.845,
                       child: Container(
-                        width: deviceWidth * 0.9,
+                        width: deviceWidth * 0.85,
                         height: deviceHeight * 0.07,
                         color: Colors.transparent,
                         child: Row(
