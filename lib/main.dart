@@ -287,12 +287,31 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       child: Container(
                         width: deviceWidth * 0.9,
                         height: deviceHeight * 0.07,
-                        color: Colors.red,
+                        color: Colors.transparent,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            
+                            Container(
+                              width: deviceWidth * 0.165,
+                              height: deviceHeight * 0.07,
+                              color: Colors.blue,
+                            ),
+                            Container(
+                              width: deviceWidth * 0.165,
+                              height: deviceHeight * 0.07,
+                              color: Colors.green,
+                            ),
+                            Container(
+                              width: deviceWidth * 0.165,
+                              height: deviceHeight * 0.07,
+                              color: Colors.yellow,
+                            ),
+                            Container(
+                              width: deviceWidth * 0.165,
+                              height: deviceHeight * 0.07,
+                              color: Colors.purple,
+                            ),
                           ],
                         ),
                       ),
