@@ -283,7 +283,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     ),
                     Positioned(
                       left: deviceWidth * 0.05,
-                      top: deviceHeight * 0.855,
+                      top: deviceHeight * 0.845,
                       child: Container(
                         width: deviceWidth * 0.9,
                         height: deviceHeight * 0.07,
@@ -299,6 +299,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                                 width: deviceHeight * 0.07,
                                 height: deviceHeight * 0.07,
                                 fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
                               ),
                             ),
                             ClipRRect(
@@ -308,6 +309,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                                 width: deviceHeight * 0.07,
                                 height: deviceHeight * 0.07,
                                 fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
                               ),
                             ),
                             ClipRRect(
@@ -317,6 +319,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                                 width: deviceHeight * 0.07,
                                 height: deviceHeight * 0.07,
                                 fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
                               ),
                             ),
                             ClipRRect(
@@ -326,6 +329,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                                 width: deviceHeight * 0.07,
                                 height: deviceHeight * 0.07,
                                 fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
                               ),
                             ),
                           ],
