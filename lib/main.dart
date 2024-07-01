@@ -304,7 +304,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                               cursor: SystemMouseCursors.click,
                               child: InkWell(
                                 onTap: () {
-                                  _launchUrl;
+                                  _launchUrl("https://github.com/Lovingcats");
                                 },
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
