@@ -8,6 +8,7 @@ import 'dart:typed_data';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -105,8 +106,18 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
 
   Future<void> _launchUrl(String myUrl) async {
     final Uri url = Uri.parse(myUrl);
-    if (!await launchUrl(url)) {
-      throw Exception('Could not launch $url');
+    // Check if the URL can be launched
+    if (await canLaunchUrl(url)) {
+      // Try to launch the URL
+      try {
+        final bool launched = await launchUrl(url, mode: LaunchMode.externalApplication);
+        if (!launched) {
+        }
+      } catch (e) {
+        print('Exception occurred while launching URL: $e');
+      }
+    } else {
+      print('Cannot launch URL: $url');
     }
   }
 
@@ -303,8 +314,12 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                             MouseRegion(
                               cursor: SystemMouseCursors.click,
                               child: InkWell(
-                                onTap: () {
-                                  _launchUrl("https://github.com/Lovingcats");
+                                onTap: () async {
+                                  try {
+                                    await _launchUrl("https://github.com/Lovingcats");
+                                  } catch (e) {
+                                    print('Error launching URL: $e');
+                                  }
                                 },
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
@@ -318,24 +333,48 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                                 ),
                               ),
                             ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                'assets/img/gmail.png',
-                                width: deviceHeight * 0.07,
-                                height: deviceHeight * 0.07,
-                                fit: BoxFit.cover,
-                                filterQuality: FilterQuality.high,
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: InkWell(
+                                onTap: () async {
+                                  try {
+                                    await _launchUrl("https://lovely-cornucopia-0ba.notion.site/05f0c597d9ac487a9228f3fd172c196a?pvs=4");
+                                  } catch (e) {
+                                    print('Error launching URL: $e');
+                                  }
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.asset(
+                                    'assets/img/gmail.png',
+                                    width: deviceHeight * 0.07,
+                                    height: deviceHeight * 0.07,
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.high,
+                                  ),
+                                ),
                               ),
                             ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                'assets/img/tistory.png',
-                                width: deviceHeight * 0.07,
-                                height: deviceHeight * 0.07,
-                                fit: BoxFit.cover,
-                                filterQuality: FilterQuality.high,
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: InkWell(
+                                onTap: () async {
+                                  try {
+                                    await _launchUrl("https://lovingcats.tistory.com/");
+                                  } catch (e) {
+                                    print('Error launching URL: $e');
+                                  }
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.asset(
+                                    'assets/img/tistory.png',
+                                    width: deviceHeight * 0.07,
+                                    height: deviceHeight * 0.07,
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.high,
+                                  ),
+                                ),
                               ),
                             ),
                             ClipRRect(
