@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutterportfolio/widget/deviceframepainter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'dart:ui' as ui;
@@ -197,9 +196,6 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 final inkwellButtonWidth = deviceWidth * 0.28;
                 final inkwellbuttonHeight = deviceHeight * 0.05;
 
-                final mainButtonWidth = deviceWidth * 0.155;
-                final mainbuttonHeight = deviceHeight * 0.065;
-
                 final buttonSpacing = deviceWidth * 0.3;
 
                 return Stack(
@@ -222,24 +218,27 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     Positioned(
                       left: deviceWidth / 2 - buttonSpacing - inkwellButtonWidth / 2,
                       top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () {
-                            print('뒤로가기 버튼');
-                          },
-                          borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                              color: Colors.transparent,
-                            ),
-                            height: inkwellbuttonHeight,
-                            width: inkwellButtonWidth,
-                            child: const Center(
-                              child: Text(
-                                "",
-                                style: TextStyle(color: Colors.white),
+                      child: FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () {
+                              print('뒤로가기 버튼');
+                            },
+                            borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                color: Colors.transparent,
+                              ),
+                              height: inkwellbuttonHeight,
+                              width: inkwellButtonWidth,
+                              child: const Center(
+                                child: Text(
+                                  "",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
@@ -249,24 +248,27 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     Positioned(
                       left: deviceWidth / 2 - inkwellButtonWidth / 2,
                       top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () {
-                            print('홈 버튼');
-                          },
-                          borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                              color: Colors.transparent,
-                            ),
-                            height: inkwellbuttonHeight,
-                            width: inkwellButtonWidth,
-                            child: const Center(
-                              child: Text(
-                                "",
-                                style: TextStyle(color: Colors.white),
+                      child: FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () {
+                              print('홈 버튼');
+                            },
+                            borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                color: Colors.transparent,
+                              ),
+                              height: inkwellbuttonHeight,
+                              width: inkwellButtonWidth,
+                              child: const Center(
+                                child: Text(
+                                  "",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
@@ -276,24 +278,27 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     Positioned(
                       left: deviceWidth / 2 + buttonSpacing - inkwellButtonWidth / 2,
                       top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () {
-                            print('최근앱 버튼');
-                          },
-                          borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                              color: Colors.transparent,
-                            ),
-                            height: inkwellbuttonHeight,
-                            width: inkwellButtonWidth,
-                            child: const Center(
-                              child: Text(
-                                "",
-                                style: TextStyle(color: Colors.white),
+                      child: FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () {
+                              print('최근앱 버튼');
+                            },
+                            borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                color: Colors.transparent,
+                              ),
+                              height: inkwellbuttonHeight,
+                              width: inkwellButtonWidth,
+                              child: const Center(
+                                child: Text(
+                                  "",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
@@ -303,91 +308,94 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     Positioned(
                       left: deviceWidth * 0.075,
                       top: deviceHeight * 0.825,
-                      child: Container(
-                        width: deviceWidth * 0.85,
-                        height: deviceHeight * 0.07,
-                        color: Colors.transparent,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: InkWell(
-                                onTap: () async {
-                                  try {
-                                    await _launchUrl("https://github.com/Lovingcats");
-                                  } catch (e) {
-                                    print('Error launching URL: $e');
-                                  }
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.asset(
-                                    'assets/img/github.png',
-                                    width: deviceHeight * 0.07,
-                                    height: deviceHeight * 0.07,
-                                    fit: BoxFit.cover,
-                                    filterQuality: FilterQuality.high,
+                      child: FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: Container(
+                          width: deviceWidth * 0.85,
+                          height: deviceHeight * 0.07,
+                          color: Colors.transparent,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: InkWell(
+                                  onTap: () async {
+                                    try {
+                                      await _launchUrl("https://github.com/Lovingcats");
+                                    } catch (e) {
+                                      print('Error launching URL: $e');
+                                    }
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.asset(
+                                      'assets/img/github.png',
+                                      width: deviceHeight * 0.07,
+                                      height: deviceHeight * 0.07,
+                                      fit: BoxFit.cover,
+                                      filterQuality: FilterQuality.high,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: InkWell(
-                                onTap: () async {
-                                  try {
-                                    await _launchUrl("https://lovely-cornucopia-0ba.notion.site/05f0c597d9ac487a9228f3fd172c196a?pvs=4");
-                                  } catch (e) {
-                                    print('Error launching URL: $e');
-                                  }
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.asset(
-                                    'assets/img/gmail.png',
-                                    width: deviceHeight * 0.07,
-                                    height: deviceHeight * 0.07,
-                                    fit: BoxFit.cover,
-                                    filterQuality: FilterQuality.high,
+                              MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: InkWell(
+                                  onTap: () async {
+                                    try {
+                                      await _launchUrl("https://lovely-cornucopia-0ba.notion.site/05f0c597d9ac487a9228f3fd172c196a?pvs=4");
+                                    } catch (e) {
+                                      print('Error launching URL: $e');
+                                    }
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.asset(
+                                      'assets/img/gmail.png',
+                                      width: deviceHeight * 0.07,
+                                      height: deviceHeight * 0.07,
+                                      fit: BoxFit.cover,
+                                      filterQuality: FilterQuality.high,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: InkWell(
-                                onTap: () async {
-                                  try {
-                                    await _launchUrl("https://lovingcats.tistory.com/");
-                                  } catch (e) {
-                                    print('Error launching URL: $e');
-                                  }
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.asset(
-                                    'assets/img/tistory.png',
-                                    width: deviceHeight * 0.07,
-                                    height: deviceHeight * 0.07,
-                                    fit: BoxFit.cover,
-                                    filterQuality: FilterQuality.high,
+                              MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: InkWell(
+                                  onTap: () async {
+                                    try {
+                                      await _launchUrl("https://lovingcats.tistory.com/");
+                                    } catch (e) {
+                                      print('Error launching URL: $e');
+                                    }
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.asset(
+                                      'assets/img/tistory.png',
+                                      width: deviceHeight * 0.07,
+                                      height: deviceHeight * 0.07,
+                                      fit: BoxFit.cover,
+                                      filterQuality: FilterQuality.high,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                'assets/img/seeAllApp.png',
-                                width: deviceHeight * 0.07,
-                                height: deviceHeight * 0.07,
-                                fit: BoxFit.cover,
-                                filterQuality: FilterQuality.high,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.asset(
+                                  'assets/img/seeAllApp.png',
+                                  width: deviceHeight * 0.07,
+                                  height: deviceHeight * 0.07,
+                                  fit: BoxFit.cover,
+                                  filterQuality: FilterQuality.high,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
