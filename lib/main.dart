@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
