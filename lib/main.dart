@@ -166,19 +166,16 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
 
     return Scaffold(
       floatingActionButton: SpeedDial(
-          icon: Icons.add,
+          icon: Icons.settings,
           activeIcon: Icons.close,
           spacing: 3,
           openCloseDial: isDialOpen,
           childPadding: const EdgeInsets.all(5),
           spaceBetweenChildren: 4,
           buttonSize: const Size(56.0, 56.0),
-
           childrenButtonSize: const Size(56.0, 56.0),
-          visible: true,
           direction: SpeedDialDirection.up,
           switchLabelPosition: false,
-
           renderOverlay: true,
           // overlayColor: Colors.black,
           // overlayOpacity: 0.5,
