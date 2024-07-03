@@ -489,36 +489,39 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
             ),
           ),
           if (_isSliderVisible)
-                      Positioned(
-                        left: 1500,
-                        right: 20,
-                        bottom: 50,
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 300,
-                              child: Slider(
-                                value: _opacity,
-                                min: 0.0,
-                                max: 1.0,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _opacity = value;
-                                  });
-                                },
-                              ),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  _isSliderVisible = false;
-                                });
-                              },
-                              child: const Text('Done'),
-                            ),
-                          ],
+            Positioned(
+              bottom: 50,
+              right: 20,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Row(
+                    children: [
+                      SizedBox(
+                        width: 300,
+                        child: Slider(
+                          value: _opacity,
+                          min: 0.0,
+                          max: 1.0,
+                          onChanged: (value) {
+                            setState(() {
+                              _opacity = value;
+                            });
+                          },
                         ),
                       ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _isSliderVisible = false;
+                          });
+                        },
+                        child: const Text('Done'),
+                      ),
+                    ],
+                  );
+                } 
+              ),
+            )      
         ],
       ),
     );
