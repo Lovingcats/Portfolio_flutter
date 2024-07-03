@@ -191,7 +191,9 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
           elevation: 8.0,
           animationCurve: Curves.elasticInOut,
           isOpenOnStart: false,
-          shape: const RoundedRectangleBorder(),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12))
+          ),
           // childMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           children: [
             SpeedDialChild(
