@@ -166,8 +166,64 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
 
     return Scaffold(
       floatingActionButton: SpeedDial(
-        animatedIcon: ,
-      ),
+          icon: Icons.add,
+          activeIcon: Icons.close,
+          spacing: 3,
+          openCloseDial: isDialOpen,
+          childPadding: const EdgeInsets.all(5),
+          spaceBetweenChildren: 4,
+          buttonSize: const Size(56.0, 56.0),
+
+          childrenButtonSize: const Size(56.0, 56.0),
+          visible: true,
+          direction: SpeedDialDirection.up,
+          switchLabelPosition: false,
+
+          renderOverlay: true,
+          // overlayColor: Colors.black,
+          // overlayOpacity: 0.5,
+          onOpen: () => debugPrint('OPENING DIAL'),
+          onClose: () => debugPrint('DIAL CLOSED'),
+          useRotationAnimation: true,
+          tooltip: 'Open Speed Dial',
+          heroTag: 'speed-dial-hero-tag',
+          // foregroundColor: Colors.black,
+          // backgroundColor: Colors.white,
+          // activeForegroundColor: Colors.red,
+          // activeBackgroundColor: Colors.blue,
+          elevation: 8.0,
+          animationCurve: Curves.elasticInOut,
+          isOpenOnStart: false,
+          shape: const RoundedRectangleBorder(),
+          // childMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          children: [
+            SpeedDialChild(
+              child: const Icon(Icons.accessibility),
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              label: 'First',
+              onTap: () => setState((){}),
+              // onLongPress: () => debugPrint('FIRST CHILD LONG PRESS'),
+            ),
+            SpeedDialChild(
+              child: const Icon(Icons.brush),
+              backgroundColor: Colors.deepOrange,
+              foregroundColor: Colors.white,
+              label: 'Second',
+              onTap: () => debugPrint('SECOND CHILD'),
+            ),
+            SpeedDialChild(
+              child: const Icon(Icons.margin),
+              backgroundColor: Colors.indigo,
+              foregroundColor: Colors.white,
+              label: 'Show Snackbar',
+              visible: true,
+              onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text(("Third Child Pressed")))),
+              // onLongPress: () => debugPrint('THIRD CHILD LONG PRESS'),
+            ),
+          ],
+        ),
       body: Stack(
         children: [
           RawImage(
