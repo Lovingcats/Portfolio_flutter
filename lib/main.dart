@@ -5,6 +5,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -74,6 +76,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   ui.Image? _recentButtonImage;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+  ValueNotifier<bool> isDialOpen = ValueNotifier(false);
 
   @override
   void initState() {
@@ -162,6 +165,77 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
     }
 
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 20, bottom: 30),
+        child: SpeedDial(
+            icon: Icons.settings,
+            backgroundColor: const Color.fromARGB(255, 183, 228, 252),
+            activeIcon: Icons.close,
+            foregroundColor: Colors.black,
+            iconTheme: const IconThemeData(size: 35.0),
+            spacing: 3,
+            openCloseDial: isDialOpen,
+            childPadding: const EdgeInsets.all(0), // 버튼 패딩 줄이기
+            spaceBetweenChildren: 15,
+            buttonSize: const Size(50.0, 50.0),
+            childrenButtonSize: const Size(50.0, 50.0),
+            direction: SpeedDialDirection.up,
+            switchLabelPosition: false,
+            renderOverlay: true,
+            overlayColor: Colors.black,
+            overlayOpacity: 0.8,
+            useRotationAnimation: true,
+            tooltip: '설정',
+            elevation: 8.0,
+            animationCurve: Curves.elasticInOut,
+            isOpenOnStart: false,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12))
+            ),
+            // childMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            children: [
+              SpeedDialChild(
+                child: const FaIcon(FontAwesomeIcons.rotate),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                elevation: 0.0,
+                label: '배경 교체',
+                labelStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
+              ),
+              SpeedDialChild(
+                child: const Icon(Icons.brightness_6),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                elevation: 0.0,
+                label: '배경 밝기 조절',
+                labelStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
+              ),
+              SpeedDialChild(
+                child: const Icon(Icons.panorama),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                elevation: 0.0,
+                label: '배경만 보기',
+                labelStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
+              ),
+            ],
+          ),
+      ),
       body: Stack(
         children: [
           RawImage(
