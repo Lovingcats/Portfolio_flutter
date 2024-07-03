@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:animate_icons/animate_icons.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -76,7 +77,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
-  
+
   @override
   void initState() {
     super.initState();
@@ -164,6 +165,9 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
     }
 
     return Scaffold(
+      floatingActionButton: SpeedDial(
+        animatedIcon: ,
+      ),
       body: Stack(
         children: [
           RawImage(
