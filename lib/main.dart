@@ -187,7 +187,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
             onOpen: () => debugPrint('OPENING DIAL'),
             onClose: () => debugPrint('DIAL CLOSED'),
             useRotationAnimation: true,
-            tooltip: 'Open Speed Dial',
+            tooltip: '설정',
             // foregroundColor: Colors.black,
             // backgroundColor: Colors.white,
             // activeForegroundColor: Colors.red,
