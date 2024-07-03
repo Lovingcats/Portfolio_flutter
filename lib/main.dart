@@ -188,7 +188,6 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
             onClose: () => debugPrint('DIAL CLOSED'),
             useRotationAnimation: true,
             tooltip: 'Open Speed Dial',
-            heroTag: 'speed-dial-hero-tag',
             // foregroundColor: Colors.black,
             // backgroundColor: Colors.white,
             // activeForegroundColor: Colors.red,
