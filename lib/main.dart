@@ -6,7 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:animate_icons/animate_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -199,7 +199,10 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
             // childMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             children: [
               SpeedDialChild(
-                child: const Icon(Icons.brush),
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  child: Image.asset("assets/img/change.png", fit: BoxFit.fill,)),
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
                 label: 'Second',
@@ -213,6 +216,9 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
                 label: 'Second',
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
                 onTap: () => debugPrint('SECOND CHILD'),
               ),
               SpeedDialChild(
@@ -221,6 +227,9 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 foregroundColor: Colors.black,
                 label: 'Show Snackbar',
                 visible: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
                 onTap: () => ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text(("Third Child Pressed")))),
                 // onLongPress: () => debugPrint('THIRD CHILD LONG PRESS'),
