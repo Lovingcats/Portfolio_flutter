@@ -184,8 +184,6 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
             renderOverlay: true,
             overlayColor: Colors.black,
             overlayOpacity: 0.8,
-            onOpen: () => debugPrint('OPENING DIAL'),
-            onClose: () => debugPrint('DIAL CLOSED'),
             useRotationAnimation: true,
             tooltip: '설정',
             // foregroundColor: Colors.black,
