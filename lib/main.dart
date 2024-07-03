@@ -199,13 +199,11 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
             // childMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             children: [
               SpeedDialChild(
-                child: Container(
-                  height: 20,
-                  width: 20,
-                  child: Image.asset("assets/img/change.png", fit: BoxFit.fill,)),
+                child: const FaIcon(FontAwesomeIcons.rotate),
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
                 label: 'Second',
+                labelBackgroundColor: Colors.transparent,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8))
                 ),
