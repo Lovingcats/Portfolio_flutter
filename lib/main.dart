@@ -172,6 +172,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
             backgroundColor: const Color.fromARGB(255, 183, 228, 252),
             activeIcon: Icons.close,
             foregroundColor: Colors.black,
+            iconTheme: const IconThemeData(size: 35.0),
             spacing: 3,
             openCloseDial: isDialOpen,
             childPadding: const EdgeInsets.all(5),
