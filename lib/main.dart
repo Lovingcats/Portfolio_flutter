@@ -199,24 +199,26 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
             // childMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             children: [
               SpeedDialChild(
-                child: const Icon(Icons.accessibility),
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
-                label: 'First',
-                onTap: () => setState((){}),
-                // onLongPress: () => debugPrint('FIRST CHILD LONG PRESS'),
+                child: const Icon(Icons.brush),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                label: 'Second',
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
+                onTap: () => debugPrint('SECOND CHILD'),
               ),
               SpeedDialChild(
                 child: const Icon(Icons.brush),
-                backgroundColor: Colors.deepOrange,
-                foregroundColor: Colors.white,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
                 label: 'Second',
                 onTap: () => debugPrint('SECOND CHILD'),
               ),
               SpeedDialChild(
                 child: const Icon(Icons.margin),
-                backgroundColor: Colors.indigo,
-                foregroundColor: Colors.white,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
                 label: 'Show Snackbar',
                 visible: true,
                 onTap: () => ScaffoldMessenger.of(context).showSnackBar(
