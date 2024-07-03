@@ -169,7 +169,9 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
         padding: const EdgeInsets.only(right: 20, bottom: 30),
         child: SpeedDial(
             icon: Icons.settings,
+            backgroundColor: const Color.fromARGB(255, 183, 228, 252),
             activeIcon: Icons.close,
+            foregroundColor: Colors.black,
             spacing: 3,
             openCloseDial: isDialOpen,
             childPadding: const EdgeInsets.all(5),
