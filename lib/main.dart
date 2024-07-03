@@ -75,7 +75,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   ui.Image? _recentButtonImage;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
-
+  ValueNotifier<bool> isDialOpen = ValueNotifier(false);
+  
   @override
   void initState() {
     super.initState();
