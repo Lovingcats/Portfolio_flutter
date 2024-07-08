@@ -517,7 +517,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                             _isSliderVisible = false;
                           });
                         },
-                        child: const Text('Done'),
+                        child: const Text('적용'),
                       ),
                     ],
                   );
