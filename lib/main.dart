@@ -77,6 +77,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
+  bool _isSliderVisible = false;
+  double _opacity = 0.7;
 
   @override
   void initState() {
@@ -108,13 +110,10 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
 
   Future<void> _launchUrl(String myUrl) async {
     final Uri url = Uri.parse(myUrl);
-    // Check if the URL can be launched
     if (await canLaunchUrl(url)) {
-      // Try to launch the URL
       try {
         final bool launched = await launchUrl(url, mode: LaunchMode.externalApplication);
-        if (!launched) {
-        }
+        if (!launched) {}
       } catch (e) {
         print('Exception occurred while launching URL: $e');
       }
@@ -165,77 +164,83 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
     }
 
     return Scaffold(
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 20, bottom: 30),
-        child: SpeedDial(
-            icon: Icons.settings,
-            backgroundColor: const Color.fromARGB(255, 183, 228, 252),
-            activeIcon: Icons.close,
-            foregroundColor: Colors.black,
-            iconTheme: const IconThemeData(size: 35.0),
-            spacing: 3,
-            openCloseDial: isDialOpen,
-            childPadding: const EdgeInsets.all(0), // 버튼 패딩 줄이기
-            spaceBetweenChildren: 15,
-            buttonSize: const Size(50.0, 50.0),
-            childrenButtonSize: const Size(50.0, 50.0),
-            direction: SpeedDialDirection.up,
-            switchLabelPosition: false,
-            renderOverlay: true,
-            overlayColor: Colors.black,
-            overlayOpacity: 0.8,
-            useRotationAnimation: true,
-            tooltip: '설정',
-            elevation: 8.0,
-            animationCurve: Curves.elasticInOut,
-            isOpenOnStart: false,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12))
+      floatingActionButton: _isSliderVisible
+          ? null
+          : Padding(
+              padding: const EdgeInsets.only(right: 20, bottom: 30),
+              child: SpeedDial(
+                icon: Icons.settings,
+                backgroundColor: const Color.fromARGB(255, 183, 228, 252),
+                activeIcon: Icons.close,
+                foregroundColor: Colors.black,
+                iconTheme: const IconThemeData(size: 35.0),
+                spacing: 3,
+                openCloseDial: isDialOpen,
+                childPadding: const EdgeInsets.all(0),
+                spaceBetweenChildren: 15,
+                buttonSize: const Size(50.0, 50.0),
+                childrenButtonSize: const Size(50.0, 50.0),
+                direction: SpeedDialDirection.up,
+                switchLabelPosition: false,
+                renderOverlay: true,
+                overlayColor: Colors.black,
+                overlayOpacity: 0.8,
+                useRotationAnimation: true,
+                tooltip: '설정',
+                elevation: 8.0,
+                animationCurve: Curves.elasticInOut,
+                isOpenOnStart: false,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                ),
+                children: [
+                  SpeedDialChild(
+                    child: const FaIcon(FontAwesomeIcons.rotate),
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    elevation: 0.0,
+                    label: '배경 교체',
+                    labelStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                  ),
+                  SpeedDialChild(
+                    child: const Icon(Icons.brightness_6),
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    elevation: 0.0,
+                    label: '배경 밝기 조절',
+                    labelStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _isSliderVisible = true;
+                      });
+                    },
+                  ),
+                  SpeedDialChild(
+                    child: const Icon(Icons.panorama),
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    elevation: 0.0,
+                    label: '배경만 보기',
+                    labelStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            // childMargin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            children: [
-              SpeedDialChild(
-                child: const FaIcon(FontAwesomeIcons.rotate),
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                elevation: 0.0,
-                label: '배경 교체',
-                labelStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8))
-                ),
-              ),
-              SpeedDialChild(
-                child: const Icon(Icons.brightness_6),
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                elevation: 0.0,
-                label: '배경 밝기 조절',
-                labelStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8))
-                ),
-              ),
-              SpeedDialChild(
-                child: const Icon(Icons.panorama),
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                elevation: 0.0,
-                label: '배경만 보기',
-                labelStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8))
-                ),
-              ),
-            ],
-          ),
-      ),
       body: Stack(
         children: [
           RawImage(
@@ -244,10 +249,14 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
             width: double.infinity,
             height: double.infinity,
           ),
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.black.withOpacity(0.7),
+          AnimatedOpacity(
+            opacity: _opacity,
+            duration: const Duration(milliseconds: 500),
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.black,
+            ),
           ),
           Center(
             child: LayoutBuilder(
@@ -473,11 +482,48 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         ),
                       ),
                     ),
+                    
                   ],
                 );
               },
             ),
           ),
+          if (_isSliderVisible)
+            Positioned(
+              bottom: 50,
+              right: 20,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Row(
+                    children: [
+                      SizedBox(
+                        width: 300,
+                        child: Slider(
+                          value: _opacity,
+                          thumbColor: Colors.white,
+                          activeColor: Colors.white,
+                          min: 0.0,
+                          max: 1.0,
+                          onChanged: (value) {
+                            setState(() {
+                              _opacity = value;
+                            });
+                          },
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _isSliderVisible = false;
+                          });
+                        },
+                        child: const Text('적용'),
+                      ),
+                    ],
+                  );
+                } 
+              ),
+            )      
         ],
       ),
     );
