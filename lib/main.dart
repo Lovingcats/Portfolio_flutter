@@ -501,6 +501,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         child: Slider(
                           value: _opacity,
                           thumbColor: Colors.white,
+                          activeColor: Colors.white,
                           min: 0.0,
                           max: 1.0,
                           onChanged: (value) {
