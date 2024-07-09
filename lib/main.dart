@@ -226,7 +226,24 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       });
                     },
                   ),
-                  SpeedDialChild(
+                  _isdeviceVisible ? SpeedDialChild(
+                    child: const Icon(Icons.smartphone),
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    elevation: 0.0,
+                    label: '디바이스 보기',
+                    labelStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    onTap: (){
+                      setState(() {
+                        _isdeviceVisible = false;
+                      });
+                    }
+                  ) : SpeedDialChild(
                     child: const Icon(Icons.panorama),
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
