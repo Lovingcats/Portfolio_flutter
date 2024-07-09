@@ -500,8 +500,8 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         width: 300,
                         child: Slider(
                           value: _opacity,
-                          thumbColor: Colors.white,
-                          activeColor: Colors.white,
+                          thumbColor: Color.fromARGB(255, 183, 228, 252),
+                          activeColor: Color.fromARGB(255, 183, 228, 252),
                           min: 0.0,
                           max: 1.0,
                           onChanged: (value) {
@@ -517,7 +517,16 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                             _isSliderVisible = false;
                           });
                         },
-                        child: const Text('적용'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          )
+                        ),
+                        child: const Text('적용', style: TextStyle(
+                          color: Colors.black
+                        ),),
+
                       ),
                     ],
                   );
