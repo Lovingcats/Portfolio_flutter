@@ -78,6 +78,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   late Animation<double> _fadeAnimation;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   bool _isSliderVisible = false;
+  bool _isdeviceVisible = false;
   double _opacity = 0.7;
 
   @override
@@ -237,6 +238,11 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
+                    onTap: (){
+                      setState(() {
+                        _isdeviceVisible = true;
+                      });
+                    }
                   ),
                 ],
               ),
