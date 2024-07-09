@@ -15,7 +15,7 @@ class DeviceFramePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color.fromARGB(255, 183, 228, 252)
+      ..color = const Color.fromARGB(255, 183, 228, 252)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10;
 
