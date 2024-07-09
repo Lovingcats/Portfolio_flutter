@@ -281,7 +281,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
               color: Colors.black,
             ),
           ),
-          if (_isdeviceVisible)
+          if (!_isdeviceVisible)
             Center(
               child: LayoutBuilder(
                 builder: (context, constraints) {
