@@ -240,7 +240,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     ),
                     onTap: (){
                       setState(() {
-                        _isdeviceVisible = !_isdeviceVisible;
+                        _isdeviceVisible = true;
                       });
                     }
                   ),
