@@ -543,7 +543,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          minimumSize: Size(70, 42),
+                          minimumSize: Size(86, 42),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           )
