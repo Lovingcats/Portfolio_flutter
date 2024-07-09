@@ -78,6 +78,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   late Animation<double> _fadeAnimation;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   bool _isSliderVisible = false;
+  bool _isdeviceVisible = false;
   double _opacity = 0.7;
 
   @override
@@ -225,7 +226,24 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                       });
                     },
                   ),
-                  SpeedDialChild(
+                  _isdeviceVisible ? SpeedDialChild(
+                    child: const Icon(Icons.smartphone),
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    elevation: 0.0,
+                    label: '디바이스 보기',
+                    labelStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    onTap: (){
+                      setState(() {
+                        _isdeviceVisible = false;
+                      });
+                    }
+                  ) : SpeedDialChild(
                     child: const Icon(Icons.panorama),
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
@@ -237,6 +255,11 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
+                    onTap: (){
+                      setState(() {
+                        _isdeviceVisible = true;
+                      });
+                    }
                   ),
                 ],
               ),
@@ -258,236 +281,237 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
               color: Colors.black,
             ),
           ),
-          Center(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final aspectRatio = 400 / 850;
-                double deviceWidth;
-                double deviceHeight;
+          if (!_isdeviceVisible)
+            Center(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final aspectRatio = 400 / 850;
+                  double deviceWidth;
+                  double deviceHeight;
 
-                if (constraints.maxWidth / constraints.maxHeight > aspectRatio) {
-                  deviceHeight = constraints.maxHeight * 0.9;
-                  deviceWidth = deviceHeight * aspectRatio;
-                } else {
-                  deviceWidth = constraints.maxWidth * 0.9;
-                  deviceHeight = deviceWidth / aspectRatio;
-                }
+                  if (constraints.maxWidth / constraints.maxHeight > aspectRatio) {
+                    deviceHeight = constraints.maxHeight * 0.9;
+                    deviceWidth = deviceHeight * aspectRatio;
+                  } else {
+                    deviceWidth = constraints.maxWidth * 0.9;
+                    deviceHeight = deviceWidth / aspectRatio;
+                  }
 
-                final customPainterButtonWidth = deviceWidth * 0.075;
-                final customPainterbuttonHeight = deviceHeight * 0.0325;
+                  final customPainterButtonWidth = deviceWidth * 0.075;
+                  final customPainterbuttonHeight = deviceHeight * 0.0325;
 
-                final inkwellButtonWidth = deviceWidth * 0.28;
-                final inkwellbuttonHeight = deviceHeight * 0.05;
+                  final inkwellButtonWidth = deviceWidth * 0.28;
+                  final inkwellbuttonHeight = deviceHeight * 0.05;
 
-                final buttonSpacing = deviceWidth * 0.3;
+                  final buttonSpacing = deviceWidth * 0.3;
 
-                return Stack(
-                  children: [
-                    FadeTransition(
-                      opacity: _fadeAnimation,
-                      child: CustomPaint(
-                        size: Size(deviceWidth, deviceHeight),
-                        painter: DeviceFramePainter(
-                          _backgroundImage!,
-                          _homeButtonImage!,
-                          _backButtonImage!,
-                          _recentButtonImage!,
-                          customPainterButtonWidth,
-                          customPainterbuttonHeight,
-                          buttonSpacing,
+                  return Stack(
+                    children: [
+                      FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: CustomPaint(
+                          size: Size(deviceWidth, deviceHeight),
+                          painter: DeviceFramePainter(
+                            _backgroundImage!,
+                            _homeButtonImage!,
+                            _backButtonImage!,
+                            _recentButtonImage!,
+                            customPainterButtonWidth,
+                            customPainterbuttonHeight,
+                            buttonSpacing,
+                          ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      left: deviceWidth / 2 - buttonSpacing - inkwellButtonWidth / 2,
-                      top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
-                      child: FadeTransition(
-                        opacity: _fadeAnimation,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {
-                              print('뒤로가기 버튼');
-                            },
-                            borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                            child: Ink(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                                color: Colors.transparent,
-                              ),
-                              height: inkwellbuttonHeight,
-                              width: inkwellButtonWidth,
-                              child: const Center(
-                                child: Text(
-                                  "",
-                                  style: TextStyle(color: Colors.white),
+                      Positioned(
+                        left: deviceWidth / 2 - buttonSpacing - inkwellButtonWidth / 2,
+                        top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
+                        child: FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                print('뒤로가기 버튼');
+                              },
+                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                              child: Ink(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                  color: Colors.transparent,
+                                ),
+                                height: inkwellbuttonHeight,
+                                width: inkwellButtonWidth,
+                                child: const Center(
+                                  child: Text(
+                                    "",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      left: deviceWidth / 2 - inkwellButtonWidth / 2,
-                      top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
-                      child: FadeTransition(
-                        opacity: _fadeAnimation,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {
-                              print('홈 버튼');
-                            },
-                            borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                            child: Ink(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                                color: Colors.transparent,
-                              ),
-                              height: inkwellbuttonHeight,
-                              width: inkwellButtonWidth,
-                              child: const Center(
-                                child: Text(
-                                  "",
-                                  style: TextStyle(color: Colors.white),
+                      Positioned(
+                        left: deviceWidth / 2 - inkwellButtonWidth / 2,
+                        top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
+                        child: FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                print('홈 버튼');
+                              },
+                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                              child: Ink(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                  color: Colors.transparent,
+                                ),
+                                height: inkwellbuttonHeight,
+                                width: inkwellButtonWidth,
+                                child: const Center(
+                                  child: Text(
+                                    "",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      left: deviceWidth / 2 + buttonSpacing - inkwellButtonWidth / 2,
-                      top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
-                      child: FadeTransition(
-                        opacity: _fadeAnimation,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {
-                              print('최근앱 버튼');
-                            },
-                            borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                            child: Ink(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                                color: Colors.transparent,
-                              ),
-                              height: inkwellbuttonHeight,
-                              width: inkwellButtonWidth,
-                              child: const Center(
-                                child: Text(
-                                  "",
-                                  style: TextStyle(color: Colors.white),
+                      Positioned(
+                        left: deviceWidth / 2 + buttonSpacing - inkwellButtonWidth / 2,
+                        top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
+                        child: FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                print('최근앱 버튼');
+                              },
+                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                              child: Ink(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                  color: Colors.transparent,
+                                ),
+                                height: inkwellbuttonHeight,
+                                width: inkwellButtonWidth,
+                                child: const Center(
+                                  child: Text(
+                                    "",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      left: deviceWidth * 0.075,
-                      top: deviceHeight * 0.825,
-                      child: FadeTransition(
-                        opacity: _fadeAnimation,
-                        child: Container(
-                          width: deviceWidth * 0.85,
-                          height: deviceHeight * 0.07,
-                          color: Colors.transparent,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: InkWell(
-                                  onTap: () async {
-                                    try {
-                                      await _launchUrl("https://github.com/Lovingcats");
-                                    } catch (e) {
-                                      print('Error launching URL: $e');
-                                    }
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.asset(
-                                      'assets/img/github.png',
-                                      width: deviceHeight * 0.07,
-                                      height: deviceHeight * 0.07,
-                                      fit: BoxFit.cover,
-                                      filterQuality: FilterQuality.high,
+                      Positioned(
+                        left: deviceWidth * 0.075,
+                        top: deviceHeight * 0.825,
+                        child: FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: Container(
+                            width: deviceWidth * 0.85,
+                            height: deviceHeight * 0.07,
+                            color: Colors.transparent,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      try {
+                                        await _launchUrl("https://github.com/Lovingcats");
+                                      } catch (e) {
+                                        print('Error launching URL: $e');
+                                      }
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.asset(
+                                        'assets/img/github.png',
+                                        width: deviceHeight * 0.07,
+                                        height: deviceHeight * 0.07,
+                                        fit: BoxFit.cover,
+                                        filterQuality: FilterQuality.high,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: InkWell(
-                                  onTap: () async {
-                                    try {
-                                      await _launchUrl("https://lovely-cornucopia-0ba.notion.site/05f0c597d9ac487a9228f3fd172c196a?pvs=4");
-                                    } catch (e) {
-                                      print('Error launching URL: $e');
-                                    }
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.asset(
-                                      'assets/img/gmail.png',
-                                      width: deviceHeight * 0.07,
-                                      height: deviceHeight * 0.07,
-                                      fit: BoxFit.cover,
-                                      filterQuality: FilterQuality.high,
+                                MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      try {
+                                        await _launchUrl("https://lovely-cornucopia-0ba.notion.site/05f0c597d9ac487a9228f3fd172c196a?pvs=4");
+                                      } catch (e) {
+                                        print('Error launching URL: $e');
+                                      }
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.asset(
+                                        'assets/img/gmail.png',
+                                        width: deviceHeight * 0.07,
+                                        height: deviceHeight * 0.07,
+                                        fit: BoxFit.cover,
+                                        filterQuality: FilterQuality.high,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: InkWell(
-                                  onTap: () async {
-                                    try {
-                                      await _launchUrl("https://lovingcats.tistory.com/");
-                                    } catch (e) {
-                                      print('Error launching URL: $e');
-                                    }
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.asset(
-                                      'assets/img/tistory.png',
-                                      width: deviceHeight * 0.07,
-                                      height: deviceHeight * 0.07,
-                                      fit: BoxFit.cover,
-                                      filterQuality: FilterQuality.high,
+                                MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      try {
+                                        await _launchUrl("https://lovingcats.tistory.com/");
+                                      } catch (e) {
+                                        print('Error launching URL: $e');
+                                      }
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.asset(
+                                        'assets/img/tistory.png',
+                                        width: deviceHeight * 0.07,
+                                        height: deviceHeight * 0.07,
+                                        fit: BoxFit.cover,
+                                        filterQuality: FilterQuality.high,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset(
-                                  'assets/img/seeAllApp.png',
-                                  width: deviceHeight * 0.07,
-                                  height: deviceHeight * 0.07,
-                                  fit: BoxFit.cover,
-                                  filterQuality: FilterQuality.high,
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.asset(
+                                    'assets/img/seeAllApp.png',
+                                    width: deviceHeight * 0.07,
+                                    height: deviceHeight * 0.07,
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.high,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    
-                  ],
-                );
-              },
+                      
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
           if (_isSliderVisible)
             Positioned(
               bottom: 50,
@@ -519,6 +543,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
+                          minimumSize: Size(70, 42),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           )
