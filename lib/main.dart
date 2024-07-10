@@ -314,22 +314,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 color: Colors.black,
               ),
             ),
-          AnimatedBuilder(
-            animation: _paddingAnimation,
-            builder: (context, child) {
-              return Padding(
-                padding: _paddingAnimation.value,
-                child: child,
-              );
-            },
-            child: Container(
-              height: 100,
-              width: 100,
-              color: Colors.blue,
-            ),
-          ),
-          
-          if(_isbackgroundImageChangeVisible)
+             if(_isbackgroundImageChangeVisible)
             Positioned(
               right: 0,
               top: 0,
@@ -345,6 +330,26 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 ),
               ),
             ),
+          Positioned(
+            right: 0,
+            top: 0,
+            child: AnimatedBuilder(
+              animation: _paddingAnimation,
+              builder: (context, child) {
+                return Padding(
+                  padding: _paddingAnimation.value,
+                  child: child,
+                );
+              },
+              child: Container(
+                height: 100,
+                width: 100,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          
+         
             
           if (!_isdeviceVisible)
             _isbackgroundImageChangeVisible ? Container() :
