@@ -79,6 +79,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   bool _isSliderVisible = false;
   bool _isdeviceVisible = false;
+  bool _isbackgroundImageChangeVisible = false;
   double _opacity = 0.7;
 
   @override
