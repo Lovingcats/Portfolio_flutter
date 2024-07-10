@@ -170,7 +170,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
     return Scaffold(
       floatingActionButton: _isSliderVisible
           ? null
-          : Padding(
+          : _isbackgroundImageChangeVisible ? null : Padding(
               padding: const EdgeInsets.only(right: 20, bottom: 30),
               child: SpeedDial(
                 icon: Icons.settings,
