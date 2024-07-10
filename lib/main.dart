@@ -289,6 +289,17 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
               color: Colors.black,
             ),
           ),
+          if(_isbackgroundImageChangeVisible)
+          Positioned(
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.23,
+              color: Colors.red,
+            ),
+          ),
+            
           if (!_isdeviceVisible)
             Center(
               child: LayoutBuilder(
