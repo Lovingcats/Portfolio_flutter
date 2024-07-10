@@ -297,6 +297,16 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
             child: Container(
               width: MediaQuery.of(context).size.width * 0.23,
               color: Colors.red,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(onPressed: (){
+                    setState(() {
+                      _isbackgroundImageChangeVisible = false;
+                    });
+                  }, child: Text("닫기"))
+                ],
+              ),
             ),
           ),
             
