@@ -280,15 +280,17 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
             width: double.infinity,
             height: double.infinity,
           ),
-          AnimatedOpacity(
-            opacity: _opacity,
-            duration: const Duration(milliseconds: 500),
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: Colors.black,
+
+          _isbackgroundImageChangeVisible ? Container() :
+            AnimatedOpacity(
+              opacity: _opacity,
+              duration: const Duration(milliseconds: 500),
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.black,
+              ),
             ),
-          ),
           if(_isbackgroundImageChangeVisible)
           Positioned(
             right: 0,
@@ -311,6 +313,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
           ),
             
           if (!_isdeviceVisible)
+            _isbackgroundImageChangeVisible ? Container() :
             Center(
               child: LayoutBuilder(
                 builder: (context, constraints) {
