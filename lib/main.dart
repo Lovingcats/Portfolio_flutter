@@ -210,6 +210,11 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
+                    onTap: (){
+                      setState(() {
+                        _isbackgroundImageChangeVisible = true;
+                      });
+                    }
                   ),
                   SpeedDialChild(
                     child: const Icon(Icons.brightness_6),
