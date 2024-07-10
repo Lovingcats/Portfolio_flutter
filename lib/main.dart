@@ -68,14 +68,16 @@ class DesktopScreen extends StatefulWidget {
   _DesktopScreenState createState() => _DesktopScreenState();
 }
 
-class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProviderStateMixin {
+class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateMixin {
   ui.Image? _backgroundImage;
   ui.Image? _pcImage;
   ui.Image? _homeButtonImage;
   ui.Image? _backButtonImage;
   ui.Image? _recentButtonImage;
   late AnimationController _animationController;
+  late AnimationController _paddingController;
   late Animation<double> _fadeAnimation;
+  late Animation<EdgeInsets> _paddingAnimation;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   bool _isSliderVisible = false;
   bool _isdeviceVisible = false;
@@ -90,6 +92,12 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
       vsync: this,
       duration: const Duration(seconds: 2),
     );
+
+    _paddingController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    
     _fadeAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween<double>(begin: 0.0, end: 0.2).chain(CurveTween(curve: const Interval(0.0, 0.2, curve: Curves.easeIn))),
@@ -100,6 +108,14 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
         weight: 80,
       ),
     ]).animate(_animationController);
+
+    _paddingAnimation = EdgeInsetsTween(
+      begin: EdgeInsets.zero,
+      end: const EdgeInsets.only(left: 100, top: 100),
+    ).animate(CurvedAnimation(
+      parent: _paddingController,
+      curve: Curves.easeInOut,
+    ));
 
     _animationController.forward();
   }
@@ -161,6 +177,17 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
     });
   }
 
+  void _toggleBackgroundImageChangeVisible() {
+    setState(() {
+      _isbackgroundImageChangeVisible = !_isbackgroundImageChangeVisible;
+      if (_isbackgroundImageChangeVisible) {
+        _paddingController.forward(from: 0.0);
+      } else {
+        _paddingController.reverse();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_backgroundImage == null || _pcImage == null || _homeButtonImage == null || _backButtonImage == null || _recentButtonImage == null) {
@@ -210,11 +237,7 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
-                    onTap: (){
-                      setState(() {
-                        _isbackgroundImageChangeVisible = true;
-                      });
-                    }
+                    onTap: _toggleBackgroundImageChangeVisible,
                   ),
                   SpeedDialChild(
                     child: const Icon(Icons.brightness_6),
@@ -291,26 +314,37 @@ class _DesktopScreenState extends State<DesktopScreen> with SingleTickerProvider
                 color: Colors.black,
               ),
             ),
-          if(_isbackgroundImageChangeVisible)
-          Positioned(
-            right: 0,
-            top: 0,
-            bottom: 0,
+          AnimatedBuilder(
+            animation: _paddingAnimation,
+            builder: (context, child) {
+              return Padding(
+                padding: _paddingAnimation.value,
+                child: child,
+              );
+            },
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.23,
-              color: Colors.red,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(onPressed: (){
-                    setState(() {
-                      _isbackgroundImageChangeVisible = false;
-                    });
-                  }, child: Text("닫기"))
-                ],
-              ),
+              height: 100,
+              width: 100,
+              color: Colors.blue,
             ),
           ),
+          
+          if(_isbackgroundImageChangeVisible)
+            Positioned(
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.23,
+                color: Colors.red,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(onPressed: _toggleBackgroundImageChangeVisible, child: Text("닫기"))
+                  ],
+                ),
+              ),
+            ),
             
           if (!_isdeviceVisible)
             _isbackgroundImageChangeVisible ? Container() :
