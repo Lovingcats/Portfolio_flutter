@@ -314,36 +314,28 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 color: Colors.black,
               ),
             ),
-             if(_isbackgroundImageChangeVisible)
-            Positioned(
-              right: 0,
-              top: 0,
-              bottom: 0,
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.23,
-                color: Colors.red,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(onPressed: _toggleBackgroundImageChangeVisible, child: Text("닫기"))
-                  ],
+            if(_isbackgroundImageChangeVisible)
+              Positioned(
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: AnimatedBuilder(
+                    animation: _sizeAnimation,
+                    builder: (context, child) {
+                      return Container(
+                        height: _sizeAnimation.value?.height,
+                        width: _sizeAnimation.value?.width,
+                        color: Colors.blue,
+                        child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(onPressed: _toggleBackgroundImageChangeVisible, child: Text("닫기"))
+                        ],
+                      ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ),
-          Positioned(
-              right: 0,
-              top: 0,
-              child: AnimatedBuilder(
-                animation: _sizeAnimation,
-                builder: (context, child) {
-                  return Container(
-                    height: _sizeAnimation.value?.height,
-                    width: _sizeAnimation.value?.width,
-                    color: Colors.blue,
-                  );
-                },
-              ),
-            ),
             
          
             
