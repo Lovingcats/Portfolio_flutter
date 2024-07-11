@@ -75,7 +75,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   ui.Image? _backButtonImage;
   ui.Image? _recentButtonImage;
   late AnimationController _animationController;
-  late AnimationController _sizeController;
+  late AnimationController _paddingController;
   late Animation<double> _fadeAnimation;
   late Animation<Size?> _sizeAnimation;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
@@ -93,7 +93,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
       duration: const Duration(seconds: 2),
     );
 
-    _sizeController = AnimationController(
+    _paddingController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
@@ -113,7 +113,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
       begin: Size.zero,
       end: const Size(100, 100),
     ).animate(CurvedAnimation(
-      parent: _sizeController,
+      parent: _paddingController,
       curve: Curves.easeInOut,
     ));
 
@@ -181,9 +181,9 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     setState(() {
       _isbackgroundImageChangeVisible = !_isbackgroundImageChangeVisible;
       if (_isbackgroundImageChangeVisible) {
-        _sizeController.forward(from: 0.0);
+        _paddingController.forward(from: 0.0);
       } else {
-        _sizeController.reverse();
+        _paddingController.reverse();
       }
     });
   }
@@ -331,24 +331,20 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
               ),
             ),
           Positioned(
-            right: 0,
-            top: 0,
-            child: AnimatedBuilder(
-              animation: _sizeAnimation,
-              builder: (context, child) {
-                return Padding(
-                  padding: _sizeAnimation.value,
-                  child: child,
-                );
-              },
-              child: Container(
-                height: 100,
-                width: 100,
-                color: Colors.blue,
+              right: 0,
+              top: 0,
+              child: AnimatedBuilder(
+                animation: _sizeAnimation,
+                builder: (context, child) {
+                  return Container(
+                    height: _sizeAnimation.value?.height,
+                    width: _sizeAnimation.value?.width,
+                    color: Colors.blue,
+                  );
+                },
               ),
             ),
-          ),
-          
+            
          
             
           if (!_isdeviceVisible)
