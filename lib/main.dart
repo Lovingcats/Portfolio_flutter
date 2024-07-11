@@ -314,7 +314,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 
           AnimatedOpacity(
               opacity: _isbackgroundImageChangeVisibleCheck ? 0.0 : _opacity,
-              duration: const Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 300),
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
