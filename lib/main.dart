@@ -110,8 +110,8 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     ]).animate(_animationController);
 
     _sizeAnimation = SizeTween(
-      begin: Size.zero,
-      end: const Size(100, 100),
+      begin: const Size(0, 100),
+      end: const Size(300, 100),
     ).animate(CurvedAnimation(
       parent: _paddingController,
       curve: Curves.easeInOut,
