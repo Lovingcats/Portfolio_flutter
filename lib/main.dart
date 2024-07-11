@@ -75,9 +75,9 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   ui.Image? _backButtonImage;
   ui.Image? _recentButtonImage;
   late AnimationController _animationController;
-  late AnimationController _paddingController;
+  late AnimationController _sizeController;
   late Animation<double> _fadeAnimation;
-  late Animation<EdgeInsets> _paddingAnimation;
+  late Animation<Size?> _sizeAnimation;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   bool _isSliderVisible = false;
   bool _isdeviceVisible = false;
@@ -93,7 +93,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
       duration: const Duration(seconds: 2),
     );
 
-    _paddingController = AnimationController(
+    _sizeController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
@@ -109,11 +109,11 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
       ),
     ]).animate(_animationController);
 
-    _paddingAnimation = EdgeInsetsTween(
-      begin: EdgeInsets.zero,
-      end: const EdgeInsets.only(left: 100, top: 100),
+    _sizeAnimation = SizeTween(
+      begin: Size.zero,
+      end: const Size(100, 100),
     ).animate(CurvedAnimation(
-      parent: _paddingController,
+      parent: _sizeController,
       curve: Curves.easeInOut,
     ));
 
@@ -181,9 +181,9 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     setState(() {
       _isbackgroundImageChangeVisible = !_isbackgroundImageChangeVisible;
       if (_isbackgroundImageChangeVisible) {
-        _paddingController.forward(from: 0.0);
+        _sizeController.forward(from: 0.0);
       } else {
-        _paddingController.reverse();
+        _sizeController.reverse();
       }
     });
   }
@@ -334,10 +334,10 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
             right: 0,
             top: 0,
             child: AnimatedBuilder(
-              animation: _paddingAnimation,
+              animation: _sizeAnimation,
               builder: (context, child) {
                 return Padding(
-                  padding: _paddingAnimation.value,
+                  padding: _sizeAnimation.value,
                   child: child,
                 );
               },
