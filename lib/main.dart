@@ -85,6 +85,8 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   bool _isbackgroundImageChangeVisibleCheck = false;
   double _opacity = 0.7;
   List<bool> changeBackgroundTabCheck = [true, false, false];
+  int _selectedImageIndex = -1; // Add this to keep track of the selected image index
+
   @override
   void initState() {
     _loadImage();
@@ -97,7 +99,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    
+
     _fadeAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween<double>(begin: 0.0, end: 0.2).chain(CurveTween(curve: const Interval(0.0, 0.2, curve: Curves.easeIn))),
@@ -148,8 +150,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     final List<int> bytes1 = data1.buffer.asUint8List();
     final ui.Codec codec1 = await ui.instantiateImageCodec(Uint8List.fromList(bytes1));
     final ui.FrameInfo fi1 = await codec1.getNextFrame();
-    
-    
+
     final ByteData data2 = await rootBundle.load('assets/img/PC_08.jpg');
     final List<int> bytes2 = data2.buffer.asUint8List();
     final ui.Codec codec2 = await ui.instantiateImageCodec(Uint8List.fromList(bytes2));
@@ -199,110 +200,112 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     return Scaffold(
       floatingActionButton: _isSliderVisible
           ? null
-          : _isbackgroundImageChangeVisibleCheck ? null : Padding(
-              padding: const EdgeInsets.only(right: 20, bottom: 30),
-              child: SpeedDial(
-                icon: Icons.settings,
-                backgroundColor: const Color.fromARGB(255, 183, 228, 252),
-                activeIcon: Icons.close,
-                foregroundColor: Colors.black,
-                iconTheme: const IconThemeData(size: 35.0),
-                spacing: 3,
-                openCloseDial: isDialOpen,
-                childPadding: const EdgeInsets.all(0),
-                spaceBetweenChildren: 15,
-                buttonSize: const Size(50.0, 50.0),
-                childrenButtonSize: const Size(50.0, 50.0),
-                direction: SpeedDialDirection.up,
-                switchLabelPosition: false,
-                renderOverlay: true,
-                overlayColor: Colors.black,
-                overlayOpacity: 0.8,
-                useRotationAnimation: true,
-                tooltip: '설정',
-                elevation: 8.0,
-                animationCurve: Curves.elasticInOut,
-                isOpenOnStart: false,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
+          : _isbackgroundImageChangeVisibleCheck
+              ? null
+              : Padding(
+                  padding: const EdgeInsets.only(right: 20, bottom: 30),
+                  child: SpeedDial(
+                    icon: Icons.settings,
+                    backgroundColor: const Color.fromARGB(255, 183, 228, 252),
+                    activeIcon: Icons.close,
+                    foregroundColor: Colors.black,
+                    iconTheme: const IconThemeData(size: 35.0),
+                    spacing: 3,
+                    openCloseDial: isDialOpen,
+                    childPadding: const EdgeInsets.all(0),
+                    spaceBetweenChildren: 15,
+                    buttonSize: const Size(50.0, 50.0),
+                    childrenButtonSize: const Size(50.0, 50.0),
+                    direction: SpeedDialDirection.up,
+                    switchLabelPosition: false,
+                    renderOverlay: true,
+                    overlayColor: Colors.black,
+                    overlayOpacity: 0.8,
+                    useRotationAnimation: true,
+                    tooltip: '설정',
+                    elevation: 8.0,
+                    animationCurve: Curves.elasticInOut,
+                    isOpenOnStart: false,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                    children: [
+                      SpeedDialChild(
+                        child: const FaIcon(FontAwesomeIcons.rotate),
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
+                        elevation: 0.0,
+                        label: '배경 교체',
+                        labelStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _isbackgroundImageChangeVisible = true;
+                            _isbackgroundImageChangeVisibleCheck = true;
+                            _paddingController.forward();
+                          });
+                        },
+                      ),
+                      SpeedDialChild(
+                        child: const Icon(Icons.brightness_6),
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
+                        elevation: 0.0,
+                        label: '배경 밝기 조절',
+                        labelStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _isSliderVisible = true;
+                          });
+                        },
+                      ),
+                      _isdeviceVisible
+                          ? SpeedDialChild(
+                              child: const Icon(Icons.smartphone),
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              elevation: 0.0,
+                              label: '디바이스 보기',
+                              labelStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(8)),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  _isdeviceVisible = false;
+                                });
+                              })
+                          : SpeedDialChild(
+                              child: const Icon(Icons.panorama),
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              elevation: 0.0,
+                              label: '배경만 보기',
+                              labelStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(8)),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  _isdeviceVisible = true;
+                                });
+                              }),
+                    ],
+                  ),
                 ),
-                children: [
-                  SpeedDialChild(
-                    child: const FaIcon(FontAwesomeIcons.rotate),
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    elevation: 0.0,
-                    label: '배경 교체',
-                    labelStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                    ),
-                    onTap: (){
-                      setState(() {
-                        _isbackgroundImageChangeVisible = true;
-                        _isbackgroundImageChangeVisibleCheck = true;
-                        _paddingController.forward();
-                      });
-                    },
-                  ),
-                  SpeedDialChild(
-                    child: const Icon(Icons.brightness_6),
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    elevation: 0.0,
-                    label: '배경 밝기 조절',
-                    labelStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                    ),
-                    onTap: () {
-                      setState(() {
-                        _isSliderVisible = true;
-                      });
-                    },
-                  ),
-                  _isdeviceVisible ? SpeedDialChild(
-                    child: const Icon(Icons.smartphone),
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    elevation: 0.0,
-                    label: '디바이스 보기',
-                    labelStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                    ),
-                    onTap: (){
-                      setState(() {
-                        _isdeviceVisible = false;
-                      });
-                    }
-                  ) : SpeedDialChild(
-                    child: const Icon(Icons.panorama),
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    elevation: 0.0,
-                    label: '배경만 보기',
-                    labelStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                    ),
-                    onTap: (){
-                      setState(() {
-                        _isdeviceVisible = true;
-                      });
-                    }
-                  ),
-                ],
-              ),
-            ),
       body: Stack(
         children: [
           RawImage(
@@ -311,17 +314,15 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
             width: double.infinity,
             height: double.infinity,
           ),
-
           AnimatedOpacity(
-              opacity: _isbackgroundImageChangeVisibleCheck ? 0.0 : _opacity,
-              duration: const Duration(milliseconds: 300),
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: Colors.black,
-              ),
+            opacity: _isbackgroundImageChangeVisibleCheck ? 0.0 : _opacity,
+            duration: const Duration(milliseconds: 300),
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.black,
             ),
-            
+          ),
           if (_isbackgroundImageChangeVisible)
             Positioned(
               right: 0,
@@ -347,7 +348,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                   Material(
+                                  Material(
                                     color: Colors.transparent,
                                     child: InkWell(
                                       onTap: () {
@@ -395,7 +396,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                         child: Center(
                                           child: Text(
                                             "블루 아카이브",
-                                            style: TextStyle(color:  changeBackgroundTabCheck[1] ? Colors.black : Colors.white, fontWeight: FontWeight.bold),
+                                            style: TextStyle(color: changeBackgroundTabCheck[1] ? Colors.black : Colors.white, fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                       ),
@@ -434,7 +435,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                             IconButton(
                               padding: EdgeInsets.zero,
                               constraints: const BoxConstraints(),
-                              onPressed: (){
+                              onPressed: () {
                                 setState(() {
                                   _isbackgroundImageChangeVisibleCheck = false;
                                 });
@@ -444,11 +445,43 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                   });
                                 });
                               },
-                              icon: const Icon(FontAwesomeIcons.xmark, color: Colors.white, size: 18,),
+                              icon: const Icon(
+                                FontAwesomeIcons.xmark,
+                                color: Colors.white,
+                                size: 18,
+                              ),
                             ),
                           ],
                         ),
-                        
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: 6,
+                            itemBuilder: (context, index) {
+                              final imageName = "assets/img/wutheringWaves/${index + 1}.png";
+                              final isSelected = _selectedImageIndex == index;
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedImageIndex = index;
+                                  });
+                                },
+                                child: Container(
+                                  width: 330,
+                                  height: 200,
+                                  margin: const EdgeInsets.only(top: 20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: isSelected ? Border.all(color: const Color(0xffB7E4FC), width: 2) : null,
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(imageName),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -456,283 +489,280 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
               ),
             ),
           if (!_isdeviceVisible)
-            _isbackgroundImageChangeVisibleCheck ? Container() :
-            Center(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  const aspectRatio = 400 / 850;
-                  double deviceWidth;
-                  double deviceHeight;
+            _isbackgroundImageChangeVisibleCheck
+                ? Container()
+                : Center(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        const aspectRatio = 400 / 850;
+                        double deviceWidth;
+                        double deviceHeight;
 
-                  if (constraints.maxWidth / constraints.maxHeight > aspectRatio) {
-                    deviceHeight = constraints.maxHeight * 0.9;
-                    deviceWidth = deviceHeight * aspectRatio;
-                  } else {
-                    deviceWidth = constraints.maxWidth * 0.9;
-                    deviceHeight = deviceWidth / aspectRatio;
-                  }
+                        if (constraints.maxWidth / constraints.maxHeight > aspectRatio) {
+                          deviceHeight = constraints.maxHeight * 0.9;
+                          deviceWidth = deviceHeight * aspectRatio;
+                        } else {
+                          deviceWidth = constraints.maxWidth * 0.9;
+                          deviceHeight = deviceWidth / aspectRatio;
+                        }
 
-                  final customPainterButtonWidth = deviceWidth * 0.075;
-                  final customPainterbuttonHeight = deviceHeight * 0.0325;
+                        final customPainterButtonWidth = deviceWidth * 0.075;
+                        final customPainterbuttonHeight = deviceHeight * 0.0325;
 
-                  final inkwellButtonWidth = deviceWidth * 0.28;
-                  final inkwellbuttonHeight = deviceHeight * 0.05;
+                        final inkwellButtonWidth = deviceWidth * 0.28;
+                        final inkwellbuttonHeight = deviceHeight * 0.05;
 
-                  final buttonSpacing = deviceWidth * 0.3;
+                        final buttonSpacing = deviceWidth * 0.3;
 
-                  return Stack(
-                    children: [
-                      FadeTransition(
-                        opacity: _fadeAnimation,
-                        child: CustomPaint(
-                          size: Size(deviceWidth, deviceHeight),
-                          painter: DeviceFramePainter(
-                            _backgroundImage!,
-                            _homeButtonImage!,
-                            _backButtonImage!,
-                            _recentButtonImage!,
-                            customPainterButtonWidth,
-                            customPainterbuttonHeight,
-                            buttonSpacing,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: deviceWidth / 2 - buttonSpacing - inkwellButtonWidth / 2,
-                        top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
-                        child: FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () {
-                                print('뒤로가기 버튼');
-                              },
-                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                              child: Ink(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                                  color: Colors.transparent,
-                                ),
-                                height: inkwellbuttonHeight,
-                                width: inkwellButtonWidth,
-                                child: const Center(
-                                  child: Text(
-                                    "",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                        return Stack(
+                          children: [
+                            FadeTransition(
+                              opacity: _fadeAnimation,
+                              child: CustomPaint(
+                                size: Size(deviceWidth, deviceHeight),
+                                painter: DeviceFramePainter(
+                                  _backgroundImage!,
+                                  _homeButtonImage!,
+                                  _backButtonImage!,
+                                  _recentButtonImage!,
+                                  customPainterButtonWidth,
+                                  customPainterbuttonHeight,
+                                  buttonSpacing,
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: deviceWidth / 2 - inkwellButtonWidth / 2,
-                        top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
-                        child: FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () {
-                                print('홈 버튼');
-                              },
-                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                              child: Ink(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                            Positioned(
+                              left: deviceWidth / 2 - buttonSpacing - inkwellButtonWidth / 2,
+                              top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
+                              child: FadeTransition(
+                                opacity: _fadeAnimation,
+                                child: Material(
                                   color: Colors.transparent,
-                                ),
-                                height: inkwellbuttonHeight,
-                                width: inkwellButtonWidth,
-                                child: const Center(
-                                  child: Text(
-                                    "",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: deviceWidth / 2 + buttonSpacing - inkwellButtonWidth / 2,
-                        top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
-                        child: FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () {
-                                print('최근앱 버튼');
-                              },
-                              borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                              child: Ink(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(inkwellButtonWidth),
-                                  color: Colors.transparent,
-                                ),
-                                height: inkwellbuttonHeight,
-                                width: inkwellButtonWidth,
-                                child: const Center(
-                                  child: Text(
-                                    "",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: deviceWidth * 0.075,
-                        top: deviceHeight * 0.825,
-                        child: FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: Container(
-                            width: deviceWidth * 0.85,
-                            height: deviceHeight * 0.07,
-                            color: Colors.transparent,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
                                   child: InkWell(
-                                    onTap: () async {
-                                      try {
-                                        await _launchUrl("https://github.com/Lovingcats");
-                                      } catch (e) {
-                                        print('Error launching URL: $e');
-                                      }
+                                    onTap: () {
+                                      print('뒤로가기 버튼');
                                     },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/img/github.png',
-                                        width: deviceHeight * 0.07,
-                                        height: deviceHeight * 0.07,
-                                        fit: BoxFit.cover,
-                                        filterQuality: FilterQuality.high,
+                                    borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                        color: Colors.transparent,
+                                      ),
+                                      height: inkwellbuttonHeight,
+                                      width: inkwellButtonWidth,
+                                      child: const Center(
+                                        child: Text(
+                                          "",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: InkWell(
-                                    onTap: () async {
-                                      try {
-                                        await _launchUrl("https://lovely-cornucopia-0ba.notion.site/05f0c597d9ac487a9228f3fd172c196a?pvs=4");
-                                      } catch (e) {
-                                        print('Error launching URL: $e');
-                                      }
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/img/gmail.png',
-                                        width: deviceHeight * 0.07,
-                                        height: deviceHeight * 0.07,
-                                        fit: BoxFit.cover,
-                                        filterQuality: FilterQuality.high,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: InkWell(
-                                    onTap: () async {
-                                      try {
-                                        await _launchUrl("https://lovingcats.tistory.com/");
-                                      } catch (e) {
-                                        print('Error launching URL: $e');
-                                      }
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/img/tistory.png',
-                                        width: deviceHeight * 0.07,
-                                        height: deviceHeight * 0.07,
-                                        fit: BoxFit.cover,
-                                        filterQuality: FilterQuality.high,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.asset(
-                                    'assets/img/seeAllApp.png',
-                                    width: deviceHeight * 0.07,
-                                    height: deviceHeight * 0.07,
-                                    fit: BoxFit.cover,
-                                    filterQuality: FilterQuality.high,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      
-                    ],
-                  );
-                },
-              ),
-            ),
+                            Positioned(
+                              left: deviceWidth / 2 - inkwellButtonWidth / 2,
+                              top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
+                              child: FadeTransition(
+                                opacity: _fadeAnimation,
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () {
+                                      print('홈 버튼');
+                                    },
+                                    borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                        color: Colors.transparent,
+                                      ),
+                                      height: inkwellbuttonHeight,
+                                      width: inkwellButtonWidth,
+                                      child: const Center(
+                                        child: Text(
+                                          "",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              left: deviceWidth / 2 + buttonSpacing - inkwellButtonWidth / 2,
+                              top: deviceHeight - 60 / 2 - inkwellbuttonHeight / 2 - 3,
+                              child: FadeTransition(
+                                opacity: _fadeAnimation,
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () {
+                                      print('최근앱 버튼');
+                                    },
+                                    borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(inkwellButtonWidth),
+                                        color: Colors.transparent,
+                                      ),
+                                      height: inkwellbuttonHeight,
+                                      width: inkwellButtonWidth,
+                                      child: const Center(
+                                        child: Text(
+                                          "",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              left: deviceWidth * 0.075,
+                              top: deviceHeight * 0.825,
+                              child: FadeTransition(
+                                opacity: _fadeAnimation,
+                                child: Container(
+                                  width: deviceWidth * 0.85,
+                                  height: deviceHeight * 0.07,
+                                  color: Colors.transparent,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            try {
+                                              await _launchUrl("https://github.com/Lovingcats");
+                                            } catch (e) {
+                                              print('Error launching URL: $e');
+                                            }
+                                          },
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(8.0),
+                                            child: Image.asset(
+                                              'assets/img/github.png',
+                                              width: deviceHeight * 0.07,
+                                              height: deviceHeight * 0.07,
+                                              fit: BoxFit.cover,
+                                              filterQuality: FilterQuality.high,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            try {
+                                              await _launchUrl("https://lovely-cornucopia-0ba.notion.site/05f0c597d9ac487a9228f3fd172c196a?pvs=4");
+                                            } catch (e) {
+                                              print('Error launching URL: $e');
+                                            }
+                                          },
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(8.0),
+                                            child: Image.asset(
+                                              'assets/img/gmail.png',
+                                              width: deviceHeight * 0.07,
+                                              height: deviceHeight * 0.07,
+                                              fit: BoxFit.cover,
+                                              filterQuality: FilterQuality.high,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            try {
+                                              await _launchUrl("https://lovingcats.tistory.com/");
+                                            } catch (e) {
+                                              print('Error launching URL: $e');
+                                            }
+                                          },
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(8.0),
+                                            child: Image.asset(
+                                              'assets/img/tistory.png',
+                                              width: deviceHeight * 0.07,
+                                              height: deviceHeight * 0.07,
+                                              fit: BoxFit.cover,
+                                              filterQuality: FilterQuality.high,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                        child: Image.asset(
+                                          'assets/img/seeAllApp.png',
+                                          width: deviceHeight * 0.07,
+                                          height: deviceHeight * 0.07,
+                                          fit: BoxFit.cover,
+                                          filterQuality: FilterQuality.high,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
           if (_isSliderVisible)
             Positioned(
               bottom: 50,
               right: 20,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return Row(
-                    children: [
-                      SizedBox(
-                        width: 300,
-                        child: Slider(
-                          value: _opacity,
-                          thumbColor: const Color.fromARGB(255, 183, 228, 252),
-                          activeColor: const Color.fromARGB(255, 183, 228, 252),
-                          min: 0.0,
-                          max: 1.0,
-                          onChanged: (value) {
-                            setState(() {
-                              _opacity = value;
-                            });
-                          },
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
+              child: LayoutBuilder(builder: (context, constraints) {
+                return Row(
+                  children: [
+                    SizedBox(
+                      width: 300,
+                      child: Slider(
+                        value: _opacity,
+                        thumbColor: const Color.fromARGB(255, 183, 228, 252),
+                        activeColor: const Color.fromARGB(255, 183, 228, 252),
+                        min: 0.0,
+                        max: 1.0,
+                        onChanged: (value) {
                           setState(() {
-                            _isSliderVisible = false;
+                            _opacity = value;
                           });
                         },
-                        style: ElevatedButton.styleFrom(
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _isSliderVisible = false;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           minimumSize: const Size(86, 42),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
-                          )
-                        ),
-                        child: const Text('적용', style: TextStyle(
-                          color: Colors.black
-                        ),),
-
+                          )),
+                      child: const Text(
+                        '적용',
+                        style: TextStyle(color: Colors.black),
                       ),
-                    ],
-                  );
-                } 
-              ),
-            )      
+                    ),
+                  ],
+                );
+              }),
+            )
         ],
       ),
     );
