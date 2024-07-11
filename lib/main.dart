@@ -329,7 +329,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
               child: SlideTransition(
                 position: _slideAnimation,
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.21,
+                  width: MediaQuery.of(context).size.width * 0.191,
                   color: Colors.blue,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
