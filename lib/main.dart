@@ -77,7 +77,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   late AnimationController _animationController;
   late AnimationController _paddingController;
   late Animation<double> _fadeAnimation;
-  late Animation<Size?> _sizeAnimation;
+  late Animation<Offset> _slideAnimation;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   bool _isSliderVisible = false;
   bool _isdeviceVisible = false;
@@ -95,7 +95,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 
     _paddingController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 1),
     );
     
     _fadeAnimation = TweenSequence<double>([
@@ -109,9 +109,9 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
       ),
     ]).animate(_animationController);
 
-    _sizeAnimation = SizeTween(
-      begin: const Size(0, 100),
-      end: const Size(300, 100),
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(1.0, 0.0),
+      end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _paddingController,
       curve: Curves.easeInOut,
@@ -181,7 +181,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     setState(() {
       _isbackgroundImageChangeVisible = !_isbackgroundImageChangeVisible;
       if (_isbackgroundImageChangeVisible) {
-        _paddingController.forward(from: 0.0);
+        _paddingController.forward();
       } else {
         _paddingController.reverse();
       }
@@ -304,9 +304,8 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
             height: double.infinity,
           ),
 
-          _isbackgroundImageChangeVisible ? Container() :
-            AnimatedOpacity(
-              opacity: _opacity,
+          AnimatedOpacity(
+              opacity: _isbackgroundImageChangeVisible ? 0.0 : _opacity,
               duration: const Duration(milliseconds: 500),
               child: Container(
                 width: double.infinity,
@@ -314,31 +313,28 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 color: Colors.black,
               ),
             ),
-            if(_isbackgroundImageChangeVisible)
-              Positioned(
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  child: AnimatedBuilder(
-                    animation: _sizeAnimation,
-                    builder: (context, child) {
-                      return Container(
-                        height: _sizeAnimation.value?.height,
-                        width: _sizeAnimation.value?.width,
-                        color: Colors.blue,
-                        child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ElevatedButton(onPressed: _toggleBackgroundImageChangeVisible, child: Text("닫기"))
-                        ],
+          if (_isbackgroundImageChangeVisible)
+            Positioned(
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: SlideTransition(
+                position: _slideAnimation,
+                child: Container(
+                  width: 300,
+                  color: Colors.blue,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed: _toggleBackgroundImageChangeVisible,
+                        child: const Text("닫기"),
                       ),
-                      );
-                    },
+                    ],
                   ),
                 ),
-            
-         
-            
+              ),
+            ),
           if (!_isdeviceVisible)
             _isbackgroundImageChangeVisible ? Container() :
             Center(
@@ -583,8 +579,8 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         width: 300,
                         child: Slider(
                           value: _opacity,
-                          thumbColor: Color.fromARGB(255, 183, 228, 252),
-                          activeColor: Color.fromARGB(255, 183, 228, 252),
+                          thumbColor: const Color.fromARGB(255, 183, 228, 252),
+                          activeColor: const Color.fromARGB(255, 183, 228, 252),
                           min: 0.0,
                           max: 1.0,
                           onChanged: (value) {
@@ -602,7 +598,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          minimumSize: Size(86, 42),
+                          minimumSize: const Size(86, 42),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           )
