@@ -199,7 +199,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     return Scaffold(
       floatingActionButton: _isSliderVisible
           ? null
-          : _isbackgroundImageChangeVisible ? null : Padding(
+          : _isbackgroundImageChangeVisibleCheck ? null : Padding(
               padding: const EdgeInsets.only(right: 20, bottom: 30),
               child: SpeedDial(
                 icon: Icons.settings,
@@ -239,7 +239,13 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
-                    onTap: _toggleBackgroundImageChangeVisible,
+                    onTap: (){
+                      setState(() {
+                        _isbackgroundImageChangeVisible = true;
+                        _isbackgroundImageChangeVisibleCheck = true;
+                        _paddingController.forward();
+                      });
+                    },
                   ),
                   SpeedDialChild(
                     child: const Icon(Icons.brightness_6),
@@ -307,7 +313,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
           ),
 
           AnimatedOpacity(
-              opacity: _isbackgroundImageChangeVisible ? 0.0 : _opacity,
+              opacity: _isbackgroundImageChangeVisibleCheck ? 0.0 : _opacity,
               duration: const Duration(milliseconds: 500),
               child: Container(
                 width: double.infinity,
@@ -332,9 +338,13 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                       ElevatedButton(
                         onPressed: (){
                           setState(() {
-                            _isbackgroundImageChangeVisible = !_isbackgroundImageChangeVisible;
+                            _isbackgroundImageChangeVisibleCheck = false;
                           });
-                          _paddingController.reverse();
+                          _paddingController.reverse().then((_) {
+                            setState(() {
+                              _isbackgroundImageChangeVisible = !_isbackgroundImageChangeVisible;
+                            });
+                          });
                         },
                         child: const Text("닫기"),
                       ),
@@ -344,7 +354,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
               ),
             ),
           if (!_isdeviceVisible)
-            _isbackgroundImageChangeVisible ? Container() :
+            _isbackgroundImageChangeVisibleCheck ? Container() :
             Center(
               child: LayoutBuilder(
                 builder: (context, constraints) {
