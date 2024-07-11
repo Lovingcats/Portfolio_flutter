@@ -445,7 +445,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
             Center(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final aspectRatio = 400 / 850;
+                  const aspectRatio = 400 / 850;
                   double deviceWidth;
                   double deviceHeight;
 
