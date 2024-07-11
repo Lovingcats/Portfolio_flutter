@@ -114,7 +114,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _paddingController,
-      curve: Curves.easeInOut,
+      curve: Curves.easeOutCubic,
     ));
 
     _animationController.forward();
@@ -636,4 +636,3 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     );
   }
 }
-
