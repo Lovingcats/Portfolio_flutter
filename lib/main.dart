@@ -332,23 +332,110 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.191,
                   color: Colors.black.withOpacity(0.62),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: (){
-                          setState(() {
-                            _isbackgroundImageChangeVisibleCheck = false;
-                          });
-                          _paddingController.reverse().then((_) {
-                            setState(() {
-                              _isbackgroundImageChangeVisible = !_isbackgroundImageChangeVisible;
-                            });
-                          });
-                        },
-                        icon: const Icon(FontAwesomeIcons.xmark, color: Colors.white,),
-                      ),
-                    ],
+                  padding: const EdgeInsets.all(10),
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                   Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                      },
+                                      borderRadius: BorderRadius.circular(30),
+                                      child: Ink(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(30),
+                                          color: Colors.transparent,
+                                        ),
+                                        height: 30,
+                                        width: 60,
+                                        child: const Center(
+                                          child: Text(
+                                            "명조",
+                                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                      },
+                                      borderRadius: BorderRadius.circular(30),
+                                      child: Ink(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(30),
+                                          color: Colors.transparent,
+                                        ),
+                                        height: 30,
+                                        width: 110,
+                                        child: const Center(
+                                          child: Text(
+                                            "블루 아카이브",
+                                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                      },
+                                      borderRadius: BorderRadius.circular(30),
+                                      child: Ink(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(30),
+                                          color: Colors.transparent,
+                                        ),
+                                        height: 30,
+                                        width: 80,
+                                        child: const Center(
+                                          child: Text(
+                                            "명일방주",
+                                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                              onPressed: (){
+                                setState(() {
+                                  _isbackgroundImageChangeVisibleCheck = false;
+                                });
+                                _paddingController.reverse().then((_) {
+                                  setState(() {
+                                    _isbackgroundImageChangeVisible = !_isbackgroundImageChangeVisible;
+                                  });
+                                });
+                              },
+                              icon: const Icon(FontAwesomeIcons.xmark, color: Colors.white, size: 18,),
+                            ),
+                          ],
+                        ),
+                        
+                      ],
+                    ),
                   ),
                 ),
               ),
