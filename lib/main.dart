@@ -84,7 +84,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   bool _isbackgroundImageChangeVisible = false;
   bool _isbackgroundImageChangeVisibleCheck = false;
   double _opacity = 0.7;
-
+  List<bool> changeBackgroundTabCheck = [true, false, false];
   @override
   void initState() {
     _loadImage();
