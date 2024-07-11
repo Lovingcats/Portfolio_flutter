@@ -341,7 +341,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(
-                              width: 250,
+                              width: 263,
                               height: 30,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
