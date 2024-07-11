@@ -351,19 +351,24 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                     color: Colors.transparent,
                                     child: InkWell(
                                       onTap: () {
+                                        setState(() {
+                                          changeBackgroundTabCheck[0] = true;
+                                          changeBackgroundTabCheck[1] = false;
+                                          changeBackgroundTabCheck[2] = false;
+                                        });
                                       },
                                       borderRadius: BorderRadius.circular(30),
                                       child: Ink(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(30),
-                                          color: Colors.transparent,
+                                          color: changeBackgroundTabCheck[0] ? const Color(0xffB7E4FC) : Colors.transparent,
                                         ),
                                         height: 30,
                                         width: 60,
-                                        child: const Center(
+                                        child: Center(
                                           child: Text(
                                             "명조",
-                                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                                            style: TextStyle(color: changeBackgroundTabCheck[0] ? Colors.black : Colors.white, fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                       ),
@@ -373,19 +378,24 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                     color: Colors.transparent,
                                     child: InkWell(
                                       onTap: () {
+                                        setState(() {
+                                          changeBackgroundTabCheck[0] = false;
+                                          changeBackgroundTabCheck[1] = true;
+                                          changeBackgroundTabCheck[2] = false;
+                                        });
                                       },
                                       borderRadius: BorderRadius.circular(30),
                                       child: Ink(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(30),
-                                          color: Colors.transparent,
+                                          color: changeBackgroundTabCheck[1] ? const Color(0xffB7E4FC) : Colors.transparent,
                                         ),
                                         height: 30,
                                         width: 110,
-                                        child: const Center(
+                                        child: Center(
                                           child: Text(
                                             "블루 아카이브",
-                                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                                            style: TextStyle(color:  changeBackgroundTabCheck[1] ? Colors.black : Colors.white, fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                       ),
@@ -395,19 +405,24 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                     color: Colors.transparent,
                                     child: InkWell(
                                       onTap: () {
+                                        setState(() {
+                                          changeBackgroundTabCheck[0] = false;
+                                          changeBackgroundTabCheck[1] = false;
+                                          changeBackgroundTabCheck[2] = true;
+                                        });
                                       },
                                       borderRadius: BorderRadius.circular(30),
                                       child: Ink(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(30),
-                                          color: Colors.transparent,
+                                          color: changeBackgroundTabCheck[2] ? const Color(0xffB7E4FC) : Colors.transparent,
                                         ),
                                         height: 30,
                                         width: 80,
-                                        child: const Center(
+                                        child: Center(
                                           child: Text(
                                             "명일방주",
-                                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+                                            style: TextStyle(color: changeBackgroundTabCheck[2] ? Colors.black : Colors.white, fontWeight: FontWeight.bold),
                                           ),
                                         ),
                                       ),
