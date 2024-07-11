@@ -330,11 +330,11 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 position: _slideAnimation,
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.191,
-                  color: Colors.blue,
+                  color: Colors.black.withOpacity(0.62),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      ElevatedButton(
+                      IconButton(
                         onPressed: (){
                           setState(() {
                             _isbackgroundImageChangeVisibleCheck = false;
@@ -345,7 +345,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                             });
                           });
                         },
-                        child: const Text("닫기"),
+                        icon: const Icon(FontAwesomeIcons.xmark, color: Colors.white,),
                       ),
                     ],
                   ),
