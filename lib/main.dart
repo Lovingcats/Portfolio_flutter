@@ -82,11 +82,11 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   bool _isSliderVisible = false;
   bool _isdeviceVisible = false;
   bool _isbackgroundImageChangeVisible = false;
+  bool _isbackgroundImageChangeVisibleCheck = false;
   double _opacity = 0.7;
 
   @override
   void initState() {
-    super.initState();
     _loadImage();
     _animationController = AnimationController(
       vsync: this,
@@ -95,7 +95,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 
     _paddingController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 300),
     );
     
     _fadeAnimation = TweenSequence<double>([
@@ -118,11 +118,13 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     ));
 
     _animationController.forward();
+    super.initState();
   }
 
   @override
   void dispose() {
     _animationController.dispose();
+    _paddingController.dispose();
     super.dispose();
   }
 
@@ -313,6 +315,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 color: Colors.black,
               ),
             ),
+            
           if (_isbackgroundImageChangeVisible)
             Positioned(
               right: 0,
@@ -327,7 +330,12 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: _toggleBackgroundImageChangeVisible,
+                        onPressed: (){
+                          setState(() {
+                            _isbackgroundImageChangeVisible = !_isbackgroundImageChangeVisible;
+                          });
+                          _paddingController.reverse();
+                        },
                         child: const Text("닫기"),
                       ),
                     ],
