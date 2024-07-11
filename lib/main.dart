@@ -330,7 +330,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
               child: SlideTransition(
                 position: _slideAnimation,
                 child: Container(
-                  width: 300,
+                  width: MediaQuery.of(context).size.width * 0.25,
                   color: Colors.blue,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -636,3 +636,4 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     );
   }
 }
+
