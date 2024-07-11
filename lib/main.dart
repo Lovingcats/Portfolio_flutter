@@ -330,7 +330,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
               child: SlideTransition(
                 position: _slideAnimation,
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.191,
+                  width: 350,
                   color: Colors.black.withOpacity(0.62),
                   padding: const EdgeInsets.all(10),
                   child: Center(
