@@ -153,7 +153,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     final ui.Codec codec1 = await ui.instantiateImageCodec(Uint8List.fromList(bytes1));
     final ui.FrameInfo fi1 = await codec1.getNextFrame();
 
-    final ByteData data2 = await rootBundle.load('assets/img/PC_08.jpg');
+    final ByteData data2 = await rootBundle.load('assets/img/blueArchive/1.png');
     final List<int> bytes2 = data2.buffer.asUint8List();
     final ui.Codec codec2 = await ui.instantiateImageCodec(Uint8List.fromList(bytes2));
     final ui.FrameInfo fi2 = await codec2.getNextFrame();
@@ -472,9 +472,11 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                             ),
                           ],
                         ),
-                        Expanded(
+                        if(changeBackgroundTabCheck[0])
+                         Expanded(
                           child: ImageList(
                             selectedIndex: _selectedImageIndex,
+                            imgType: "wutheringWaves",
                             onImageSelected: (index) async {
                               setState(() {
                                 _isImageChanging = true;
@@ -482,6 +484,25 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                               });
 
                               await _changeBackgroundImage("assets/img/wutheringWaves/${index + 1}.png");
+
+                              setState(() {
+                                _isImageChanging = false;
+                              });
+                            },
+                          ),
+                        ),
+                        if(changeBackgroundTabCheck[1])
+                         Expanded(
+                          child: ImageList(
+                            selectedIndex: _selectedImageIndex,
+                            imgType: "blueArchive",
+                            onImageSelected: (index) async {
+                              setState(() {
+                                _isImageChanging = true;
+                                _selectedImageIndex = index;
+                              });
+
+                              await _changeBackgroundImage("assets/img/blueArchive/${index + 1}.png");
 
                               setState(() {
                                 _isImageChanging = false;
@@ -779,15 +800,16 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 class ImageList extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onImageSelected;
+  final String imgType;
 
-  const ImageList({Key? key, required this.selectedIndex, required this.onImageSelected}) : super(key: key);
+  const ImageList({Key? key, required this.selectedIndex, required this.imgType, required this.onImageSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: 6,
       itemBuilder: (context, index) {
-        final imageName = "assets/img/wutheringWaves/${index + 1}.png";
+        final imageName = "assets/img/$imgType/${index + 1}.png";
         final isSelected = selectedIndex == index;
         return GestureDetector(
           onTap: () {
