@@ -85,7 +85,9 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   bool _isbackgroundImageChangeVisibleCheck = false;
   double _opacity = 0.7;
   List<bool> changeBackgroundTabCheck = [true, false, false];
-  int _selectedImageIndex = -1; // Add this to keep track of the selected image index
+  int _selectedImageIndex = -1;
+  ui.Image? _selectedImage;
+  bool _isImageChanging = false;
 
   @override
   void initState() {
@@ -177,6 +179,18 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
       _homeButtonImage = homeFi.image;
       _backButtonImage = backFi.image;
       _recentButtonImage = recentFi.image;
+      _selectedImage = fi2.image;
+    });
+  }
+
+  Future<void> _changeBackgroundImage(String imagePath) async {
+    final ByteData data = await rootBundle.load(imagePath);
+    final List<int> bytes = data.buffer.asUint8List();
+    final ui.Codec codec = await ui.instantiateImageCodec(Uint8List.fromList(bytes));
+    final ui.FrameInfo frameInfo = await codec.getNextFrame();
+
+    setState(() {
+      _selectedImage = frameInfo.image;
     });
   }
 
@@ -242,12 +256,13 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
-                        onTap: () {
+                        onTap: () async {
+                          await _paddingController.reverse();
                           setState(() {
                             _isbackgroundImageChangeVisible = true;
                             _isbackgroundImageChangeVisibleCheck = true;
-                            _paddingController.forward();
                           });
+                          await _paddingController.forward();
                         },
                       ),
                       SpeedDialChild(
@@ -308,11 +323,15 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 ),
       body: Stack(
         children: [
-          RawImage(
-            image: _pcImage!,
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
+          AnimatedOpacity(
+            opacity: _isImageChanging ? 0.0 : 1.0,
+            duration: const Duration(milliseconds: 300),
+            child: RawImage(
+              image: _selectedImage!,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
           ),
           AnimatedOpacity(
             opacity: _isbackgroundImageChangeVisibleCheck ? 0.0 : _opacity,
@@ -456,9 +475,16 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         Expanded(
                           child: ImageList(
                             selectedIndex: _selectedImageIndex,
-                            onImageSelected: (index) {
+                            onImageSelected: (index) async {
                               setState(() {
+                                _isImageChanging = true;
                                 _selectedImageIndex = index;
+                              });
+
+                              await _changeBackgroundImage("assets/img/wutheringWaves/${index + 1}.png");
+
+                              setState(() {
+                                _isImageChanging = false;
                               });
                             },
                           ),
@@ -750,27 +776,22 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   }
 }
 
-class ImageList extends StatefulWidget {
+class ImageList extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onImageSelected;
 
   const ImageList({Key? key, required this.selectedIndex, required this.onImageSelected}) : super(key: key);
 
   @override
-  _ImageListState createState() => _ImageListState();
-}
-
-class _ImageListState extends State<ImageList> {
-  @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: 6,
       itemBuilder: (context, index) {
         final imageName = "assets/img/wutheringWaves/${index + 1}.png";
-        final isSelected = widget.selectedIndex == index;
+        final isSelected = selectedIndex == index;
         return GestureDetector(
           onTap: () {
-            widget.onImageSelected(index);
+            onImageSelected(index);
           },
           child: Container(
             width: 330,
