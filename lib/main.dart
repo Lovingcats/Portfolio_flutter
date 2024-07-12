@@ -510,6 +510,25 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                             },
                           ),
                         ),
+                      if(changeBackgroundTabCheck[2])
+                         Expanded(
+                          child: ImageList(
+                            selectedIndex: _selectedImageIndex,
+                            imgType: "arkNights",
+                            onImageSelected: (index) async {
+                              setState(() {
+                                _isImageChanging = true;
+                                _selectedImageIndex = index;
+                              });
+
+                              await _changeBackgroundImage("assets/img/arkNights/${index + 1}.png");
+
+                              setState(() {
+                                _isImageChanging = false;
+                              });
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),
