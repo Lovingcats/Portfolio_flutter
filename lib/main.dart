@@ -86,7 +86,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   double _opacity = 0.7;
   List<bool> changeBackgroundTabCheck = [true, false, false];
   int _wuntheringWaveSelectedImageIndex = -1;
-  int _blueArchiveWaveSelectedImageIndex = -1;
+  int _blueArchiveWaveSelectedImageIndex = 0;
   int _arkNightsWaveSelectedImageIndex = -1;
   ui.Image? _selectedImage;
   bool _isImageChanging = false;
