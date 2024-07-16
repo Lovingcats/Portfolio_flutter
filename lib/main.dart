@@ -87,6 +87,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   List<bool> changeBackgroundTabCheck = [true, false, false];
   List<bool> wutheringWavesCheck = [false, false, false, false, false ,false];
   List<bool> blueArchiveCheck = [true, false, false, false, false ,false];
+  List<bool> arkNightsCheck = [false, false, false, false, false ,false];
   int _selectedImageIndex = -1;
   ui.Image? _selectedImage;
   bool _isImageChanging = false;
