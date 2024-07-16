@@ -478,12 +478,17 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         if(changeBackgroundTabCheck[0])
                          Expanded(
                           child: ImageList(
-                            selectedIndex: _selectedImageIndex,
+                            selectedIndexList: wutheringWavesCheck,
                             imgType: "wutheringWaves",
                             onImageSelected: (index) async {
                               setState(() {
                                 _isImageChanging = true;
-                                _selectedImageIndex = index;
+                                for(int i = 0; i < 6; i++){
+                                  if(i == index){
+                                    wutheringWavesCheck[i] = true;
+                                  }
+                                  wutheringWavesCheck[i] = false;
+                                }
                               });
 
                               await _changeBackgroundImage("assets/img/wutheringWaves/${index + 1}.png");
@@ -820,11 +825,11 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 }
 
 class ImageList extends StatelessWidget {
-  final int selectedIndex;
+  final List<bool> selectedIndexList;
   final Function(int) onImageSelected;
   final String imgType;
 
-  const ImageList({Key? key, required this.selectedIndex, required this.imgType, required this.onImageSelected}) : super(key: key);
+  const ImageList({Key? key, required this.selectedIndexList, required this.imgType, required this.onImageSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
