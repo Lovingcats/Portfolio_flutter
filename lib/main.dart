@@ -477,12 +477,14 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         if(changeBackgroundTabCheck[0])
                          Expanded(
                           child: ImageList(
-                            selectedIndex: _selectedImageIndex,
+                            selectedIndex: _wuntheringWaveSelectedImageIndex,
                             imgType: "wutheringWaves",
                             onImageSelected: (index) async {
                               setState(() {
                                 _isImageChanging = true;
-                                _selectedImageIndex = index;
+                                _wuntheringWaveSelectedImageIndex = index;
+                                _blueArchiveWaveSelectedImageIndex = -1;
+                                _arkNightsWaveSelectedImageIndex = -1;
                               });
 
                               await _changeBackgroundImage("assets/img/wutheringWaves/${index + 1}.png");
@@ -496,12 +498,14 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         if(changeBackgroundTabCheck[1])
                          Expanded(
                           child: ImageList(
-                            selectedIndex: _selectedImageIndex,
+                            selectedIndex: _blueArchiveWaveSelectedImageIndex,
                             imgType: "blueArchive",
                             onImageSelected: (index) async {
                               setState(() {
                                 _isImageChanging = true;
-                                _selectedImageIndex = index;
+                                _blueArchiveWaveSelectedImageIndex = index;
+                                _wuntheringWaveSelectedImageIndex = -1;
+                                _arkNightsWaveSelectedImageIndex = -1;
                               });
 
                               await _changeBackgroundImage("assets/img/blueArchive/${index + 1}.png");
