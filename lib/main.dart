@@ -85,9 +85,6 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   bool _isbackgroundImageChangeVisibleCheck = false;
   double _opacity = 0.7;
   List<bool> changeBackgroundTabCheck = [true, false, false];
-  List<bool> wutheringWavesCheck = [false, false, false, false, false ,false];
-  List<bool> blueArchiveCheck = [true, false, false, false, false ,false];
-  List<bool> arkNightsCheck = [false, false, false, false, false ,false];
   int _selectedImageIndex = -1;
   ui.Image? _selectedImage;
   bool _isImageChanging = false;
@@ -478,17 +475,12 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         if(changeBackgroundTabCheck[0])
                          Expanded(
                           child: ImageList(
-                            selectedIndexList: wutheringWavesCheck,
+                            selectedIndex: _selectedImageIndex,
                             imgType: "wutheringWaves",
                             onImageSelected: (index) async {
                               setState(() {
                                 _isImageChanging = true;
-                                for(int i = 0; i < 6; i++){
-                                  if(i == index){
-                                    wutheringWavesCheck[i] = true;
-                                  }
-                                  wutheringWavesCheck[i] = false;
-                                }
+                                _selectedImageIndex = index;
                               });
 
                               await _changeBackgroundImage("assets/img/wutheringWaves/${index + 1}.png");
@@ -825,11 +817,11 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 }
 
 class ImageList extends StatelessWidget {
-  final List<bool> selectedIndexList;
+  final int selectedIndex;
   final Function(int) onImageSelected;
   final String imgType;
 
-  const ImageList({Key? key, required this.selectedIndexList, required this.imgType, required this.onImageSelected}) : super(key: key);
+  const ImageList({Key? key, required this.selectedIndex, required this.imgType, required this.onImageSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
