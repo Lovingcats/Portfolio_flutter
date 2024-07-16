@@ -519,12 +519,14 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                       if(changeBackgroundTabCheck[2])
                          Expanded(
                           child: ImageList(
-                            selectedIndex: _selectedImageIndex,
+                            selectedIndex: _arkNightsWaveSelectedImageIndex,
                             imgType: "arkNights",
                             onImageSelected: (index) async {
                               setState(() {
                                 _isImageChanging = true;
-                                _selectedImageIndex = index;
+                                _arkNightsWaveSelectedImageIndex = index;
+                                _wuntheringWaveSelectedImageIndex = -1;
+                                _blueArchiveWaveSelectedImageIndex = -1;
                               });
 
                               await _changeBackgroundImage("assets/img/arkNights/${index + 1}.png");
