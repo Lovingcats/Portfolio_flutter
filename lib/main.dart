@@ -91,6 +91,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   int _arkNightsWaveSelectedImageIndex = -1;
   ui.Image? _selectedImage;
   bool _isImageChanging = false;
+  bool test = false;
 
   @override
   void initState() {
@@ -210,8 +211,12 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    if (_backgroundImage == null || _pcImage == null || _homeButtonImage == null || _backButtonImage == null || _recentButtonImage == null) {
-      return const Center(child: CircularProgressIndicator());
+    if (_backgroundImage == null || _pcImage == null || _homeButtonImage == null || _backButtonImage == null || _recentButtonImage == null || test == false) {
+      return Center(child: Container(
+        height: 500,
+        child: Lottie.asset('assets/lottie/loading.json',
+                          fit: BoxFit.contain),
+      ));
     }
 
     return Scaffold(
