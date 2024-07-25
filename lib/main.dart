@@ -92,7 +92,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   int _wuntheringWaveSelectedImageIndex = -1;
   int _blueArchiveSelectedImageIndex = 0;
   int _arkNightsSelectedImageIndex = -1;
-  List<ui.Image?> wuntheringWaveImages = [];
+  List<ui.Image?> wutheringWaveImages = [];
   List<ui.Image?> blueArchiveImages = [];
   List<ui.Image?> arkNightsImages = [];
   bool wutheringWaveLoaded = false;
@@ -229,7 +229,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
       if(type == "arkNights"){
         arkNightsImages.add(backgroundFi.image);
       } else if(type == "wutheringWaves"){
-        wuntheringWaveImages.add(backgroundFi.image);
+        wutheringWaveImages.add(backgroundFi.image);
       } else if(type == "blueArchive"){
         blueArchiveImages.add(backgroundFi.image);
       } else {
@@ -238,7 +238,15 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     }
       
     setState(() {
-      
+      if(type == "arkNights"){
+        arkNightsLoaded = true;
+      } else if(type == "wutheringWaves"){
+        wutheringWaveLoaded = true;
+      } else if(type == "blueArchive"){
+        blueArchiveLoaded = true;
+      } else {
+        print("만족화는게 없습니다.");
+      }
     });
   }
 
