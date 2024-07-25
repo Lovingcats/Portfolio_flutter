@@ -893,8 +893,9 @@ class ImageList extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onImageSelected;
   final String imgType;
+  final bool loadingType;
 
-  const ImageList({Key? key, required this.selectedIndex, required this.imgType, required this.onImageSelected}) : super(key: key);
+  const ImageList({Key? key, required this.selectedIndex, required this.imgType, required this.onImageSelected, required this.loadingType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
