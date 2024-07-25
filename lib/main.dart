@@ -915,8 +915,7 @@ class ImageList extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onImageSelected;
   final bool loadingType;
-  final List<ui.Image?> imageList;
-
+  final List<Uint8List?> imageList;
   const ImageList({
     Key? key,
     required this.selectedIndex,
@@ -945,7 +944,7 @@ class ImageList extends StatelessWidget {
                     border: isSelected ? Border.all(color: const Color(0xffB7E4FC), width: 2) : null,
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: RawImage(image: imageList[index]!) as ImageProvider,
+                      image: MemoryImage(imageList[index]!),
                     ),
                   ),
                 ),
