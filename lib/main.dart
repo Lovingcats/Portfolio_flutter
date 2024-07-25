@@ -218,11 +218,24 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 
   Future<void> backgroundChangeImageLoad(String type) async {
     setState(() {
-      if (type == 'arkNights') arkNightsLoaded = false;
-      if (type == 'wutheringWaves') wutheringWaveLoaded = false;
-      if (type == 'blueArchive') blueArchiveLoaded = false;
+      switch (type) {
+        case 'arkNights':
+          arkNightsLoaded = false;
+          arkNightsImages = [];
+          break;
+        case 'wutheringWaves':
+          wutheringWaveLoaded = false;
+          wutheringWaveImages = [];
+          break;
+        case 'blueArchive':
+          blueArchiveLoaded = false;
+          blueArchiveImages = [];
+          break;
+        default:
+          break;
+      }
     });
-
+    
     final List<Future<Uint8List>> futures = [];
     for (int i = 0; i < 6; i++) {
       futures.add(_loadBackgroundChangeImage('assets/img/$type/${i+1}.png'));
@@ -230,24 +243,25 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 
     List<Uint8List> images = await Future.wait(futures);
 
-    setState(() {
-      switch (type) {
-        case 'arkNights':
-          arkNightsImages = images;
-          arkNightsLoaded = true;
-          break;
-        case 'wutheringWaves':
-          wutheringWaveImages = images;
-          wutheringWaveLoaded = true;
-          break;
-        case 'blueArchive':
-          blueArchiveImages = images;
-          blueArchiveLoaded = true;
-          break;
-        default:
-          print("아무곳에도 해당되지 않습니다.");
-          break;
-      }
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {
+        switch (type) {
+          case 'arkNights':
+            arkNightsImages = images;
+            arkNightsLoaded = true;
+            break;
+          case 'wutheringWaves':
+            wutheringWaveImages = images;
+            wutheringWaveLoaded = true;
+            break;
+          case 'blueArchive':
+            blueArchiveImages = images;
+            blueArchiveLoaded = true;
+            break;
+          default:
+            break;
+        }
+      });
     });
   }
 
@@ -902,7 +916,7 @@ class ImageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: imageList.length,
+      itemCount: 6,
       itemBuilder: (context, index) {
         final isSelected = selectedIndex == index;
         return loadingType
