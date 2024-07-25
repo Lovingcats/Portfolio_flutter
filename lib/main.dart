@@ -482,65 +482,77 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         ),
                         if(changeBackgroundTabCheck[0])
                          Expanded(
-                          child: ImageList(
-                            selectedIndex: _wuntheringWaveSelectedImageIndex,
-                            imgType: "wutheringWaves",
-                            onImageSelected: (index) async {
-                              setState(() {
-                                _isImageChanging = true;
-                                _wuntheringWaveSelectedImageIndex = index;
-                                _blueArchiveWaveSelectedImageIndex = -1;
-                                _arkNightsWaveSelectedImageIndex = -1;
-                              });
-
-                              await _changeBackgroundImage("assets/img/wutheringWaves/${index + 1}.png");
-
-                              setState(() {
-                                _isImageChanging = false;
-                              });
-                            },
+                          child: Shimmer.fromColors(
+                            baseColor: Colors.grey.shade300,
+                            highlightColor: Colors.grey.shade100,
+                            child: ImageList(
+                              selectedIndex: _wuntheringWaveSelectedImageIndex,
+                              imgType: "wutheringWaves",
+                              onImageSelected: (index) async {
+                                setState(() {
+                                  _isImageChanging = true;
+                                  _wuntheringWaveSelectedImageIndex = index;
+                                  _blueArchiveWaveSelectedImageIndex = -1;
+                                  _arkNightsWaveSelectedImageIndex = -1;
+                                });
+                            
+                                await _changeBackgroundImage("assets/img/wutheringWaves/${index + 1}.png");
+                            
+                                setState(() {
+                                  _isImageChanging = false;
+                                });
+                              },
+                            ),
                           ),
                         ),
                         if(changeBackgroundTabCheck[1])
                          Expanded(
-                          child: ImageList(
-                            selectedIndex: _blueArchiveWaveSelectedImageIndex,
-                            imgType: "blueArchive",
-                            onImageSelected: (index) async {
-                              setState(() {
-                                _isImageChanging = true;
-                                _blueArchiveWaveSelectedImageIndex = index;
-                                _wuntheringWaveSelectedImageIndex = -1;
-                                _arkNightsWaveSelectedImageIndex = -1;
-                              });
-
-                              await _changeBackgroundImage("assets/img/blueArchive/${index + 1}.png");
-
-                              setState(() {
-                                _isImageChanging = false;
-                              });
-                            },
+                          child: Shimmer.fromColors(
+                            baseColor: Colors.grey.shade300,
+                            highlightColor: Colors.grey.shade100,
+                            child: ImageList(
+                              selectedIndex: _blueArchiveWaveSelectedImageIndex,
+                              imgType: "blueArchive",
+                              onImageSelected: (index) async {
+                                setState(() {
+                                  _isImageChanging = true;
+                                  _blueArchiveWaveSelectedImageIndex = index;
+                                  _wuntheringWaveSelectedImageIndex = -1;
+                                  _arkNightsWaveSelectedImageIndex = -1;
+                                });
+                            
+                                await _changeBackgroundImage("assets/img/blueArchive/${index + 1}.png");
+                            
+                                setState(() {
+                                  _isImageChanging = false;
+                                });
+                              },
+                            ),
                           ),
                         ),
                       if(changeBackgroundTabCheck[2])
                          Expanded(
-                          child: ImageList(
-                            selectedIndex: _arkNightsWaveSelectedImageIndex,
-                            imgType: "arkNights",
-                            onImageSelected: (index) async {
-                              setState(() {
-                                _isImageChanging = true;
-                                _arkNightsWaveSelectedImageIndex = index;
-                                _wuntheringWaveSelectedImageIndex = -1;
-                                _blueArchiveWaveSelectedImageIndex = -1;
-                              });
-
-                              await _changeBackgroundImage("assets/img/arkNights/${index + 1}.png");
-
-                              setState(() {
-                                _isImageChanging = false;
-                              });
-                            },
+                          child: Shimmer.fromColors(
+                            baseColor: Colors.grey.shade300,
+                            highlightColor: Colors.grey.shade100,
+                            child: ImageList(
+                              selectedIndex: _arkNightsWaveSelectedImageIndex,
+                              imgType: "arkNights",
+                              onImageSelected: (index) async {
+                                setState(() {
+                                  _isImageChanging = true;
+                                  _arkNightsWaveSelectedImageIndex = index;
+                                  _wuntheringWaveSelectedImageIndex = -1;
+                                  _blueArchiveWaveSelectedImageIndex = -1;
+                                });
+                            
+                                await _changeBackgroundImage("assets/img/arkNights/${index + 1}.png");
+                            
+                                setState(() {
+                                  _isImageChanging = false;
+                                });
+                              },
+                            ),
                           ),
                         ),
                       ],
@@ -844,33 +856,24 @@ class ImageList extends StatelessWidget {
       itemBuilder: (context, index) {
         final imageName = "assets/img/$imgType/${index + 1}.png";
         final isSelected = selectedIndex == index;
-        return GestureDetector(
-          onTap: () {
-            onImageSelected(index);
-          },
-          child: SizedBox(
-            width: 330.0,
-            height: 200.0,
-            child: Shimmer.fromColors(
-              baseColor: Colors.red,
-              highlightColor: Colors.yellow,
-              child: Text(
-                'Shimmer',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 40.0,
-                  fontWeight:
-                  FontWeight.bold,
-                ),
-              ),
+        return Container(
+            width: 330,
+            height: 200,
+            margin: const EdgeInsets.only(top: 20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.grey
             ),
-          )
-        );
+          );
       },
     );
   }
 }
-// Container(
+// GestureDetector(
+//           onTap: () {
+//             onImageSelected(index);
+//           },
+//           child: Container(
 //             width: 330,
 //             height: 200,
 //             margin: const EdgeInsets.only(top: 20),
@@ -883,3 +886,4 @@ class ImageList extends StatelessWidget {
 //               ),
 //             ),
 //           ),
+//         );
