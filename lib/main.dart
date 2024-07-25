@@ -90,9 +90,9 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   int _wuntheringWaveSelectedImageIndex = -1;
   int _blueArchiveSelectedImageIndex = 0;
   int _arkNightsSelectedImageIndex = -1;
-  List<String> wuntheringWaveImages = [];
-  List<String> blueArchiveImages = [];
-  List<String> arkNightsImages = [];
+  List<ui.Image?> wuntheringWaveImages = [];
+  List<ui.Image?> blueArchiveImages = [];
+  List<ui.Image?> arkNightsImages = [];
 
 
   ui.Image? _selectedImage;
@@ -214,11 +214,24 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     });
   }
 
-  void backgroundChangeImageLoad() async{
-        final ByteData data1 = await rootBundle.load('assets/img/deviceBackground.png');
-        final List<int> bytes1 = data1.buffer.asUint8List();
-        final ui.Codec codec1 = await ui.instantiateImageCodec(Uint8List.fromList(bytes1));
-        final ui.FrameInfo fi1 = await codec1.getNextFrame();
+  Future<void> backgroundChangeImageLoad(String type) async{
+    for(int i = 0; i < 6; i++){
+      final ByteData backgroundData = await rootBundle.load('assets/img/$type/$i.png');
+      final List<int> backgroundBytes = backgroundData.buffer.asUint8List();
+      final ui.Codec backgroundCodec1 = await ui.instantiateImageCodec(Uint8List.fromList(backgroundBytes));
+      final ui.FrameInfo backgroundFi = await backgroundCodec1.getNextFrame();
+
+      if(type == "arkNights"){
+        arkNightsImages.add(backgroundFi.image);
+      } else if(type == "wutheringWaves"){
+        wuntheringWaveImages.add(backgroundFi.image);
+      } else if(type == "blueArchive"){
+        blueArchiveImages.add(backgroundFi.image);
+      } else {
+        print("아무곳에도 해당되지 않습니다.");
+      }
+    }
+        
   }
 
   @override
