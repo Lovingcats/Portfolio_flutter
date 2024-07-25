@@ -945,7 +945,7 @@ class ImageList extends StatelessWidget {
                 child: Container(
                   width: 330,
                   height: 200,
-                  margin: const EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(bottom: 20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: Colors.grey,
