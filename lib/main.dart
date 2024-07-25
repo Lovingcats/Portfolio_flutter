@@ -90,6 +90,11 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   int _wuntheringWaveSelectedImageIndex = -1;
   int _blueArchiveWaveSelectedImageIndex = 0;
   int _arkNightsWaveSelectedImageIndex = -1;
+  List<String> wuntheringWaveImages = [];
+  List<String> blueArchiveImages = [];
+  List<String> arkNightsImages = [];
+
+
   ui.Image? _selectedImage;
   bool _isImageChanging = false;
 
@@ -209,13 +214,19 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     });
   }
 
+  void backgroundChangeImageLoad() async{
+        final ByteData data1 = await rootBundle.load('assets/img/deviceBackground.png');
+        final List<int> bytes1 = data1.buffer.asUint8List();
+        final ui.Codec codec1 = await ui.instantiateImageCodec(Uint8List.fromList(bytes1));
+        final ui.FrameInfo fi1 = await codec1.getNextFrame();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_backgroundImage == null || _pcImage == null || _homeButtonImage == null || _backButtonImage == null || _recentButtonImage == null) {
       return Center(child: SizedBox(
         height: 500,
-        child: Lottie.asset('assets/lottie/loading.json',
-                          fit: BoxFit.contain),
+        child: Lottie.asset('assets/lottie/loading.json', fit: BoxFit.contain),
       ));
     }
 
