@@ -73947,11 +73947,11 @@ o=p.y
 o===$&&A.b()
 s=2
 return A.J(o.d_(),$async$$0)
-case 2:s=3
-return A.J(p.lN("wutheringWaves"),$async$$0)
-case 3:p.aj(new A.a7L(p))
-s=4
+case 2:p.aj(new A.a7L(p))
+s=3
 return A.J(p.y.c7(),$async$$0)
+case 3:s=4
+return A.J(p.lN("wutheringWaves"),$async$$0)
 case 4:return A.L(null,r)}})
 return A.M($async$$0,r)},
 $S:7}
