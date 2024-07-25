@@ -326,12 +326,12 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         ),
                         onTap: () async {
                           await _paddingController.reverse();
-                          await backgroundChangeImageLoad("wutheringWaves");
                           setState(() {
                             _isbackgroundImageChangeVisible = true;
                             _isbackgroundImageChangeVisibleCheck = true;
                           });
                           await _paddingController.forward();
+                          await backgroundChangeImageLoad("wutheringWaves");
                         },
                       ),
                       SpeedDialChild(
