@@ -88,8 +88,8 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   double _opacity = 0.7;
   List<bool> changeBackgroundTabCheck = [true, false, false];
   int _wuntheringWaveSelectedImageIndex = -1;
-  int _blueArchiveWaveSelectedImageIndex = 0;
-  int _arkNightsWaveSelectedImageIndex = -1;
+  int _blueArchiveSelectedImageIndex = 0;
+  int _arkNightsSelectedImageIndex = -1;
   List<String> wuntheringWaveImages = [];
   List<String> blueArchiveImages = [];
   List<String> arkNightsImages = [];
@@ -503,8 +503,8 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                 setState(() {
                                   _isImageChanging = true;
                                   _wuntheringWaveSelectedImageIndex = index;
-                                  _blueArchiveWaveSelectedImageIndex = -1;
-                                  _arkNightsWaveSelectedImageIndex = -1;
+                                  _blueArchiveSelectedImageIndex = -1;
+                                  _arkNightsSelectedImageIndex = -1;
                                 });
                             
                                 await _changeBackgroundImage("assets/img/wutheringWaves/${index + 1}.png");
@@ -522,14 +522,14 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                             baseColor: Colors.grey.shade300,
                             highlightColor: Colors.grey.shade100,
                             child: ImageList(
-                              selectedIndex: _blueArchiveWaveSelectedImageIndex,
+                              selectedIndex: _blueArchiveSelectedImageIndex,
                               imgType: "blueArchive",
                               onImageSelected: (index) async {
                                 setState(() {
                                   _isImageChanging = true;
-                                  _blueArchiveWaveSelectedImageIndex = index;
+                                  _blueArchiveSelectedImageIndex = index;
                                   _wuntheringWaveSelectedImageIndex = -1;
-                                  _arkNightsWaveSelectedImageIndex = -1;
+                                  _arkNightsSelectedImageIndex = -1;
                                 });
                             
                                 await _changeBackgroundImage("assets/img/blueArchive/${index + 1}.png");
@@ -547,14 +547,14 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                             baseColor: Colors.grey.shade300,
                             highlightColor: Colors.grey.shade100,
                             child: ImageList(
-                              selectedIndex: _arkNightsWaveSelectedImageIndex,
+                              selectedIndex: _arkNightsSelectedImageIndex,
                               imgType: "arkNights",
                               onImageSelected: (index) async {
                                 setState(() {
                                   _isImageChanging = true;
-                                  _arkNightsWaveSelectedImageIndex = index;
+                                  _arkNightsSelectedImageIndex = index;
                                   _wuntheringWaveSelectedImageIndex = -1;
-                                  _blueArchiveWaveSelectedImageIndex = -1;
+                                  _blueArchiveSelectedImageIndex = -1;
                                 });
                             
                                 await _changeBackgroundImage("assets/img/arkNights/${index + 1}.png");
