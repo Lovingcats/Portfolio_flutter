@@ -220,6 +220,14 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   }
 
   Future<void> backgroundChangeImageLoad(String type) async {
+    if (arkNightsImages.isEmpty || wutheringWaveImages.isEmpty || blueArchiveImages.isEmpty) {
+      setState(() {
+        arkNightsLoaded = false;
+        wutheringWaveLoaded = false;
+        blueArchiveLoaded = false;
+      });
+    }
+
     final List<Future<ui.Image>> futures = [];
     
     for (int i = 0; i < 6; i++) {
@@ -313,6 +321,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         ),
                         onTap: () async {
                           await _paddingController.reverse();
+                          await backgroundChangeImageLoad("wutheringWaves");
                           setState(() {
                             _isbackgroundImageChangeVisible = true;
                             _isbackgroundImageChangeVisibleCheck = true;
