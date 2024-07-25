@@ -219,36 +219,43 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     });
   }
 
-  Future<void> backgroundChangeImageLoad(String type) async{
-    for(int i = 0; i < 6; i++){
-      final ByteData backgroundData = await rootBundle.load('assets/img/$type/$i.png');
-      final List<int> backgroundBytes = backgroundData.buffer.asUint8List();
-      final ui.Codec backgroundCodec1 = await ui.instantiateImageCodec(Uint8List.fromList(backgroundBytes));
-      final ui.FrameInfo backgroundFi = await backgroundCodec1.getNextFrame();
-
-      if(type == "arkNights"){
-        arkNightsImages.add(backgroundFi.image);
-      } else if(type == "wutheringWaves"){
-        wutheringWaveImages.add(backgroundFi.image);
-      } else if(type == "blueArchive"){
-        blueArchiveImages.add(backgroundFi.image);
-      } else {
-        print("아무곳에도 해당되지 않습니다.");
-      }
-    }
-      
-    setState(() {
-      if(type == "arkNights"){
-        arkNightsLoaded = true;
-      } else if(type == "wutheringWaves"){
-        wutheringWaveLoaded = true;
-      } else if(type == "blueArchive"){
-        blueArchiveLoaded = true;
-      } else {
-        print("만족화는게 없습니다.");
-      }
-    });
+  Future<void> backgroundChangeImageLoad(String type) async {
+  final List<Future<ui.Image>> futures = [];
+  
+  for (int i = 0; i < 6; i++) {
+    futures.add(_loadBackgroundChangeImage('assets/img/$type/$i.png'));
   }
+
+  List<ui.Image> images = await Future.wait(futures);
+
+  setState(() {
+    switch (type) {
+      case 'arkNights':
+        arkNightsImages.addAll(images);
+        arkNightsLoaded = true;
+        break;
+      case 'wutheringWaves':
+        wutheringWaveImages.addAll(images);
+        wutheringWaveLoaded = true;
+        break;
+      case 'blueArchive':
+        blueArchiveImages.addAll(images);
+        blueArchiveLoaded = true;
+        break;
+      default:
+        print("아무곳에도 해당되지 않습니다.");
+        break;
+    }
+  });
+}
+
+Future<ui.Image> _loadBackgroundChangeImage(String path) async {
+  final ByteData data = await rootBundle.load(path);
+  final List<int> bytes = data.buffer.asUint8List();
+  final ui.Codec codec = await ui.instantiateImageCodec(Uint8List.fromList(bytes));
+  final ui.FrameInfo frameInfo = await codec.getNextFrame();
+  return frameInfo.image;
+}
 
   @override
   Widget build(BuildContext context) {
