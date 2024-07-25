@@ -533,8 +533,8 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                             baseColor: Colors.grey.shade300,
                             highlightColor: Colors.grey.shade100,
                             child: ImageList(
+                              imageList: wutheringWaveImages,
                               selectedIndex: _wuntheringWaveSelectedImageIndex,
-                              imgType: "wutheringWaves",
                               onImageSelected: (index) async {
                                 setState(() {
                                   _isImageChanging = true;
@@ -560,7 +560,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                             highlightColor: Colors.grey.shade100,
                             child: ImageList(
                               selectedIndex: _blueArchiveSelectedImageIndex,
-                              imgType: "blueArchive",
+                              imageList: blueArchiveImages,
                               onImageSelected: (index) async {
                                 setState(() {
                                   _isImageChanging = true;
@@ -586,7 +586,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                             highlightColor: Colors.grey.shade100,
                             child: ImageList(
                               selectedIndex: _arkNightsSelectedImageIndex,
-                              imgType: "arkNights",
+                              imageList: arkNightsImages,
                               onImageSelected: (index) async {
                                 setState(() {
                                   _isImageChanging = true;
