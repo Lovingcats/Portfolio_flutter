@@ -434,12 +434,13 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                   Material(
                                     color: Colors.transparent,
                                     child: InkWell(
-                                      onTap: () {
+                                      onTap: () async{
                                         setState(() {
                                           changeBackgroundTabCheck[0] = true;
                                           changeBackgroundTabCheck[1] = false;
                                           changeBackgroundTabCheck[2] = false;
                                         });
+                                        await backgroundChangeImageLoad("wutheringWaves");
                                       },
                                       borderRadius: BorderRadius.circular(30),
                                       child: Ink(
@@ -461,12 +462,14 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                   Material(
                                     color: Colors.transparent,
                                     child: InkWell(
-                                      onTap: () {
+                                      onTap: () async{
                                         setState(() {
                                           changeBackgroundTabCheck[0] = false;
                                           changeBackgroundTabCheck[1] = true;
                                           changeBackgroundTabCheck[2] = false;
                                         });
+                                        
+                                        await backgroundChangeImageLoad("blueArchive");
                                       },
                                       borderRadius: BorderRadius.circular(30),
                                       child: Ink(
@@ -488,12 +491,14 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                   Material(
                                     color: Colors.transparent,
                                     child: InkWell(
-                                      onTap: () {
+                                      onTap: () async{
                                         setState(() {
                                           changeBackgroundTabCheck[0] = false;
                                           changeBackgroundTabCheck[1] = false;
                                           changeBackgroundTabCheck[2] = true;
                                         });
+                                        
+                                        await backgroundChangeImageLoad("arkNights");
                                       },
                                       borderRadius: BorderRadius.circular(30),
                                       child: Ink(
