@@ -95,6 +95,9 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   List<ui.Image?> wuntheringWaveImages = [];
   List<ui.Image?> blueArchiveImages = [];
   List<ui.Image?> arkNightsImages = [];
+  bool wutheringWaveLoaded = false;
+  bool blueArchiveLoaded = false;
+  bool arkNightsLoaded = false;
 
 
   ui.Image? _selectedImage;
@@ -233,7 +236,10 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
         print("아무곳에도 해당되지 않습니다.");
       }
     }
-       
+      
+    setState(() {
+      
+    });
   }
 
   @override
