@@ -549,6 +549,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                   _isImageChanging = false;
                                 });
                               },
+                              loadingType: wutheringWaveLoaded,
                             ),
                           ),
                         ),
@@ -574,6 +575,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                   _isImageChanging = false;
                                 });
                               },
+                              loadingType: blueArchiveLoaded,
                             ),
                           ),
                         ),
@@ -599,6 +601,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                   _isImageChanging = false;
                                 });
                               },
+                              loadingType: arkNightsLoaded,
                             ),
                           ),
                         ),
