@@ -546,6 +546,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                             ),
                           ],
                         ),
+                        const SizedBox(height: 20,),
                         if(changeBackgroundTabCheck[0])
                          Expanded(
                           child: ImageList(
