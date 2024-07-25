@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -87,8 +88,15 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   double _opacity = 0.7;
   List<bool> changeBackgroundTabCheck = [true, false, false];
   int _wuntheringWaveSelectedImageIndex = -1;
-  int _blueArchiveWaveSelectedImageIndex = 0;
-  int _arkNightsWaveSelectedImageIndex = -1;
+  int _blueArchiveSelectedImageIndex = 0;
+  int _arkNightsSelectedImageIndex = -1;
+  List<Uint8List> wutheringWaveImages = [];
+  List<Uint8List> blueArchiveImages = [];
+  List<Uint8List> arkNightsImages = [];
+  bool wutheringWaveLoaded = false;
+  bool blueArchiveLoaded = false;
+  bool arkNightsLoaded = false;
+
   ui.Image? _selectedImage;
   bool _isImageChanging = false;
 
@@ -208,13 +216,66 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     });
   }
 
+  Future<void> backgroundChangeImageLoad(String type) async {
+    setState(() {
+      switch (type) {
+        case 'arkNights':
+          arkNightsLoaded = false;
+          arkNightsImages = [];
+          break;
+        case 'wutheringWaves':
+          wutheringWaveLoaded = false;
+          wutheringWaveImages = [];
+          break;
+        case 'blueArchive':
+          blueArchiveLoaded = false;
+          blueArchiveImages = [];
+          break;
+        default:
+          break;
+      }
+    });
+    
+    final List<Future<Uint8List>> futures = [];
+    for (int i = 0; i < 6; i++) {
+      futures.add(_loadBackgroundChangeImage('assets/img/$type/${i+1}.png'));
+    }
+
+    List<Uint8List> images = await Future.wait(futures);
+
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {
+        switch (type) {
+          case 'arkNights':
+            arkNightsImages = images;
+            arkNightsLoaded = true;
+            break;
+          case 'wutheringWaves':
+            wutheringWaveImages = images;
+            wutheringWaveLoaded = true;
+            break;
+          case 'blueArchive':
+            blueArchiveImages = images;
+            blueArchiveLoaded = true;
+            break;
+          default:
+            break;
+        }
+      });
+    });
+  }
+
+  Future<Uint8List> _loadBackgroundChangeImage(String path) async {
+    final ByteData data = await rootBundle.load(path);
+    return data.buffer.asUint8List();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_backgroundImage == null || _pcImage == null || _homeButtonImage == null || _backButtonImage == null || _recentButtonImage == null) {
       return Center(child: SizedBox(
         height: 500,
-        child: Lottie.asset('assets/lottie/loading.json',
-                          fit: BoxFit.contain),
+        child: Lottie.asset('assets/lottie/loading.json', fit: BoxFit.contain),
       ));
     }
 
@@ -265,6 +326,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         ),
                         onTap: () async {
                           await _paddingController.reverse();
+                          await backgroundChangeImageLoad("wutheringWaves");
                           setState(() {
                             _isbackgroundImageChangeVisible = true;
                             _isbackgroundImageChangeVisibleCheck = true;
@@ -377,12 +439,13 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                   Material(
                                     color: Colors.transparent,
                                     child: InkWell(
-                                      onTap: () {
+                                      onTap: () async{
                                         setState(() {
                                           changeBackgroundTabCheck[0] = true;
                                           changeBackgroundTabCheck[1] = false;
                                           changeBackgroundTabCheck[2] = false;
                                         });
+                                        await backgroundChangeImageLoad("wutheringWaves");
                                       },
                                       borderRadius: BorderRadius.circular(30),
                                       child: Ink(
@@ -404,12 +467,14 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                   Material(
                                     color: Colors.transparent,
                                     child: InkWell(
-                                      onTap: () {
+                                      onTap: () async{
                                         setState(() {
                                           changeBackgroundTabCheck[0] = false;
                                           changeBackgroundTabCheck[1] = true;
                                           changeBackgroundTabCheck[2] = false;
                                         });
+                                        
+                                        await backgroundChangeImageLoad("blueArchive");
                                       },
                                       borderRadius: BorderRadius.circular(30),
                                       child: Ink(
@@ -431,12 +496,14 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                                   Material(
                                     color: Colors.transparent,
                                     child: InkWell(
-                                      onTap: () {
+                                      onTap: () async{
                                         setState(() {
                                           changeBackgroundTabCheck[0] = false;
                                           changeBackgroundTabCheck[1] = false;
                                           changeBackgroundTabCheck[2] = true;
                                         });
+                                        
+                                        await backgroundChangeImageLoad("arkNights");
                                       },
                                       borderRadius: BorderRadius.circular(30),
                                       child: Ink(
@@ -479,67 +546,71 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                             ),
                           ],
                         ),
+                        const SizedBox(height: 20,),
                         if(changeBackgroundTabCheck[0])
                          Expanded(
                           child: ImageList(
+                            imageList: wutheringWaveImages,
                             selectedIndex: _wuntheringWaveSelectedImageIndex,
-                            imgType: "wutheringWaves",
                             onImageSelected: (index) async {
                               setState(() {
                                 _isImageChanging = true;
                                 _wuntheringWaveSelectedImageIndex = index;
-                                _blueArchiveWaveSelectedImageIndex = -1;
-                                _arkNightsWaveSelectedImageIndex = -1;
+                                _blueArchiveSelectedImageIndex = -1;
+                                _arkNightsSelectedImageIndex = -1;
                               });
-
+                          
                               await _changeBackgroundImage("assets/img/wutheringWaves/${index + 1}.png");
-
+                          
                               setState(() {
                                 _isImageChanging = false;
                               });
                             },
+                            loadingType: wutheringWaveLoaded,
                           ),
                         ),
                         if(changeBackgroundTabCheck[1])
                          Expanded(
                           child: ImageList(
-                            selectedIndex: _blueArchiveWaveSelectedImageIndex,
-                            imgType: "blueArchive",
+                            selectedIndex: _blueArchiveSelectedImageIndex,
+                            imageList: blueArchiveImages,
                             onImageSelected: (index) async {
                               setState(() {
                                 _isImageChanging = true;
-                                _blueArchiveWaveSelectedImageIndex = index;
+                                _blueArchiveSelectedImageIndex = index;
                                 _wuntheringWaveSelectedImageIndex = -1;
-                                _arkNightsWaveSelectedImageIndex = -1;
+                                _arkNightsSelectedImageIndex = -1;
                               });
-
+                          
                               await _changeBackgroundImage("assets/img/blueArchive/${index + 1}.png");
-
+                          
                               setState(() {
                                 _isImageChanging = false;
                               });
                             },
+                            loadingType: blueArchiveLoaded,
                           ),
                         ),
                       if(changeBackgroundTabCheck[2])
                          Expanded(
                           child: ImageList(
-                            selectedIndex: _arkNightsWaveSelectedImageIndex,
-                            imgType: "arkNights",
+                            selectedIndex: _arkNightsSelectedImageIndex,
+                            imageList: arkNightsImages,
                             onImageSelected: (index) async {
                               setState(() {
                                 _isImageChanging = true;
-                                _arkNightsWaveSelectedImageIndex = index;
+                                _arkNightsSelectedImageIndex = index;
                                 _wuntheringWaveSelectedImageIndex = -1;
-                                _blueArchiveWaveSelectedImageIndex = -1;
+                                _blueArchiveSelectedImageIndex = -1;
                               });
-
+                          
                               await _changeBackgroundImage("assets/img/arkNights/${index + 1}.png");
-
+                          
                               setState(() {
                                 _isImageChanging = false;
                               });
                             },
+                            loadingType: arkNightsLoaded,
                           ),
                         ),
                       ],
@@ -832,35 +903,55 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 class ImageList extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onImageSelected;
-  final String imgType;
+  final bool loadingType;
+  final List<Uint8List> imageList;
 
-  const ImageList({Key? key, required this.selectedIndex, required this.imgType, required this.onImageSelected}) : super(key: key);
+  const ImageList({
+    Key? key,
+    required this.selectedIndex,
+    required this.onImageSelected,
+    required this.loadingType,
+    required this.imageList,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: 6,
       itemBuilder: (context, index) {
-        final imageName = "assets/img/$imgType/${index + 1}.png";
         final isSelected = selectedIndex == index;
-        return GestureDetector(
-          onTap: () {
-            onImageSelected(index);
-          },
-          child: Container(
-            width: 330,
-            height: 200,
-            margin: const EdgeInsets.only(top: 20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: isSelected ? Border.all(color: const Color(0xffB7E4FC), width: 2) : null,
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(imageName),
-              ),
-            ),
-          ),
-        );
+        return loadingType
+            ? GestureDetector(
+                onTap: () {
+                  onImageSelected(index);
+                },
+                child: Container(
+                  width: 330,
+                  height: 200,
+                  margin: const EdgeInsets.only(bottom: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: isSelected ? Border.all(color: const Color(0xffB7E4FC), width: 2) : null,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: MemoryImage(imageList[index]),
+                    ),
+                  ),
+                ),
+              )
+            : Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Container(
+                  width: 330,
+                  height: 200,
+                  margin: const EdgeInsets.only(bottom: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey,
+                  ),
+                ),
+              );
       },
     );
   }
