@@ -895,46 +895,52 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 class ImageList extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onImageSelected;
-  final String imgType;
   final bool loadingType;
+  final List<ui.Image?> imageList;
 
-  const ImageList({Key? key, required this.selectedIndex, required this.imgType, required this.onImageSelected, required this.loadingType}) : super(key: key);
+  const ImageList({
+    Key? key,
+    required this.selectedIndex,
+    required this.onImageSelected,
+    required this.loadingType,
+    required this.imageList,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: 6,
       itemBuilder: (context, index) {
-        final imageName = "assets/img/$imgType/${index + 1}.png";
         final isSelected = selectedIndex == index;
-        return Container(
-            width: 330,
-            height: 200,
-            margin: const EdgeInsets.only(top: 20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.grey
-            ),
-          );
+        return loadingType
+            ? GestureDetector(
+                onTap: () {
+                  onImageSelected(index);
+                },
+                child: Container(
+                  width: 330,
+                  height: 200,
+                  margin: const EdgeInsets.only(top: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: isSelected ? Border.all(color: const Color(0xffB7E4FC), width: 2) : null,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: RawImage(image: imageList[index]!) as ImageProvider,
+                    ),
+                  ),
+                ),
+              )
+            : Container(
+                width: 330,
+                height: 200,
+                margin: const EdgeInsets.only(top: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.grey,
+                ),
+              );
       },
     );
   }
 }
-// GestureDetector(
-//           onTap: () {
-//             onImageSelected(index);
-//           },
-//           child: Container(
-//             width: 330,
-//             height: 200,
-//             margin: const EdgeInsets.only(top: 20),
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(8),
-//               border: isSelected ? Border.all(color: const Color(0xffB7E4FC), width: 2) : null,
-//               image: DecorationImage(
-//                 fit: BoxFit.cover,
-//                 image: AssetImage(imageName),
-//               ),
-//             ),
-//           ),
-//         );
