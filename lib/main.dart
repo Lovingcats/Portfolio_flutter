@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:flutterportfolio/widget/deviceframepainter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -92,13 +90,12 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   int _wuntheringWaveSelectedImageIndex = -1;
   int _blueArchiveSelectedImageIndex = 0;
   int _arkNightsSelectedImageIndex = -1;
-  List<ui.Image?> wutheringWaveImages = [];
-  List<ui.Image?> blueArchiveImages = [];
-  List<ui.Image?> arkNightsImages = [];
+  List<Uint8List> wutheringWaveImages = [];
+  List<Uint8List> blueArchiveImages = [];
+  List<Uint8List> arkNightsImages = [];
   bool wutheringWaveLoaded = false;
   bool blueArchiveLoaded = false;
   bool arkNightsLoaded = false;
-
 
   ui.Image? _selectedImage;
   bool _isImageChanging = false;
@@ -220,34 +217,31 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   }
 
   Future<void> backgroundChangeImageLoad(String type) async {
-    if (arkNightsImages.isEmpty || wutheringWaveImages.isEmpty || blueArchiveImages.isEmpty) {
-      setState(() {
-        arkNightsLoaded = false;
-        wutheringWaveLoaded = false;
-        blueArchiveLoaded = false;
-      });
-    }
+    setState(() {
+      if (type == 'arkNights') arkNightsLoaded = false;
+      if (type == 'wutheringWaves') wutheringWaveLoaded = false;
+      if (type == 'blueArchive') blueArchiveLoaded = false;
+    });
 
-    final List<Future<ui.Image>> futures = [];
-    
+    final List<Future<Uint8List>> futures = [];
     for (int i = 0; i < 6; i++) {
       futures.add(_loadBackgroundChangeImage('assets/img/$type/${i+1}.png'));
     }
 
-    List<ui.Image> images = await Future.wait(futures);
+    List<Uint8List> images = await Future.wait(futures);
 
     setState(() {
       switch (type) {
         case 'arkNights':
-          arkNightsImages.addAll(images);
+          arkNightsImages = images;
           arkNightsLoaded = true;
           break;
         case 'wutheringWaves':
-          wutheringWaveImages.addAll(images);
+          wutheringWaveImages = images;
           wutheringWaveLoaded = true;
           break;
         case 'blueArchive':
-          blueArchiveImages.addAll(images);
+          blueArchiveImages = images;
           blueArchiveLoaded = true;
           break;
         default:
@@ -257,15 +251,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     });
   }
 
-  Future<ui.Image> _loadBackgroundChangeImage(String path) async {
-    final ByteData data = await rootBundle.load(path);
-    final List<int> bytes = data.buffer.asUint8List();
-    final ui.Codec codec = await ui.instantiateImageCodec(Uint8List.fromList(bytes));
-    final ui.FrameInfo frameInfo = await codec.getNextFrame();
-    return frameInfo.image;
-  }
-
-  Future<Uint8List> _loadBackgroundChangeImageBytes(String path) async {
+  Future<Uint8List> _loadBackgroundChangeImage(String path) async {
     final ByteData data = await rootBundle.load(path);
     return data.buffer.asUint8List();
   }
@@ -548,80 +534,68 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                         ),
                         if(changeBackgroundTabCheck[0])
                          Expanded(
-                          child: Shimmer.fromColors(
-                            baseColor: Colors.grey.shade300,
-                            highlightColor: Colors.grey.shade100,
-                            child: ImageList(
-                              imageList: wutheringWaveImages,
-                              selectedIndex: _wuntheringWaveSelectedImageIndex,
-                              onImageSelected: (index) async {
-                                setState(() {
-                                  _isImageChanging = true;
-                                  _wuntheringWaveSelectedImageIndex = index;
-                                  _blueArchiveSelectedImageIndex = -1;
-                                  _arkNightsSelectedImageIndex = -1;
-                                });
-                            
-                                await _changeBackgroundImage("assets/img/wutheringWaves/${index + 1}.png");
-                            
-                                setState(() {
-                                  _isImageChanging = false;
-                                });
-                              },
-                              loadingType: wutheringWaveLoaded,
-                            ),
+                          child: ImageList(
+                            imageList: wutheringWaveImages,
+                            selectedIndex: _wuntheringWaveSelectedImageIndex,
+                            onImageSelected: (index) async {
+                              setState(() {
+                                _isImageChanging = true;
+                                _wuntheringWaveSelectedImageIndex = index;
+                                _blueArchiveSelectedImageIndex = -1;
+                                _arkNightsSelectedImageIndex = -1;
+                              });
+                          
+                              await _changeBackgroundImage("assets/img/wutheringWaves/${index + 1}.png");
+                          
+                              setState(() {
+                                _isImageChanging = false;
+                              });
+                            },
+                            loadingType: wutheringWaveLoaded,
                           ),
                         ),
                         if(changeBackgroundTabCheck[1])
                          Expanded(
-                          child: Shimmer.fromColors(
-                            baseColor: Colors.grey.shade300,
-                            highlightColor: Colors.grey.shade100,
-                            child: ImageList(
-                              selectedIndex: _blueArchiveSelectedImageIndex,
-                              imageList: blueArchiveImages,
-                              onImageSelected: (index) async {
-                                setState(() {
-                                  _isImageChanging = true;
-                                  _blueArchiveSelectedImageIndex = index;
-                                  _wuntheringWaveSelectedImageIndex = -1;
-                                  _arkNightsSelectedImageIndex = -1;
-                                });
-                            
-                                await _changeBackgroundImage("assets/img/blueArchive/${index + 1}.png");
-                            
-                                setState(() {
-                                  _isImageChanging = false;
-                                });
-                              },
-                              loadingType: blueArchiveLoaded,
-                            ),
+                          child: ImageList(
+                            selectedIndex: _blueArchiveSelectedImageIndex,
+                            imageList: blueArchiveImages,
+                            onImageSelected: (index) async {
+                              setState(() {
+                                _isImageChanging = true;
+                                _blueArchiveSelectedImageIndex = index;
+                                _wuntheringWaveSelectedImageIndex = -1;
+                                _arkNightsSelectedImageIndex = -1;
+                              });
+                          
+                              await _changeBackgroundImage("assets/img/blueArchive/${index + 1}.png");
+                          
+                              setState(() {
+                                _isImageChanging = false;
+                              });
+                            },
+                            loadingType: blueArchiveLoaded,
                           ),
                         ),
                       if(changeBackgroundTabCheck[2])
                          Expanded(
-                          child: Shimmer.fromColors(
-                            baseColor: Colors.grey.shade300,
-                            highlightColor: Colors.grey.shade100,
-                            child: ImageList(
-                              selectedIndex: _arkNightsSelectedImageIndex,
-                              imageList: arkNightsImages,
-                              onImageSelected: (index) async {
-                                setState(() {
-                                  _isImageChanging = true;
-                                  _arkNightsSelectedImageIndex = index;
-                                  _wuntheringWaveSelectedImageIndex = -1;
-                                  _blueArchiveSelectedImageIndex = -1;
-                                });
-                            
-                                await _changeBackgroundImage("assets/img/arkNights/${index + 1}.png");
-                            
-                                setState(() {
-                                  _isImageChanging = false;
-                                });
-                              },
-                              loadingType: arkNightsLoaded,
-                            ),
+                          child: ImageList(
+                            selectedIndex: _arkNightsSelectedImageIndex,
+                            imageList: arkNightsImages,
+                            onImageSelected: (index) async {
+                              setState(() {
+                                _isImageChanging = true;
+                                _arkNightsSelectedImageIndex = index;
+                                _wuntheringWaveSelectedImageIndex = -1;
+                                _blueArchiveSelectedImageIndex = -1;
+                              });
+                          
+                              await _changeBackgroundImage("assets/img/arkNights/${index + 1}.png");
+                          
+                              setState(() {
+                                _isImageChanging = false;
+                              });
+                            },
+                            loadingType: arkNightsLoaded,
                           ),
                         ),
                       ],
@@ -915,7 +889,8 @@ class ImageList extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onImageSelected;
   final bool loadingType;
-  final List<Uint8List?> imageList;
+  final List<Uint8List> imageList;
+
   const ImageList({
     Key? key,
     required this.selectedIndex,
@@ -927,7 +902,7 @@ class ImageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 6,
+      itemCount: imageList.length,
       itemBuilder: (context, index) {
         final isSelected = selectedIndex == index;
         return loadingType
@@ -944,18 +919,22 @@ class ImageList extends StatelessWidget {
                     border: isSelected ? Border.all(color: const Color(0xffB7E4FC), width: 2) : null,
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: MemoryImage(imageList[index]!),
+                      image: MemoryImage(imageList[index]),
                     ),
                   ),
                 ),
               )
-            : Container(
-                width: 330,
-                height: 200,
-                margin: const EdgeInsets.only(top: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.grey,
+            : Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Container(
+                  width: 330,
+                  height: 200,
+                  margin: const EdgeInsets.only(top: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey,
+                  ),
                 ),
               );
       },
