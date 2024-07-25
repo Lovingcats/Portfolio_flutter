@@ -231,7 +231,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     final List<Future<ui.Image>> futures = [];
     
     for (int i = 0; i < 6; i++) {
-      futures.add(_loadBackgroundChangeImage('assets/img/$type/$i.png'));
+      futures.add(_loadBackgroundChangeImage('assets/img/$type/${i+1}.png'));
     }
 
     List<ui.Image> images = await Future.wait(futures);
@@ -263,6 +263,11 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     final ui.Codec codec = await ui.instantiateImageCodec(Uint8List.fromList(bytes));
     final ui.FrameInfo frameInfo = await codec.getNextFrame();
     return frameInfo.image;
+  }
+
+  Future<Uint8List> _loadBackgroundChangeImageBytes(String path) async {
+    final ByteData data = await rootBundle.load(path);
+    return data.buffer.asUint8List();
   }
 
   @override
