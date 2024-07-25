@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutterportfolio/widget/deviceframepainter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -231,7 +233,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
         print("아무곳에도 해당되지 않습니다.");
       }
     }
-        
+       
   }
 
   @override
