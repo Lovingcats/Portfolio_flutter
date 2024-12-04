@@ -216,8 +216,11 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     });
   }
 
+  //초기화
   Future<void> backgroundChangeImageLoad(String type) async {
     setState(() {
+
+      //초기화
       switch (type) {
         case 'arkNights':
           arkNightsLoaded = false;
@@ -241,27 +244,28 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
       futures.add(_loadBackgroundChangeImage('assets/img/$type/${i+1}.png'));
     }
 
+    //이미지를 모두 로딩한다.
     List<Uint8List> images = await Future.wait(futures);
 
-    Future.delayed(Duration(seconds: 1), () {
-      setState(() {
-        switch (type) {
-          case 'arkNights':
-            arkNightsImages = images;
-            arkNightsLoaded = true;
-            break;
-          case 'wutheringWaves':
-            wutheringWaveImages = images;
-            wutheringWaveLoaded = true;
-            break;
-          case 'blueArchive':
-            blueArchiveImages = images;
-            blueArchiveLoaded = true;
-            break;
-          default:
-            break;
-        }
-      });
+
+    //위에서 비동기로 불러왔기에 모두 로딩된 다음에 이미지를 보여주게 된다.
+    setState(() {
+      switch (type) {
+        case 'arkNights':
+          arkNightsImages = images;
+          arkNightsLoaded = true;
+          break;
+        case 'wutheringWaves':
+          wutheringWaveImages = images;
+          wutheringWaveLoaded = true;
+          break;
+        case 'blueArchive':
+          blueArchiveImages = images;
+          blueArchiveLoaded = true;
+          break;
+        default:
+          break;
+      }
     });
   }
 
@@ -392,6 +396,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 ),
       body: Stack(
         children: [
+          // 백그라운드 이미지
           AnimatedOpacity(
             opacity: _isImageChanging ? 0.0 : 1.0,
             duration: const Duration(milliseconds: 300),
@@ -402,6 +407,8 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
               height: double.infinity,
             ),
           ),
+          
+          // 배경밝기조절을 위한 검은색 배경
           AnimatedOpacity(
             opacity: _isbackgroundImageChangeVisibleCheck ? 0.0 : _opacity,
             duration: const Duration(milliseconds: 300),
@@ -411,7 +418,9 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
               color: Colors.black,
             ),
           ),
+
           if (_isbackgroundImageChangeVisible)
+            // 설정 버튼을 나오면 나오는 컨테이너
             Positioned(
               right: 0,
               top: 0,
