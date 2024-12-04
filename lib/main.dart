@@ -71,7 +71,7 @@ class DesktopScreen extends StatefulWidget {
 }
 
 class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateMixin {
-  ui.Image? _backgroundImage;
+  ui.Image? _deviceBackgroundImage;
   ui.Image? _pcImage;
   ui.Image? _homeButtonImage;
   ui.Image? _backButtonImage;
@@ -97,7 +97,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   bool blueArchiveLoaded = false;
   bool arkNightsLoaded = false;
 
-  ui.Image? _selectedImage;
+  ui.Image? _backgroundImage;
   bool _isImageChanging = false;
 
   @override
@@ -185,12 +185,12 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     final ui.FrameInfo recentFi = await recentCodec.getNextFrame();
 
     setState(() {
-      _backgroundImage = fi1.image;
+      _deviceBackgroundImage = fi1.image;
       _pcImage = fi2.image;
       _homeButtonImage = homeFi.image;
       _backButtonImage = backFi.image;
       _recentButtonImage = recentFi.image;
-      _selectedImage = fi2.image;
+      _backgroundImage = fi2.image;
     });
   }
 
@@ -201,7 +201,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     final ui.FrameInfo frameInfo = await codec.getNextFrame();
 
     setState(() {
-      _selectedImage = frameInfo.image;
+      _backgroundImage = frameInfo.image;
     });
   }
 
@@ -216,8 +216,11 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     });
   }
 
+  //초기화
   Future<void> backgroundChangeImageLoad(String type) async {
     setState(() {
+
+      //초기화
       switch (type) {
         case 'arkNights':
           arkNightsLoaded = false;
@@ -241,27 +244,28 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
       futures.add(_loadBackgroundChangeImage('assets/img/$type/${i+1}.png'));
     }
 
+    //이미지를 모두 로딩한다.
     List<Uint8List> images = await Future.wait(futures);
 
-    Future.delayed(Duration(seconds: 1), () {
-      setState(() {
-        switch (type) {
-          case 'arkNights':
-            arkNightsImages = images;
-            arkNightsLoaded = true;
-            break;
-          case 'wutheringWaves':
-            wutheringWaveImages = images;
-            wutheringWaveLoaded = true;
-            break;
-          case 'blueArchive':
-            blueArchiveImages = images;
-            blueArchiveLoaded = true;
-            break;
-          default:
-            break;
-        }
-      });
+
+    //위에서 비동기로 불러왔기에 모두 로딩된 다음에 이미지를 보여주게 된다.
+    setState(() {
+      switch (type) {
+        case 'arkNights':
+          arkNightsImages = images;
+          arkNightsLoaded = true;
+          break;
+        case 'wutheringWaves':
+          wutheringWaveImages = images;
+          wutheringWaveLoaded = true;
+          break;
+        case 'blueArchive':
+          blueArchiveImages = images;
+          blueArchiveLoaded = true;
+          break;
+        default:
+          break;
+      }
     });
   }
 
@@ -272,7 +276,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    if (_backgroundImage == null || _pcImage == null || _homeButtonImage == null || _backButtonImage == null || _recentButtonImage == null) {
+    if (_deviceBackgroundImage == null || _pcImage == null || _homeButtonImage == null || _backButtonImage == null || _recentButtonImage == null) {
       return Center(child: SizedBox(
         height: 500,
         child: Lottie.asset('assets/lottie/loading.json', fit: BoxFit.contain),
@@ -392,16 +396,19 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 ),
       body: Stack(
         children: [
+          // 백그라운드 이미지
           AnimatedOpacity(
             opacity: _isImageChanging ? 0.0 : 1.0,
             duration: const Duration(milliseconds: 300),
             child: RawImage(
-              image: _selectedImage!,
+              image: _backgroundImage!,
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
             ),
           ),
+          
+          // 배경밝기조절을 위한 검은색 배경
           AnimatedOpacity(
             opacity: _isbackgroundImageChangeVisibleCheck ? 0.0 : _opacity,
             duration: const Duration(milliseconds: 300),
@@ -411,7 +418,9 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
               color: Colors.black,
             ),
           ),
+
           if (_isbackgroundImageChangeVisible)
+            // 설정 버튼을 나오면 나오는 컨테이너
             Positioned(
               right: 0,
               top: 0,
@@ -619,7 +628,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 ),
               ),
             ),
-          if (!_isdeviceVisible)
+          if (!_isdeviceVisible) //디바이스 그려주는 부분
             _isbackgroundImageChangeVisibleCheck
                 ? Container()
                 : Center(
@@ -652,7 +661,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                               child: CustomPaint(
                                 size: Size(deviceWidth, deviceHeight),
                                 painter: DeviceFramePainter(
-                                  _backgroundImage!,
+                                  _deviceBackgroundImage!,
                                   _homeButtonImage!,
                                   _backButtonImage!,
                                   _recentButtonImage!,
