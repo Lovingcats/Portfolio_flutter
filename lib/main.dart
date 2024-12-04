@@ -71,7 +71,7 @@ class DesktopScreen extends StatefulWidget {
 }
 
 class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateMixin {
-  ui.Image? _backgroundImage;
+  ui.Image? _deviceBackgroundImage;
   ui.Image? _pcImage;
   ui.Image? _homeButtonImage;
   ui.Image? _backButtonImage;
@@ -97,7 +97,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
   bool blueArchiveLoaded = false;
   bool arkNightsLoaded = false;
 
-  ui.Image? _selectedImage;
+  ui.Image? _backgroundImage;
   bool _isImageChanging = false;
 
   @override
@@ -185,12 +185,12 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     final ui.FrameInfo recentFi = await recentCodec.getNextFrame();
 
     setState(() {
-      _backgroundImage = fi1.image;
+      _deviceBackgroundImage = fi1.image;
       _pcImage = fi2.image;
       _homeButtonImage = homeFi.image;
       _backButtonImage = backFi.image;
       _recentButtonImage = recentFi.image;
-      _selectedImage = fi2.image;
+      _backgroundImage = fi2.image;
     });
   }
 
@@ -201,7 +201,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
     final ui.FrameInfo frameInfo = await codec.getNextFrame();
 
     setState(() {
-      _selectedImage = frameInfo.image;
+      _backgroundImage = frameInfo.image;
     });
   }
 
@@ -272,7 +272,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    if (_backgroundImage == null || _pcImage == null || _homeButtonImage == null || _backButtonImage == null || _recentButtonImage == null) {
+    if (_deviceBackgroundImage == null || _pcImage == null || _homeButtonImage == null || _backButtonImage == null || _recentButtonImage == null) {
       return Center(child: SizedBox(
         height: 500,
         child: Lottie.asset('assets/lottie/loading.json', fit: BoxFit.contain),
@@ -396,7 +396,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
             opacity: _isImageChanging ? 0.0 : 1.0,
             duration: const Duration(milliseconds: 300),
             child: RawImage(
-              image: _selectedImage!,
+              image: _backgroundImage!,
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
@@ -619,7 +619,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                 ),
               ),
             ),
-          if (!_isdeviceVisible)
+          if (!_isdeviceVisible) //디바이스 그려주는 부분
             _isbackgroundImageChangeVisibleCheck
                 ? Container()
                 : Center(
@@ -652,7 +652,7 @@ class _DesktopScreenState extends State<DesktopScreen> with TickerProviderStateM
                               child: CustomPaint(
                                 size: Size(deviceWidth, deviceHeight),
                                 painter: DeviceFramePainter(
-                                  _backgroundImage!,
+                                  _deviceBackgroundImage!,
                                   _homeButtonImage!,
                                   _backButtonImage!,
                                   _recentButtonImage!,
